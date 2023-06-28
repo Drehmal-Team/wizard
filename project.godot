@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Drehmal Installer"
+run/main_scene="res://test_node.tscn"
 config/features=PackedStringArray("4.0", "Mobile")
 config/icon="res://icon.svg"
 

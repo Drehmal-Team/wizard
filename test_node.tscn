@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://cm2i5ra0k0ml8"]
+[gd_scene load_steps=2 format=3 uid="uid://cm2i5ra0k0ml8"]
+
+[ext_resource type="Script" path="res://TestDownload.gd" id="1_1yxhg"]
 
 [node name="Test Node" type="Control"]
 layout_mode = 3
@@ -7,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_1yxhg")
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0
@@ -15,3 +18,7 @@ offset_top = 243.0
 offset_right = 754.0
 offset_bottom = 309.0
 text = "Download a mod to this folder"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="pressed" from="Button" to="." method="_on_TestDL_button_pressed"]
