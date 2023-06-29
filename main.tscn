@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://bq7ndyehv8jte"]
 
-[ext_resource type="Texture2D" uid="uid://c21btbjxr5471" path="res://icon.svg" id="1_ke4k3"]
+[ext_resource type="Texture2D" uid="uid://cmufa4gmdmmu4" path="res://DrehmalPrimordialLogo.png" id="1_uq4cw"]
 
 [sub_resource type="Shader" id="Shader_wadys"]
 code = "shader_type canvas_item;
@@ -79,7 +79,6 @@ shader = SubResource("Shader_yciap")
 shader_parameter/pixelSize = 20.0
 
 [node name="Main" type="Control"]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -87,7 +86,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_buuqy")
 layout_mode = 1
 anchors_preset = 15
@@ -96,7 +95,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="ColorRect"]
+[node name="Pixelate" type="ColorRect" parent="Background"]
 material = SubResource("ShaderMaterial_dpnuv")
 layout_mode = 1
 anchors_preset = 15
@@ -106,9 +105,27 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 503.0
-offset_top = 229.0
-offset_right = 631.0
-offset_bottom = 357.0
-texture = ExtResource("1_ke4k3")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -346.814
+offset_right = 347.186
+offset_bottom = 199.0
+grow_horizontal = 2
+texture = ExtResource("1_uq4cw")
+stretch_mode = 3
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 70.0
+offset_top = -451.0
+offset_right = -70.0
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 0.686275)
