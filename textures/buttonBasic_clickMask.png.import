@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dqnbr4ynkemm2"
-path="res://.godot/imported/pack.png-1bb491268e52fd2d01bf64ec20bc064a.ctex"
+uid="uid://badfcyagcbtvm"
+path="res://.godot/imported/buttonBasic_clickMask.png-2a06750321fe00122d817cd3c642f550.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pack.png"
-dest_files=["res://.godot/imported/pack.png-1bb491268e52fd2d01bf64ec20bc064a.ctex"]
+source_file="res://textures/buttonBasic_clickMask.png"
+dest_files=["res://.godot/imported/buttonBasic_clickMask.png-2a06750321fe00122d817cd3c642f550.ctex"]
 
 [params]
 
