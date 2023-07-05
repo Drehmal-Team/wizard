@@ -11,13 +11,17 @@ config_version=5
 [application]
 
 config/name="Drehmal Installer"
-run/main_scene="res://main.tscn"
+run/main_scene="res://InstallMain.tscn"
 config/features=PackedStringArray("4.0", "Mobile")
 config/icon="res://textures/icon.svg"
 
 [display]
 
 window/size/mode=3
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/native_dialogs/plugin.cfg")
 
 [rendering]
 
