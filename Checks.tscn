@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bpevw2r2jiwyn"]
+[gd_scene load_steps=16 format=3 uid="uid://bpevw2r2jiwyn"]
 
 [ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="1_62o6e"]
 [ext_resource type="Script" path="res://Checks.gd" id="1_gc1au"]
@@ -22,12 +22,13 @@ outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_qmgtg"]
 font = ExtResource("1_62o6e")
-font_size = 32
+font_size = 42
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_rly0y"]
 font = ExtResource("1_62o6e")
+font_size = 20
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 
@@ -42,6 +43,18 @@ font = ExtResource("1_62o6e")
 font_size = 24
 font_color = Color(1, 0, 0, 1)
 outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_tilxl"]
+font = ExtResource("1_62o6e")
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_v0yke"]
+font = ExtResource("1_62o6e")
+font_size = 24
+outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [node name="Checks" type="Control"]
@@ -164,7 +177,7 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.0
-text = "yahoo"
+placeholder_text = "path to your minecraft folder"
 wrap_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/MarginContainer/VBoxContainer"]
@@ -183,17 +196,22 @@ theme_override_constants/margin_left = 60
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainerMisc"]
 layout_mode = 2
+horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/separation = 25
 
-[node name="HBoxContainer_Saves" type="HBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer"]
+[node name="VBoxCont_MODS" type="VBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/HBoxContainer_Saves"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS/HBoxContainer"]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
@@ -201,26 +219,166 @@ texture = ExtResource("2_yguxx")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="TextureButton" type="TextureButton" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/HBoxContainer_Saves"]
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS/HBoxContainer"]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 texture_normal = ExtResource("5_x4kec")
 stretch_mode = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/HBoxContainer_Saves"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.49
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Mods Folder"
+label_settings = SubResource("LabelSettings_tilxl")
+
+[node name="Label2" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "Your mods folder contains the mods that will be used by Drehmal to boost its performance or change some in-game textures."
+label_settings = SubResource("LabelSettings_v0yke")
+autowrap_mode = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/HBoxContainer_Saves/VBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS/HBoxContainer2"]
+layout_mode = 2
+text = "Path :"
+label_settings = SubResource("LabelSettings_i33rv")
+
+[node name="TextEdit_MODS" type="TextEdit" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "usually found inside your minecraft folder"
+
+[node name="VBoxCont_SAVES" type="VBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/HBoxContainer_Saves/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES"]
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_yguxx")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("5_x4kec")
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.49
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Saves Folder"
+label_settings = SubResource("LabelSettings_tilxl")
+
+[node name="Label2" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "The save folder contains every minecraft save you have. Drehmal will be installed in this folder."
+label_settings = SubResource("LabelSettings_v0yke")
+autowrap_mode = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES/HBoxContainer2"]
+layout_mode = 2
+text = "Path :"
+label_settings = SubResource("LabelSettings_i33rv")
+
+[node name="TextEdit_SAVES" type="TextEdit" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "usually found inside your minecraft folder"
+
+[node name="VBoxCont_RES" type="VBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_yguxx")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("5_x4kec")
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.49
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Resourcepacks Folder"
+label_settings = SubResource("LabelSettings_tilxl")
+
+[node name="Label2" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "This folder contains all of your resourcepacks. It will only be used if you decide to install the resourcepack locally."
+label_settings = SubResource("LabelSettings_v0yke")
+autowrap_mode = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer2"]
+layout_mode = 2
+text = "Path :"
+label_settings = SubResource("LabelSettings_i33rv")
+
+[node name="TextEdit_RES" type="TextEdit" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "usually found inside your minecraft folder"
 
 [node name="NativeFileDialog" type="NativeFileDialog" parent="."]
+title = "Open a Directory"
+file_mode = 2
+
+[node name="NativeFileDialogMods" type="NativeFileDialog" parent="."]
+title = "Open a Directory"
+file_mode = 2
+
+[node name="NativeFileDialogSaves" type="NativeFileDialog" parent="."]
+title = "Open a Directory"
+file_mode = 2
+
+[node name="NativeFileDialogRes" type="NativeFileDialog" parent="."]
 title = "Open a Directory"
 file_mode = 2
 
 [connection signal="pressed" from="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/HBoxContainer/TextureButton_AUTOFIND" to="." method="_on_texture_button_autofind_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/HBoxContainer/TextureButton_FIND" to="." method="_on_texture_button_find_pressed"]
 [connection signal="dir_selected" from="NativeFileDialog" to="." method="_on_native_file_dialog_dir_selected"]
+[connection signal="dir_selected" from="NativeFileDialogMods" to="." method="_on_native_file_dialog_mods_dir_selected"]
+[connection signal="dir_selected" from="NativeFileDialogSaves" to="." method="_on_native_file_dialog_saves_dir_selected"]
+[connection signal="dir_selected" from="NativeFileDialogRes" to="." method="_on_native_file_dialog_res_dir_selected"]
