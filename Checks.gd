@@ -36,6 +36,8 @@ func _on_native_file_dialog_dir_selected(dir):
 @onready var TextureRes = $VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer/TextureRect
 @onready var EditRes = $VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer2/TextEdit_RES
 
+@onready var MinecraftDir = null
+
 func _on_texture_button_autofind_pressed():
 	if OS.get_name() in ["Windows","Linux","macOS"] :
 		match OS.get_name() :
@@ -49,7 +51,8 @@ func _on_texture_button_autofind_pressed():
 		TextEditPath.text = MinecraftFolder
 		LogLabel.text = "Minecraft Folder found successfully !"
 		LogLabel.label_settings.font_color = Color(0,1,0,1)
-		var MinecraftDir = DirAccess.open(MinecraftFolder)
+		MinecraftDir = DirAccess.open(MinecraftFolder)
+		print(DirAccess.get_open_error())
 		print(MinecraftDir.get_directories())
 	else:
 		LogLabel.text = "Your operating system was not recognized properly ! Please select your minecraft folder with the manual button."
@@ -66,3 +69,4 @@ func _on_native_file_dialog_saves_dir_selected(dir):
 
 func _on_native_file_dialog_res_dir_selected(dir):
 	pass # Replace with function body.
+

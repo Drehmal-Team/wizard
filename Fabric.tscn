@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=3 uid="uid://cew7e6vstebj3"]
+
+[ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="1_v012q"]
+[ext_resource type="PackedScene" uid="uid://0bouryp2467i" path="res://NextPrevButtons.tscn" id="2_aywwt"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_olk1x"]
+font = ExtResource("1_v012q")
+font_size = 48
+shadow_size = 16
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ffuag"]
+font = ExtResource("1_v012q")
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Fabric" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 8.0
+text = "FABRIC INSTALLATION"
+label_settings = SubResource("LabelSettings_olk1x")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Please follow the steps to install the fabric mod loader."
+label_settings = SubResource("LabelSettings_ffuag")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="NextPrevButtons" parent="VBoxContainer" instance=ExtResource("2_aywwt")]
+layout_mode = 2
+NextStepButton = true
+PrevStepButton = true

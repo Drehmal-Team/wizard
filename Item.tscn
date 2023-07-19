@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=3 uid="uid://blobb1em1f15d"]
+
+[ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="2_jgk1v"]
+
+[sub_resource type="GDScript" id="GDScript_j7o2m"]
+resource_name = "Item"
+script/source = "class_name Item extends HBoxContainer
+
+@export var Icon : Texture2D
+@export var Title : String
+@export var Link : String
+@export var Href : String
+@export var Desc : String
+
+func _ready():
+	$TextureRect.texture = Icon
+	$VBoxContainer/Label.text = Title
+	$VBoxContainer/LinkButton.text = Link
+	$VBoxContainer/LinkButton.uri = Href
+	$VBoxContainer/Label2.text = Desc
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_837bo"]
+font = ExtResource("2_jgk1v")
+font_size = 24
+
+[sub_resource type="LabelSettings" id="LabelSettings_clrci"]
+font = ExtResource("2_jgk1v")
+
+[node name="Discord" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 0
+script = SubResource("GDScript_j7o2m")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 4.0
+expand_mode = 5
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 20.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_837bo")
+
+[node name="LinkButton" type="LinkButton" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.239216, 0.894118, 1, 1)
+theme_override_colors/font_pressed_color = Color(1, 0.635294, 0.580392, 1)
+theme_override_colors/font_hover_color = Color(0.811765, 1, 0.992157, 1)
+theme_override_fonts/font = ExtResource("2_jgk1v")
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+label_settings = SubResource("LabelSettings_clrci")
+autowrap_mode = 3

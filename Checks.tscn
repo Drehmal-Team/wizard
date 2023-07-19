@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bpevw2r2jiwyn"]
+[gd_scene load_steps=17 format=3 uid="uid://bpevw2r2jiwyn"]
 
 [ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="1_62o6e"]
 [ext_resource type="Script" path="res://Checks.gd" id="1_gc1au"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d3ix1fngnm87t" path="res://textures/Checks/AutoFindFileShine.png" id="4_kbjn8"]
 [ext_resource type="Texture2D" uid="uid://dg8rmhkc3r2ow" path="res://textures/Checks/FindFile.png" id="5_x4kec"]
 [ext_resource type="Texture2D" uid="uid://blgqnrq35mxfn" path="res://textures/Checks/FindFileShine.png" id="6_y1qc1"]
+[ext_resource type="PackedScene" uid="uid://0bouryp2467i" path="res://NextPrevButtons.tscn" id="8_okxhb"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_h0qg1"]
 font = ExtResource("1_62o6e")
@@ -77,14 +78,14 @@ theme_override_constants/separation = 10
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "CHECKS"
+text = "FOLDERS"
 label_settings = SubResource("LabelSettings_h0qg1")
 horizontal_alignment = 1
 vertical_alignment = 2
 
 [node name="Label2" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Please ensure all of the following checks are okay before continuing."
+text = "Please ensure that the installer knows where your minecraft folders are."
 label_settings = SubResource("LabelSettings_r3xr5")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -192,6 +193,7 @@ label_settings = SubResource("LabelSettings_dyd42")
 [node name="MarginContainerMisc" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
 theme_override_constants/margin_left = 60
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainerMisc"]
@@ -359,6 +361,11 @@ label_settings = SubResource("LabelSettings_i33rv")
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "usually found inside your minecraft folder"
+
+[node name="MarginContainer" parent="VBoxContainer" instance=ExtResource("8_okxhb")]
+layout_mode = 2
+NextStepButton = true
+PrevStepButton = true
 
 [node name="NativeFileDialog" type="NativeFileDialog" parent="."]
 title = "Open a Directory"

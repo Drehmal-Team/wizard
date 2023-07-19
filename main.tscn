@@ -1,5 +1,6 @@
 [gd_scene load_steps=33 format=3 uid="uid://bq7ndyehv8jte"]
 
+[ext_resource type="Script" path="res://Global.gd" id="1_8d5yp"]
 [ext_resource type="Texture2D" uid="uid://cmufa4gmdmmu4" path="res://textures/DrehmalPrimordialLogo.png" id="1_cja0g"]
 [ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="2_w1ona"]
 [ext_resource type="Texture2D" uid="uid://dmdl5rr0gcjv6" path="res://textures/buttonBasic_normal.png" id="3_eypmd"]
@@ -8,11 +9,12 @@
 [ext_resource type="Texture2D" uid="uid://clgm1pkmj38vf" path="res://textures/buttonBasic_hover.png" id="5_6j0lm"]
 [ext_resource type="Texture2D" uid="uid://dqnbr4ynkemm2" path="res://textures/pack.png" id="7_b3wg5"]
 [ext_resource type="Texture2D" uid="uid://da7730m5n5k0n" path="res://textures/warning.png" id="8_h7i78"]
+[ext_resource type="PackedScene" uid="uid://blobb1em1f15d" path="res://Item.tscn" id="8_ht514"]
 [ext_resource type="Texture2D" uid="uid://bf7y8tx6wrxhy" path="res://textures/discord.png" id="8_nkbtr"]
-[ext_resource type="Texture2D" uid="uid://d7fnmgufxqjm" path="res://textures/clean.png" id="9_dmtma"]
 [ext_resource type="Texture2D" uid="uid://q512vlitmraf" path="res://textures/Fandom_heart-logo.svg.png" id="9_keqcq"]
-[ext_resource type="Texture2D" uid="uid://dib1we6o7rqt5" path="res://textures/cleanOpenShine.png" id="10_hmmhr"]
 [ext_resource type="Texture2D" uid="uid://lp5bqvr60tst" path="res://textures/twitter-icon.png" id="10_o86tn"]
+[ext_resource type="Texture2D" uid="uid://c54rvk8eq0kgd" path="res://textures/InstallButton/InstallButton_OFF.png" id="14_sowgc"]
+[ext_resource type="Texture2D" uid="uid://cepmo5hr2lcrk" path="res://textures/InstallButton/InstallButton_ON.png" id="15_h6scu"]
 
 [sub_resource type="Shader" id="Shader_wadys"]
 code = "shader_type canvas_item;
@@ -106,17 +108,6 @@ shadow_offset = Vector2(3, 3)
 resource_name = "Button_Quit"
 script/source = "extends TextureButton
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
 func _on_pressed():
 	get_tree().quit()# Replace with function body.
 "
@@ -127,13 +118,6 @@ font_size = 32
 
 [sub_resource type="LabelSettings" id="LabelSettings_nlmmf"]
 line_spacing = 4.0
-font = ExtResource("2_w1ona")
-
-[sub_resource type="LabelSettings" id="LabelSettings_837bo"]
-font = ExtResource("2_w1ona")
-font_size = 24
-
-[sub_resource type="LabelSettings" id="LabelSettings_clrci"]
 font = ExtResource("2_w1ona")
 
 [sub_resource type="LabelSettings" id="LabelSettings_s0mkl"]
@@ -151,6 +135,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_8d5yp")
 
 [node name="Background" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_buuqy")
@@ -180,8 +165,9 @@ grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_bottom = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer"]
 layout_mode = 2
@@ -190,8 +176,10 @@ layout_mode = 2
 texture_filter = 1
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
+size_flags_vertical = 3
 size_flags_stretch_ratio = 2.07
 texture = ExtResource("1_cja0g")
+expand_mode = 3
 stretch_mode = 5
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer"]
@@ -347,6 +335,7 @@ label_settings = SubResource("LabelSettings_kydu7")
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 size_flags_vertical = 3
+scroll_vertical = 100
 horizontal_scroll_mode = 0
 
 [node name="LabelMenuInfo" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer"]
@@ -412,163 +401,39 @@ label_settings = SubResource("LabelSettings_nlmmf")
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 2
+theme_override_constants/separation = 15
 
-[node name="Website" type="HBoxContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials"]
+[node name="Discord2" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials" instance=ExtResource("8_ht514")]
 layout_mode = 2
-size_flags_vertical = 0
+Icon = ExtResource("8_nkbtr")
+Title = "Discord"
+Link = "Join the discord !"
+Href = "https://discord.gg/B3ut7tTD43"
+Desc = "This is the best place to interact with the community ! You can ask questions, suggest your ideas, and post your creations and memes ! We also organise events once in a while, such as Hide&Seek and Drehmal Bedwars !"
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Website"]
-custom_minimum_size = Vector2(30, 30)
+[node name="Website" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials" instance=ExtResource("8_ht514")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-texture = ExtResource("7_b3wg5")
-expand_mode = 5
-stretch_mode = 5
+Icon = ExtResource("7_b3wg5")
+Title = "Website"
+Link = "drehmal.net"
+Href = "https://drehmal.net"
+Desc = "Our website has all the information you need on installation or on the map ! You'll find all the news and blog post we posted, along with a quick presentation of the team, and even a press kit ! "
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Website"]
+[node name="Wiki" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials" instance=ExtResource("8_ht514")]
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 20.0
+Icon = ExtResource("9_keqcq")
+Title = "Wiki"
+Link = "drehmal.fandom.com"
+Href = "https://drehmal.fandom.com/wiki/Drehmal_Wiki"
+Desc = "Our community-managed wiki can help you with your understanding of the world of Drehmal ! Careful, it's full of spoilers."
 
-[node name="Label" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Website/VBoxContainer"]
+[node name="Twitter" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials" instance=ExtResource("8_ht514")]
 layout_mode = 2
-text = "Website"
-label_settings = SubResource("LabelSettings_837bo")
-
-[node name="LinkButton" type="LinkButton" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Website/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.454902, 0.870588, 0.968627, 1)
-theme_override_colors/font_pressed_color = Color(1, 0.635294, 0.580392, 1)
-theme_override_colors/font_hover_color = Color(0, 0.917647, 1, 1)
-theme_override_fonts/font = ExtResource("2_w1ona")
-text = "drehmal.net"
-uri = "https://drehmal.net"
-
-[node name="Label2" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Website/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-text = "Our main website has all the information you need about drehmal, including blog posts, a list of the team members, and a press kit !"
-label_settings = SubResource("LabelSettings_clrci")
-autowrap_mode = 3
-
-[node name="Discord" type="HBoxContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials"]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Discord"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-texture = ExtResource("8_nkbtr")
-expand_mode = 5
-stretch_mode = 5
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Discord"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 20.0
-
-[node name="Label" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Discord/VBoxContainer"]
-layout_mode = 2
-text = "Discord"
-label_settings = SubResource("LabelSettings_837bo")
-
-[node name="LinkButton" type="LinkButton" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Discord/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.454902, 0.870588, 0.968627, 1)
-theme_override_colors/font_pressed_color = Color(1, 0.635294, 0.580392, 1)
-theme_override_colors/font_hover_color = Color(0, 0.917647, 1, 1)
-theme_override_fonts/font = ExtResource("2_w1ona")
-text = "Join the discord !"
-uri = "https://discord.gg/B3ut7tTD43"
-
-[node name="Label2" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Discord/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-text = "This is the best place to interact with the community ! You can ask questions, suggest your ideas, and post your creations and memes ! We also organise events once in a while, such as Hide&Seek and Drehmal Bedwars !"
-label_settings = SubResource("LabelSettings_clrci")
-autowrap_mode = 3
-
-[node name="Wiki" type="HBoxContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials"]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Wiki"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-texture = ExtResource("9_keqcq")
-expand_mode = 5
-stretch_mode = 5
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Wiki"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 20.0
-
-[node name="Label" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Wiki/VBoxContainer"]
-layout_mode = 2
-text = "Wiki"
-label_settings = SubResource("LabelSettings_837bo")
-
-[node name="LinkButton" type="LinkButton" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Wiki/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.454902, 0.870588, 0.968627, 1)
-theme_override_colors/font_pressed_color = Color(1, 0.635294, 0.580392, 1)
-theme_override_colors/font_hover_color = Color(0, 0.917647, 1, 1)
-theme_override_fonts/font = ExtResource("2_w1ona")
-text = "drehmal.fandom.com"
-uri = "https://drehmal.fandom.com/wiki/Drehmal_Wiki"
-
-[node name="Label2" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Wiki/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-text = "Our community-managed wiki can help you with your understanding of the world of Drehmal ! Careful, it's full of spoilers."
-label_settings = SubResource("LabelSettings_clrci")
-autowrap_mode = 3
-
-[node name="Twitter" type="HBoxContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials"]
-layout_mode = 2
-size_flags_vertical = 0
-
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Twitter"]
-custom_minimum_size = Vector2(30, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 4.0
-texture = ExtResource("10_o86tn")
-expand_mode = 5
-stretch_mode = 5
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Twitter"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 20.0
-
-[node name="Label" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Twitter/VBoxContainer"]
-layout_mode = 2
-text = "Twitter"
-label_settings = SubResource("LabelSettings_837bo")
-
-[node name="LinkButton" type="LinkButton" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Twitter/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.454902, 0.870588, 0.968627, 1)
-theme_override_colors/font_pressed_color = Color(1, 0.635294, 0.580392, 1)
-theme_override_colors/font_hover_color = Color(0, 0.917647, 1, 1)
-theme_override_fonts/font = ExtResource("2_w1ona")
-text = "DrehmalMC on Twitter"
-uri = "https://twitter.com/DrehmalMC"
-
-[node name="Label2" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials/Twitter/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-text = "We post teasers, trailers and annoucements on our official Twitter."
-label_settings = SubResource("LabelSettings_clrci")
-autowrap_mode = 3
+Icon = ExtResource("10_o86tn")
+Title = "Twitter"
+Link = "DrehmalMC on Twitter"
+Href = "https://twitter.com/DrehmalMC"
+Desc = "We post teasers, trailers and annoucements on our official Twitter."
 
 [node name="VBoxInstall" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer"]
 layout_mode = 2
@@ -577,6 +442,7 @@ size_flags_vertical = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxInstall"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxInstall/HBoxContainer"]
 texture_filter = 1
@@ -605,6 +471,7 @@ expand_mode = 2
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxInstall"]
 texture_filter = 2
 layout_mode = 2
+size_flags_vertical = 3
 text = "Drehmal is a minecraft map, not a server or a standalone game. You will need Minecraft : Java Edition to play it.
 
 This is an installer, not a launcher : it only installs the map, you have to launch minecraft afterwards from the minecraft launcher.
@@ -621,11 +488,15 @@ autowrap_mode = 3
 
 [node name="Button" type="TextureButton" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxInstall"]
 layout_mode = 2
-texture_normal = ExtResource("9_dmtma")
-texture_pressed = ExtResource("10_hmmhr")
-texture_hover = ExtResource("3_eypmd")
+size_flags_vertical = 3
+toggle_mode = true
+texture_normal = ExtResource("14_sowgc")
+texture_pressed = ExtResource("15_h6scu")
+texture_hover = ExtResource("15_h6scu")
+stretch_mode = 5
 
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Install" to="VBoxContainer/MarginContainer2/MenuManagers" method="_on_button_install_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Info" to="VBoxContainer/MarginContainer2/MenuManagers" method="_on_button_info_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Social" to="VBoxContainer/MarginContainer2/MenuManagers" method="_on_button_social_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Quit" to="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Quit" method="_on_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxInstall/Button" to="." method="_on_install_begin_button_pressed"]

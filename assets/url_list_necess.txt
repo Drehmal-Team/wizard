@@ -1,0 +1,9 @@
+https://modrinth.com/mod/cit-resewn
+https://modrinth.com/mod/entitytexturefeatures
+https://modrinth.com/mod/fabricskyboxes
+https://modrinth.com/mod/indium
+https://modrinth.com/mod/lambdynamiclights
+https://modrinth.com/mod/fabric-api
+https://modrinth.com/mod/animatica
+
+#and manually add that one cem fork i found, works great

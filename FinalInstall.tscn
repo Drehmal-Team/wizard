@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=3 uid="uid://rvajgvr2atcb"]
+
+[ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="1_n2vdw"]
+[ext_resource type="Texture2D" uid="uid://c54rvk8eq0kgd" path="res://textures/InstallButton/InstallButton_OFF.png" id="2_2fcmv"]
+[ext_resource type="PackedScene" uid="uid://0bouryp2467i" path="res://NextPrevButtons.tscn" id="2_c8in2"]
+[ext_resource type="Texture2D" uid="uid://cepmo5hr2lcrk" path="res://textures/InstallButton/InstallButton_ON.png" id="3_bio4k"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_olk1x"]
+font = ExtResource("1_n2vdw")
+font_size = 48
+shadow_size = 16
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ffuag"]
+font = ExtResource("1_n2vdw")
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[node name="FinalInstall" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 8.0
+text = "FINAL INSTALLATION"
+label_settings = SubResource("LabelSettings_olk1x")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Once you completed every other step, press the install button !
+WARNING : this can take a while, depending on your internet connection and disk system..."
+label_settings = SubResource("LabelSettings_ffuag")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 20
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/MarginContainer"]
+texture_filter = 1
+layout_mode = 2
+texture_normal = ExtResource("2_2fcmv")
+texture_pressed = ExtResource("3_bio4k")
+texture_hover = ExtResource("3_bio4k")
+stretch_mode = 5
+
+[node name="NextPrevButtons" parent="VBoxContainer" instance=ExtResource("2_c8in2")]
+layout_mode = 2
+PrevStepButton = true

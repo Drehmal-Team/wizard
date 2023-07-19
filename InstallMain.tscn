@@ -1,6 +1,75 @@
-[gd_scene load_steps=12 format=3 uid="uid://bmcp21nfcxnnc"]
+[gd_scene load_steps=18 format=3 uid="uid://bmcp21nfcxnnc"]
 
 [ext_resource type="PackedScene" uid="uid://bpevw2r2jiwyn" path="res://Checks.tscn" id="1_qfx2f"]
+[ext_resource type="PackedScene" uid="uid://doq8uefudtoga" path="res://Mods.tscn" id="2_hpugn"]
+[ext_resource type="PackedScene" uid="uid://d2e45cw8bbhfj" path="res://Choices.tscn" id="3_do7np"]
+[ext_resource type="PackedScene" uid="uid://buumrt6abcnyv" path="res://ModList.tscn" id="4_5wdwl"]
+[ext_resource type="PackedScene" uid="uid://cew7e6vstebj3" path="res://Fabric.tscn" id="5_4xb7k"]
+[ext_resource type="PackedScene" uid="uid://rvajgvr2atcb" path="res://FinalInstall.tscn" id="6_m42nw"]
+
+[sub_resource type="GDScript" id="GDScript_ys4wk"]
+resource_name = "InstallMenu"
+script/source = "extends Control
+
+var step : int = 0
+var mods : bool = false
+var tween = Tween
+@onready var Panels = $MainContainer.get_children()
+@onready var PanelModList = $MainContainer.get_node(\"PanelModList\")
+
+func _ready():
+	Panels.remove_at(Panels.find(PanelModList))
+	
+	get_tree().get_root().size_changed.connect(resize)
+	Global.NextStep.connect(next_step)
+	Global.PrevStep.connect(prev_step)
+	Global.SeeMods.connect(SeeMods)
+	Global.OutMods.connect(OutMods)
+	resize()
+
+func resize():
+	var ScreenDim = DisplayServer.window_get_size(0)
+	PanelModList.set_size(Vector2(ScreenDim.x - 20,ScreenDim.y- 20))
+	PanelModList.set_position(Vector2(10 + ScreenDim.x*2,10 + ScreenDim.y))
+	for i in len(Panels):
+		Panels[i].set_size(Vector2(ScreenDim.x - 20,ScreenDim.y- 20))
+		Panels[i].set_position(Vector2(10 + ScreenDim.x*i,10))
+		$MainContainer.position.x = ScreenDim.x * (0-step)
+		$MainContainer.position.y = ScreenDim.y if mods else 0
+
+func next_step():
+	if step <= 3 :
+		var ScreenDim = DisplayServer.window_get_size(0)
+		step += 1
+		
+		tween = create_tween()
+		tween.tween_property($MainContainer, \"position:x\", ScreenDim.x * (0-step),1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+
+func prev_step():
+	if step >= 1:
+		var ScreenDim = DisplayServer.window_get_size(0)
+		step -= 1
+		
+		tween = create_tween()
+		tween.tween_property($MainContainer, \"position:x\", ScreenDim.x * (0-step),0.8).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	
+	elif step == 0 :
+		SceneTransition.dissolve(\"res://main.tscn\")
+
+func SeeMods():
+	var ScreenDim = DisplayServer.window_get_size(0)
+	mods = true
+	
+	tween = create_tween()
+	tween.tween_property($MainContainer, \"position:y\", 10 - ScreenDim.y,1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	
+func OutMods():
+	mods = false
+	
+	tween = create_tween()
+	tween.tween_property($MainContainer, \"position:y\", 10,1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	
+"
 
 [sub_resource type="Shader" id="Shader_wadys"]
 code = "shader_type canvas_item;
@@ -77,13 +146,14 @@ void fragment() {
 shader = SubResource("Shader_yciap")
 shader_parameter/pixelSize = 24.0
 
-[node name="MainMenu" type="Control"]
+[node name="InstallMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = SubResource("GDScript_ys4wk")
 
 [node name="Background" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_buuqy")
@@ -103,28 +173,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MainContainer" type="Control" parent="."]
+layout_direction = 2
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
 
-[node name="Panel" type="PanelContainer" parent="MarginContainer"]
-layout_mode = 2
+[node name="PanelChecks" type="PanelContainer" parent="MainContainer"]
+layout_mode = 0
+offset_right = 30.0
+offset_bottom = 30.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel"]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/Panel/VBoxContainer"]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MainContainer/PanelChecks"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 15
@@ -132,5 +195,85 @@ theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
 
-[node name="Checks" parent="MarginContainer/Panel/VBoxContainer/MarginContainer" instance=ExtResource("1_qfx2f")]
+[node name="Checks" parent="MainContainer/PanelChecks/MarginContainer" instance=ExtResource("1_qfx2f")]
+layout_mode = 2
+
+[node name="PanelChoice" type="PanelContainer" parent="MainContainer"]
+layout_mode = 0
+offset_right = 1112.0
+offset_bottom = 608.0
+
+[node name="MarginContainer" type="MarginContainer" parent="MainContainer/PanelChoice"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="Choices" parent="MainContainer/PanelChoice/MarginContainer" instance=ExtResource("3_do7np")]
+layout_mode = 2
+
+[node name="PanelMods" type="PanelContainer" parent="MainContainer"]
+layout_mode = 0
+offset_right = 1112.0
+offset_bottom = 608.0
+
+[node name="MarginContainer" type="MarginContainer" parent="MainContainer/PanelMods"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="Mods" parent="MainContainer/PanelMods/MarginContainer" instance=ExtResource("2_hpugn")]
+layout_mode = 2
+
+[node name="PanelModList" type="PanelContainer" parent="MainContainer"]
+layout_mode = 0
+offset_right = 1112.0
+offset_bottom = 608.0
+
+[node name="MarginContainer" type="MarginContainer" parent="MainContainer/PanelModList"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="Mods" parent="MainContainer/PanelModList/MarginContainer" instance=ExtResource("4_5wdwl")]
+layout_mode = 2
+
+[node name="PanelFabric" type="PanelContainer" parent="MainContainer"]
+layout_mode = 0
+offset_right = 1112.0
+offset_bottom = 608.0
+
+[node name="MarginContainer" type="MarginContainer" parent="MainContainer/PanelFabric"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="Fabric" parent="MainContainer/PanelFabric/MarginContainer" instance=ExtResource("5_4xb7k")]
+layout_mode = 2
+
+[node name="PanelFinalInstall" type="PanelContainer" parent="MainContainer"]
+layout_mode = 0
+offset_right = 1112.0
+offset_bottom = 608.0
+
+[node name="MarginContainer" type="MarginContainer" parent="MainContainer/PanelFinalInstall"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="FinalInstall" parent="MainContainer/PanelFinalInstall/MarginContainer" instance=ExtResource("6_m42nw")]
 layout_mode = 2

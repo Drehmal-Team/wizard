@@ -1,0 +1,148 @@
+[gd_scene load_steps=8 format=3 uid="uid://buumrt6abcnyv"]
+
+[ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="1_34ehl"]
+[ext_resource type="Texture2D" uid="uid://4rmds46ima60" path="res://textures/NextStepButton/BackToInstallButton_OFF.png" id="2_aly23"]
+[ext_resource type="Texture2D" uid="uid://cgj8crlipe718" path="res://textures/NextStepButton/BackToInstallButton_ON.png" id="3_vl433"]
+
+[sub_resource type="GDScript" id="GDScript_licpc"]
+resource_name = "ModList"
+script/source = "extends Control
+
+func _ready():
+	pass
+
+func _on_back_to_install_button_pressed():
+	Global.emit_signal(\"OutMods\")
+
+
+
+func _on_tab_bar_tab_changed(tab):
+	if tab == 0 :
+		$VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer/VBoxNecess.show()
+		$VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer/VBoxPerf.hide()
+		$VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer/VBoxOpti.hide()
+	elif tab == 1 :
+		$VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer/VBoxNecess.hide()
+		$VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer/VBoxPerf.show()
+		$VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer/VBoxOpti.hide()
+	elif tab == 2 :
+		$VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer/VBoxNecess.hide()
+		$VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer/VBoxPerf.hide()
+		$VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer/VBoxOpti.show()
+
+
+
+func _on_http_request_request_completed(result, response_code, headers, body):
+	pass # Replace with function body.
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_h0qg1"]
+font = ExtResource("1_34ehl")
+font_size = 48
+shadow_size = 16
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_r3xr5"]
+font = ExtResource("1_34ehl")
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awi0o"]
+bg_color = Color(0, 0, 0, 0.247059)
+
+[node name="Mods" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_licpc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 8.0
+text = "LIST OF MODS"
+label_settings = SubResource("LabelSettings_h0qg1")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Use the tabs to check each pack individually."
+label_settings = SubResource("LabelSettings_r3xr5")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TabBar" type="TabBar" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_34ehl")
+theme_override_font_sizes/font_size = 28
+tab_alignment = 1
+tab_count = 3
+tab_0/title = "Necessary"
+tab_1/title = "Performance"
+tab_2/title = "Optimisation"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 9.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_awi0o")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="VBoxNecess" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="VBoxPerf" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="VBoxOpti" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="BackToInstallButton" type="TextureButton" parent="VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+texture_normal = ExtResource("2_aly23")
+texture_pressed = ExtResource("3_vl433")
+texture_hover = ExtResource("3_vl433")
+stretch_mode = 5
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[connection signal="tab_changed" from="VBoxContainer/VBoxContainer/TabBar" to="." method="_on_tab_bar_tab_changed"]
+[connection signal="pressed" from="VBoxContainer/BackToInstallButton" to="." method="_on_back_to_install_button_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]

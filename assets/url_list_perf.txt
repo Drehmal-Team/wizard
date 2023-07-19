@@ -1,0 +1,9 @@
+https://modrinth.com/mod/sodium-extra
+https://modrinth.com/mod/reeses-sodium-options
+https://modrinth.com/mod/dynamic-fps
+https://modrinth.com/mod/entityculling
+https://modrinth.com/mod/lazydfu
+https://modrinth.com/mod/lithium
+https://modrinth.com/mod/starlight
+https://modrinth.com/mod/sodium
+https://modrinth.com/mod/ebe
