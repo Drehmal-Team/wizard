@@ -45,8 +45,8 @@ vertical_alignment = 2
 
 [node name="Label2" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Once you have completed every other step, you can press the install button!
-WARNING: this can take a while, depending on your internet connection and disk system. Be patient. Drehmal is big!"
+text = "Once you completed every other step, press the install button !
+WARNING : this can take a while, depending on your internet connection and disk system..."
 label_settings = SubResource("LabelSettings_ffuag")
 horizontal_alignment = 1
 vertical_alignment = 1

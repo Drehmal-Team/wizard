@@ -257,7 +257,7 @@ theme_override_constants/margin_left = 39
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Info/MarginContainer"]
 layout_mode = 2
-text = "Information"
+text = "Informations"
 label_settings = SubResource("LabelSettings_pdi5q")
 vertical_alignment = 1
 
@@ -307,7 +307,7 @@ theme_override_constants/margin_left = 39
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Quit/MarginContainer"]
 layout_mode = 2
-text = "Quit The Installer"
+text = "Quit the installer"
 label_settings = SubResource("LabelSettings_pdi5q")
 vertical_alignment = 1
 
@@ -328,14 +328,14 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info"]
 layout_mode = 2
-text = "PATCH NOTES:"
+text = "PATCH NOTES :"
 label_settings = SubResource("LabelSettings_kydu7")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info"]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 size_flags_vertical = 3
-scroll_vertical = 33
+scroll_vertical = 100
 horizontal_scroll_mode = 0
 
 [node name="LabelMenuInfo" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer"]
@@ -472,15 +472,16 @@ expand_mode = 2
 texture_filter = 2
 layout_mode = 2
 size_flags_vertical = 3
-text = "Drehmal is a Minecraft map, not a server or a standalone game. You will need Minecraft: Java Edition to play it.
+text = "Drehmal is a minecraft map, not a server or a standalone game. You will need Minecraft : Java Edition to play it.
 
-This is an installer, not a launcher: it only installs the map, you have to launch Minecraft afterwards from the Minecraft launcher.
+This is an installer, not a launcher : it only installs the map, you have to launch minecraft afterwards from the minecraft launcher.
 
-Drehmal 2.2 is a large map  - around 5GB of terrain and 700MB of ressources. Make sure you have enough space on your computer!
+Drehmal 2.2 is a heavy map (around 5GB of terrain and 700MB of ressources !)
+Make sure you have enough space on your computer !
 
-Drehmal can sometimes be demanding when it comes to computing power and graphics. This installer will allow you to install additional performance mods if you think you need them, but if your computer already has trouble running Minecraft, this might not be enough.
+Drehmal can sometimes be demanding when it comes to computing power and graphics. This installer will allow you to install additional performance mods if you think you need them, but if your computer has trouble running Minecraft usually, this will maybe not be enough.
 
-If everything is okay, let's start the install process!"
+If everything is okay, let's start the install process !"
 label_settings = SubResource("LabelSettings_37puh")
 horizontal_alignment = 1
 autowrap_mode = 3
