@@ -85,7 +85,7 @@ vertical_alignment = 2
 
 [node name="Label2" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Please ensure that the installer knows where your minecraft folders are."
+text = "Please ensure that the installer knows where your Minecraft folders are."
 label_settings = SubResource("LabelSettings_r3xr5")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -149,11 +149,11 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 size_flags_stretch_ratio = 2.79
-text = "The installer needs your minecraft folder to properly install the map : this is the folder that contains your minecraft data : saves, ressourcepacks, mods, etc...
-Usually, it's there :
-- Windows : %appdata%\\.minecraft
-- MacOS : ~/Library/Application Support/minecraft
-- Linux : ~/.minecraft"
+text = "The installer needs your Minecraft folder to properly install the map: this is the folder that contains your minecraft data: saves, ressourcepacks, mods, etc...
+Usually, it's here:
+-Windows: %appdata%\\.minecraft
+-MacOS: ~/Library/Application Support/minecraft
+-Linux: ~/.minecraft"
 label_settings = SubResource("LabelSettings_rly0y")
 autowrap_mode = 3
 
@@ -250,7 +250,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS/HBoxContainer2"]
 layout_mode = 2
-text = "Path :"
+text = "Path:"
 label_settings = SubResource("LabelSettings_i33rv")
 
 [node name="TextEdit_MODS" type="TextEdit" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS/HBoxContainer2"]
@@ -293,7 +293,7 @@ label_settings = SubResource("LabelSettings_tilxl")
 [node name="Label2" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-text = "The save folder contains every minecraft save you have. Drehmal will be installed in this folder."
+text = "The save folder contains every Minecraft save you have. Drehmal will be installed in this folder."
 label_settings = SubResource("LabelSettings_v0yke")
 autowrap_mode = 3
 
@@ -302,7 +302,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES/HBoxContainer2"]
 layout_mode = 2
-text = "Path :"
+text = "Path:"
 label_settings = SubResource("LabelSettings_i33rv")
 
 [node name="TextEdit_SAVES" type="TextEdit" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES/HBoxContainer2"]
@@ -339,13 +339,13 @@ size_flags_stretch_ratio = 3.49
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-text = "Resourcepacks Folder"
+text = "Resource Packs Folder"
 label_settings = SubResource("LabelSettings_tilxl")
 
 [node name="Label2" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-text = "This folder contains all of your resourcepacks. It will only be used if you decide to install the resourcepack locally."
+text = "This folder contains all of your resource packs. It will only be used if you decide to install the resource pack locally."
 label_settings = SubResource("LabelSettings_v0yke")
 autowrap_mode = 3
 

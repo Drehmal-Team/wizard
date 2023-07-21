@@ -165,7 +165,7 @@ texture_filter = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
-text = "These mods are EXTREMELY recommended : they're an innate part of the Drehmal experience. They change textures, skyboxes, models, et caetera."
+text = "These mods are NECESSARY to install: they're an innate part of the Drehmal experience. They change textures, skyboxes, models, et cetera."
 label_settings = SubResource("LabelSettings_scsti")
 autowrap_mode = 3
 
@@ -231,7 +231,7 @@ texture_filter = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
-text = "Optimisation Mods"
+text = "Optimization Mods"
 label_settings = SubResource("LabelSettings_vem87")
 
 [node name="Label2" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer_OPTI/VBoxContainer"]
@@ -239,7 +239,7 @@ texture_filter = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
-text = "If your computer isn't too good, or if it can have a bit of trouble running Minecraft usually, you can use this additional performance pack."
+text = "If your computer isn't too good, and it can have a bit of trouble running Minecraft, you can use this additional performance pack."
 label_settings = SubResource("LabelSettings_scsti")
 autowrap_mode = 3
 

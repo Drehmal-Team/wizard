@@ -51,14 +51,14 @@ theme_override_constants/separation = 10
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "RESSOURCE PACK OPTIONS"
+text = "RESOURCE PACK OPTIONS"
 label_settings = SubResource("LabelSettings_h0qg1")
 horizontal_alignment = 1
 vertical_alignment = 2
 
 [node name="Label2" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Select one or both options."
+text = "Select one option."
 label_settings = SubResource("LabelSettings_r3xr5")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -79,9 +79,11 @@ theme_override_constants/separation = 15
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer"]
 layout_mode = 2
-text = "In Drehmal, the Ressource Pack is responsible for changing some in-game textures and models, for more immersion into the realm.
-The ressource pack is bound to your game by default : it only changes stuff when playing Drehmal. But if you want to, it can be globalised : that way, you will be able to have the Drehmal textures when playing the game regularly !
-Of course, you can also choose both to have both, but since the ressource pack weighs a lot, you should only choose that if you have space to spare. "
+text = "In Drehmal, the Resource Pack is responsible for changing some in-game textures and models, adding music, and more. It is a necessary part of the  intended Drehmal experience.
+
+The resource pack is bound to your game by default: it only changes stuff when playing Drehmal. But if you want to, it can be globalised: that way, you will be able to have the Drehmal textures when playing the game regularly!
+
+Of course, you can also choose both, but since the ressource pack is quite large, you should only choose that if you have space to spare. "
 label_settings = SubResource("LabelSettings_u0qt2")
 horizontal_alignment = 1
 autowrap_mode = 3
@@ -109,7 +111,7 @@ stretch_mode = 5
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
-text = "Install the ressource pack locally"
+text = "Install the resource pack locally"
 label_settings = SubResource("LabelSettings_vem87")
 
 [node name="HBoxContainer_GLOBAL" type="HBoxContainer" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer"]
@@ -130,7 +132,7 @@ stretch_mode = 5
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 4.0
-text = "Install the ressource pack globally"
+text = "Install the resource pack globally"
 label_settings = SubResource("LabelSettings_vem87")
 
 [node name="HBoxContainer_BOTH" type="HBoxContainer" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer"]
