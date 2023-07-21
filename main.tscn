@@ -335,7 +335,6 @@ label_settings = SubResource("LabelSettings_kydu7")
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 size_flags_vertical = 3
-scroll_vertical = 33
 horizontal_scroll_mode = 0
 
 [node name="LabelMenuInfo" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer"]
@@ -398,7 +397,6 @@ Mais je ne permets pas qu’un autre me les serve."
 label_settings = SubResource("LabelSettings_nlmmf")
 
 [node name="VBoxSocials" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 15
@@ -409,7 +407,7 @@ Icon = ExtResource("8_nkbtr")
 Title = "Discord"
 Link = "Join the discord !"
 Href = "https://discord.gg/B3ut7tTD43"
-Desc = "This is the best place to interact with the community ! You can ask questions, suggest your ideas, and post your creations and memes ! We also organise events once in a while, such as Hide&Seek and Drehmal Bedwars !"
+Desc = "This is the best place to interact with the community! You can ask questions, suggest your ideas, and post your creations! We also organise events once in a while, such as Hide&Seek and Drehmal Bedwars!"
 
 [node name="Website" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials" instance=ExtResource("8_ht514")]
 layout_mode = 2
@@ -417,7 +415,7 @@ Icon = ExtResource("7_b3wg5")
 Title = "Website"
 Link = "drehmal.net"
 Href = "https://drehmal.net"
-Desc = "Our website has all the information you need on installation or on the map ! You'll find all the news and blog post we posted, along with a quick presentation of the team, and even a press kit ! "
+Desc = "Our website has all the information you need on installation or on the map! You'll find all the news and development updates we posted, along with a quick presentation of the team, and even a press kit! "
 
 [node name="Wiki" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials" instance=ExtResource("8_ht514")]
 layout_mode = 2
@@ -425,7 +423,7 @@ Icon = ExtResource("9_keqcq")
 Title = "Wiki"
 Link = "drehmal.fandom.com"
 Href = "https://drehmal.fandom.com/wiki/Drehmal_Wiki"
-Desc = "Our community-managed wiki can help you with your understanding of the world of Drehmal ! Careful, it's full of spoilers."
+Desc = "Our community-managed wiki can help you with your understanding of the world of Drehmal! Careful, it's full of spoilers."
 
 [node name="Twitter" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials" instance=ExtResource("8_ht514")]
 layout_mode = 2
@@ -436,6 +434,7 @@ Href = "https://twitter.com/DrehmalMC"
 Desc = "We post teasers, trailers and annoucements on our official Twitter."
 
 [node name="VBoxInstall" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
