@@ -256,7 +256,7 @@ theme_override_constants/margin_left = 39
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Info/MarginContainer"]
 layout_mode = 2
-text = "Informations"
+text = "Information"
 label_settings = SubResource("LabelSettings_pdi5q")
 vertical_alignment = 1
 
@@ -306,7 +306,7 @@ theme_override_constants/margin_left = 39
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Quit/MarginContainer"]
 layout_mode = 2
-text = "Quit the installer"
+text = "Quit The Installer"
 label_settings = SubResource("LabelSettings_pdi5q")
 vertical_alignment = 1
 
@@ -327,7 +327,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info"]
 layout_mode = 2
-text = "PATCH NOTES :"
+text = "PATCH NOTES:"
 label_settings = SubResource("LabelSettings_kydu7")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info"]
@@ -406,7 +406,7 @@ Icon = ExtResource("8_nkbtr")
 Title = "Discord"
 Link = "Join the discord !"
 Href = "https://discord.gg/B3ut7tTD43"
-Desc = "This is the best place to interact with the community ! You can ask questions, suggest your ideas, and post your creations and memes ! We also organise events once in a while, such as Hide&Seek and Drehmal Bedwars !"
+Desc = "This is the best place to interact with the community! You can ask questions, suggest your ideas, and post your creations! We also organise events once in a while, such as Hide&Seek and Drehmal Bedwars!"
 
 [node name="Website" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials" instance=ExtResource("8_ht514")]
 layout_mode = 2
@@ -414,14 +414,14 @@ Icon = ExtResource("7_b3wg5")
 Title = "Website"
 Link = "drehmal.net"
 Href = "https://drehmal.net"
-Desc = "Our website has all the information you need on installation or on the map ! You'll find all the news and blog post we posted, along with a quick presentation of the team, and even a press kit ! "
+Desc = "Our website has all the information you need on installation or on the map! You'll find all the news and development updates we posted, along with a quick presentation of the team, and even a press kit! "
 
 [node name="Wiki" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials" instance=ExtResource("8_ht514")]
 layout_mode = 2
 Title = "Wiki lmao"
 Link = "drehmal.fandom.com"
 Href = "https://drehmal.fandom.com/wiki/Drehmal_Wiki"
-Desc = "Our community-managed wiki can help you with your understanding of the world of Drehmal ! Careful, it's full of spoilers."
+Desc = "Our community-managed wiki can help you with your understanding of the world of Drehmal! Careful, it's full of spoilers."
 
 [node name="Twitter" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials" instance=ExtResource("8_ht514")]
 layout_mode = 2
@@ -469,16 +469,15 @@ expand_mode = 2
 texture_filter = 2
 layout_mode = 2
 size_flags_vertical = 3
-text = "Drehmal is a minecraft map, not a server or a standalone game. You will need Minecraft : Java Edition to play it.
+text = "Drehmal is a Minecraft map, not a server or a standalone game. You will need Minecraft: Java Edition to play it.
 
-This is an installer, not a launcher : it only installs the map, you have to launch minecraft afterwards from the minecraft launcher.
+This is an installer, not a launcher: it only installs the map, you have to launch Minecraft afterwards from the Minecraft launcher.
 
-Drehmal 2.2 is a heavy map (around 5GB of terrain and 700MB of ressources !)
-Make sure you have enough space on your computer !
+Drehmal 2.2 is a large map  - around 5GB of terrain and 700MB of ressources. Make sure you have enough space on your computer!
 
-Drehmal can sometimes be demanding when it comes to computing power and graphics. This installer will allow you to install additional performance mods if you think you need them, but if your computer has trouble running Minecraft usually, this will maybe not be enough.
+Drehmal can sometimes be demanding when it comes to computing power and graphics. This installer will allow you to install additional performance mods if you think you need them, but if your computer already has trouble running Minecraft, this might not be enough.
 
-If everything is okay, let's start the install process !"
+If everything is okay, let's start the install process!"
 label_settings = SubResource("LabelSettings_37puh")
 horizontal_alignment = 1
 autowrap_mode = 3
