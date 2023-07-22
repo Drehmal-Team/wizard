@@ -29,5 +29,5 @@ func _finished():
 	
 
 func _on_install_begin_button_pressed():
-	$VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxInstall/Button.process_mode = 4
+	$VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxInstall/Button.process_mode = Node.PROCESS_MODE_DISABLED
 	SceneTransition.dissolve("res://InstallMain.tscn")

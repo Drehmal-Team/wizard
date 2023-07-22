@@ -1,6 +1,6 @@
-https://modrinth.com/mod/smoothboot-fabric
-https://modrinth.com/mod/cull-leaves
-https://modrinth.com/mod/ferrite-core
-https://modrinth.com/mod/audio-engine-tweaks
-https://modrinth.com/mod/memoryleakfix
-https://modrinth.com/mod/c2me-fabric
+FWumhS4T : smoothboot-fabric
+GNxdLCoP : cull-leaves
+uXXizFIs : ferrite-core
+DZ81JNQ1 : audio-engine-tweaks
+NRjRiSSD : memoryleakfix
+VSNURh3q : c2me-fabric

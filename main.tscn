@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bq7ndyehv8jte"]
+[gd_scene load_steps=32 format=3 uid="uid://bq7ndyehv8jte"]
 
 [ext_resource type="Script" path="res://Global.gd" id="1_8d5yp"]
 [ext_resource type="Texture2D" uid="uid://cmufa4gmdmmu4" path="res://textures/DrehmalPrimordialLogo.png" id="1_cja0g"]
@@ -11,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://da7730m5n5k0n" path="res://textures/warning.png" id="8_h7i78"]
 [ext_resource type="PackedScene" uid="uid://blobb1em1f15d" path="res://Item.tscn" id="8_ht514"]
 [ext_resource type="Texture2D" uid="uid://bf7y8tx6wrxhy" path="res://textures/discord.png" id="8_nkbtr"]
-[ext_resource type="Texture2D" uid="uid://q512vlitmraf" path="res://textures/Fandom_heart-logo.svg.png" id="9_keqcq"]
 [ext_resource type="Texture2D" uid="uid://lp5bqvr60tst" path="res://textures/twitter-icon.png" id="10_o86tn"]
 [ext_resource type="Texture2D" uid="uid://c54rvk8eq0kgd" path="res://textures/InstallButton/InstallButton_OFF.png" id="14_sowgc"]
 [ext_resource type="Texture2D" uid="uid://cepmo5hr2lcrk" path="res://textures/InstallButton/InstallButton_ON.png" id="15_h6scu"]
@@ -335,7 +334,6 @@ label_settings = SubResource("LabelSettings_kydu7")
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 size_flags_vertical = 3
-scroll_vertical = 100
 horizontal_scroll_mode = 0
 
 [node name="LabelMenuInfo" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer"]
@@ -398,7 +396,6 @@ Mais je ne permets pas qu’un autre me les serve."
 label_settings = SubResource("LabelSettings_nlmmf")
 
 [node name="VBoxSocials" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 15
@@ -421,8 +418,7 @@ Desc = "Our website has all the information you need on installation or on the m
 
 [node name="Wiki" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials" instance=ExtResource("8_ht514")]
 layout_mode = 2
-Icon = ExtResource("9_keqcq")
-Title = "Wiki"
+Title = "Wiki lmao"
 Link = "drehmal.fandom.com"
 Href = "https://drehmal.fandom.com/wiki/Drehmal_Wiki"
 Desc = "Our community-managed wiki can help you with your understanding of the world of Drehmal ! Careful, it's full of spoilers."
@@ -436,6 +432,7 @@ Href = "https://twitter.com/DrehmalMC"
 Desc = "We post teasers, trailers and annoucements on our official Twitter."
 
 [node name="VBoxInstall" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

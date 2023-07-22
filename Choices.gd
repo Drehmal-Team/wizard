@@ -8,3 +8,4 @@ func _ready():
 	ButtonLocal.button_pressed = true
 	ButtonGlobal.button_pressed = false
 	ButtonBoth.button_pressed = false
+

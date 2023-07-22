@@ -40,8 +40,7 @@ script = SubResource("GDScript_j7o2m")
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 0
-size_flags_stretch_ratio = 4.0
+size_flags_stretch_ratio = 3.0
 expand_mode = 5
 stretch_mode = 5
 
@@ -49,6 +48,7 @@ stretch_mode = 5
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 20.0
+theme_override_constants/separation = 5
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
