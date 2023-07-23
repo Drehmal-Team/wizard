@@ -93,7 +93,7 @@ vertical_alignment = 2
 
 [node name="Label2" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Please ensure that the installer knows where your Minecraft folders are."
+text = "Please verify that the installer has the correct paths to your Minecraft files."
 label_settings = SubResource("LabelSettings_r3xr5")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -159,7 +159,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 size_flags_stretch_ratio = 2.79
-text = "The installer needs your Minecraft folder to properly install the map: this is the folder that contains your minecraft data: saves, ressourcepacks, mods, etc...
+text = "The installer needs your Minecraft folder to properly install the map: this is the folder that contains your minecraft data such as saves, resourcepacks, mods, etc.
 Usually, it's here:
 -Windows: %appdata%\\.minecraft
 -MacOS: ~/Library/Application Support/minecraft
@@ -252,7 +252,7 @@ label_settings = SubResource("LabelSettings_tilxl")
 [node name="Label2" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-text = "Your mods folder contains the mods that will be used by Drehmal to boost its performance or change some in-game textures."
+text = "Your mods folder contains the mods that will be installed at a later step. If there are currently files in your mods folder, please be aware that they will be deleted in this installation process. If you do not see a mods folder, please create one."
 label_settings = SubResource("LabelSettings_v0yke")
 autowrap_mode = 3
 
@@ -304,7 +304,7 @@ label_settings = SubResource("LabelSettings_tilxl")
 [node name="Label2" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-text = "The save folder contains every Minecraft save you have. Drehmal will be installed in this folder."
+text = "The saves folder contains every Minecraft save you have. Drehmal's world file will be installed in this folder."
 label_settings = SubResource("LabelSettings_v0yke")
 autowrap_mode = 3
 
@@ -356,7 +356,7 @@ label_settings = SubResource("LabelSettings_tilxl")
 [node name="Label2" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-text = "This folder contains all of your resource packs. It will only be used if you decide to install the resource pack locally."
+text = "This folder contains all of your resource packs. It will only be used if you decide to install the resource pack globally."
 label_settings = SubResource("LabelSettings_v0yke")
 autowrap_mode = 3
 

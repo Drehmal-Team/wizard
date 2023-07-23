@@ -165,9 +165,9 @@ theme_override_fonts/font = ExtResource("1_34ehl")
 theme_override_font_sizes/font_size = 28
 tab_alignment = 1
 tab_count = 3
-tab_0/title = "Necessary"
+tab_0/title = "Core"
 tab_1/title = "Performance"
-tab_2/title = "Optimisation"
+tab_2/title = "Optimization"
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/VBoxContainer"]
 layout_mode = 2

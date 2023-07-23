@@ -306,7 +306,7 @@ theme_override_constants/margin_left = 39
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Quit/MarginContainer"]
 layout_mode = 2
-text = "Quit The Installer"
+text = "Quit"
 label_settings = SubResource("LabelSettings_pdi5q")
 vertical_alignment = 1
 
