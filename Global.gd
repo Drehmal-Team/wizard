@@ -6,7 +6,7 @@ var ModsFolderPath = ""
 var ResFolderPath = ""
 var SavesFolderPath = ""
 var NecessMods = true
-var PerfMods = true
+var PerfMods = false
 var OptiMods = false
 
 var Music = AudioStreamPlayer.new()

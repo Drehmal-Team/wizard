@@ -20,12 +20,42 @@ var MinecraftDir
 func _on_texture_button_find_pressed():
 	$NativeFileDialog.show()
 
+func _on_texture_button_mods_pressed():
+	$NativeFileDialogMODS.show()
+
+
+func _on_texture_button_saves_pressed():
+	$NativeFileDialogSAVES.show()
+
+
+func _on_texture_button_res_pressed():
+	$NativeFileDialogRES.show()
+
+
+
 
 func _on_native_file_dialog_dir_selected(dir):
 	MinecraftFolder = dir
 	print(dir)
 	$VBoxContainer/MarginContMinecraftFolder/VBoxContainer/HBoxContainer/TextureRect.texture = CheckTexture
 	TextEditPath.text = MinecraftFolder
+
+func _on_native_file_dialog_mods_dir_selected(dir):
+	TextureMods.texture = CheckTexture
+	EditMods.text = dir
+	Global.ModsFolderPath = dir
+
+func _on_native_file_dialog_saves_dir_selected(dir):
+	TextureSaves.texture = CheckTexture
+	EditSaves.text = dir
+	Global.SavesFolderPath = dir
+
+func _on_native_file_dialog_res_dir_selected(dir):
+	TextureRes.texture = CheckTexture
+	EditRes.text = dir
+	Global.ResFolderPath = dir
+
+
 
 func _on_texture_button_autofind_pressed():
 	if OS.get_name() in ["Windows","Linux","macOS"] :
@@ -88,4 +118,10 @@ func _on_texture_button_autofind_pressed():
 		$VBoxContainer/MarginContMinecraftFolder/VBoxContainer/HBoxContainer/TextureRect.texture = ErrorTexture
 		LogLabel.text = "Your operating system was not recognized properly ! Please select your minecraft folder with the manual button."
 		LogLabel.label_settings.font_color = Color(1,0,0,1)
+
+
+
+
+
+
 

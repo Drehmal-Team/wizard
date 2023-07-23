@@ -93,7 +93,7 @@ vertical_alignment = 2
 
 [node name="Label2" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Please verify that the installer has the correct paths to your Minecraft files."
+text = "Please verify that the installer has the correct paths to your Minecraft files. If one of the subfolders (\"saves\", \"mods\", and \"resourcepacks\") is missing from your minecraft folder, please create it."
 label_settings = SubResource("LabelSettings_r3xr5")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -159,7 +159,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 size_flags_stretch_ratio = 2.79
-text = "The installer needs your Minecraft folder to properly install the map: this is the folder that contains your minecraft data such as saves, resourcepacks, mods, etc.
+text = "This is the folder that contains your minecraft data such as saves, resourcepacks, mods, etc.
 Usually, it's here:
 -Windows: %appdata%\\.minecraft
 -MacOS: ~/Library/Application Support/minecraft
@@ -232,11 +232,13 @@ texture = ExtResource("2_yguxx")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="TextureButton" type="TextureButton" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS/HBoxContainer"]
+[node name="TextureButtonMODS" type="TextureButton" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS/HBoxContainer"]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 texture_normal = ExtResource("5_x4kec")
+texture_pressed = ExtResource("6_y1qc1")
+texture_hover = ExtResource("6_y1qc1")
 stretch_mode = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS/HBoxContainer"]
@@ -252,7 +254,7 @@ label_settings = SubResource("LabelSettings_tilxl")
 [node name="Label2" type="Label" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-text = "Your mods folder contains the mods that will be installed at a later step. If there are currently files in your mods folder, please be aware that they will be deleted in this installation process. If you do not see a mods folder, please create one."
+text = "Your mods folder contains the mods that will be installed at a later step. If you do not see a mods folder, please create one."
 label_settings = SubResource("LabelSettings_v0yke")
 autowrap_mode = 3
 
@@ -284,11 +286,13 @@ texture = ExtResource("2_yguxx")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="TextureButton" type="TextureButton" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES/HBoxContainer"]
+[node name="TextureButtonSAVES" type="TextureButton" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES/HBoxContainer"]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 texture_normal = ExtResource("5_x4kec")
+texture_pressed = ExtResource("6_y1qc1")
+texture_hover = ExtResource("6_y1qc1")
 stretch_mode = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES/HBoxContainer"]
@@ -336,11 +340,13 @@ texture = ExtResource("2_yguxx")
 expand_mode = 3
 stretch_mode = 5
 
-[node name="TextureButton" type="TextureButton" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer"]
+[node name="TextureButtonRES" type="TextureButton" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer"]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
 texture_normal = ExtResource("5_x4kec")
+texture_pressed = ExtResource("6_y1qc1")
+texture_hover = ExtResource("6_y1qc1")
 stretch_mode = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer"]
@@ -382,6 +388,24 @@ PrevStepButton = true
 title = "Open a Directory"
 file_mode = 2
 
+[node name="NativeFileDialogMODS" type="NativeFileDialog" parent="."]
+title = "Open a Directory"
+file_mode = 2
+
+[node name="NativeFileDialogSAVES" type="NativeFileDialog" parent="."]
+title = "Open a Directory"
+file_mode = 2
+
+[node name="NativeFileDialogRES" type="NativeFileDialog" parent="."]
+title = "Open a Directory"
+file_mode = 2
+
 [connection signal="pressed" from="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/HBoxContainer/TextureButton_AUTOFIND" to="." method="_on_texture_button_autofind_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/HBoxContainer/TextureButton_FIND" to="." method="_on_texture_button_find_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS/HBoxContainer/TextureButtonMODS" to="." method="_on_texture_button_mods_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES/HBoxContainer/TextureButtonSAVES" to="." method="_on_texture_button_saves_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer/TextureButtonRES" to="." method="_on_texture_button_res_pressed"]
 [connection signal="dir_selected" from="NativeFileDialog" to="." method="_on_native_file_dialog_dir_selected"]
+[connection signal="dir_selected" from="NativeFileDialogMODS" to="." method="_on_native_file_dialog_mods_dir_selected"]
+[connection signal="dir_selected" from="NativeFileDialogSAVES" to="." method="_on_native_file_dialog_saves_dir_selected"]
+[connection signal="dir_selected" from="NativeFileDialogRES" to="." method="_on_native_file_dialog_res_dir_selected"]

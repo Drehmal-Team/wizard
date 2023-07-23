@@ -74,10 +74,11 @@ func _on_http_request_request_completed(result, _response_code, _headers, body):
 	new_item.Link = \"Go to Modrinth page\"
 	new_item.Href = \"https://modrinth.com/mod/\" + str(json[\"slug\"])
 	new_item.Desc = json[\"description\"]
-	$HTTPRequestIMG.download_file = \"res://assets/mod_icons/\" + str(json[\"id\"]) + \".png\"
-	$HTTPRequestIMG.request(json[\"icon_url\"],[\"User-Agent: Drehmal_Installer_beta (drehmal.net)\"])
-	await $HTTPRequestIMG.request_completed
-	await get_tree().create_timer(1).timeout 
+	if not FileAccess.file_exists(\"res://assets/mod_icons/\" + str(json[\"id\"]) + \".png\") :
+		$HTTPRequestIMG.download_file = \"res://assets/mod_icons/\" + str(json[\"id\"]) + \".png\"
+		$HTTPRequestIMG.request(json[\"icon_url\"],[\"User-Agent: Drehmal_Installer_beta (drehmal.net)\"])
+		await $HTTPRequestIMG.request_completed
+		await get_tree().create_timer(1).timeout
 	new_item.Icon = load(\"res://assets/mod_icons/\" + str(json[\"id\"]) + \".png\")
 	if json[\"id\"] in UrlList[0] :
 		VBoxNecess.add_child(new_item)
