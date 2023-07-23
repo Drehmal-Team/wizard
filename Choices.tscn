@@ -79,11 +79,9 @@ theme_override_constants/separation = 15
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer"]
 layout_mode = 2
-text = "In Drehmal, the Resource Pack is responsible for changing some in-game textures and models, adding music, and more. It is a necessary part of the  intended Drehmal experience.
+text = "Drehmal's resource pack, the \"Primordial Pack\" is necessary for all audio-visual features of the Drehmal experience. From item textures to the soundtrack to essential story visuals, the resource pack is essential.
 
-The resource pack is bound to your game by default: it only changes stuff when playing Drehmal. But if you want to, it can be globalised: that way, you will be able to have the Drehmal textures when playing the game regularly!
-
-Of course, you can also choose both, but since the ressource pack is quite large, you should only choose that if you have space to spare. "
+Here you can choose to install the resource pack locally, globally, or both. A local installation will simply install the resource pack within the Drehmal world folder, loading and enabling the resource pack when you load Drehmal. A global installation will add it to your resource packs folder where it can be used on any world/server. A global installation is necessary if you intend to join any multiplayer servers hosting Drehmal."
 label_settings = SubResource("LabelSettings_u0qt2")
 horizontal_alignment = 1
 autowrap_mode = 3
