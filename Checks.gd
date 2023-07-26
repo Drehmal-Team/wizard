@@ -63,7 +63,7 @@ func _on_texture_button_autofind_pressed():
 	if OS.get_name() in ["Windows","Linux","macOS"] :
 		match OS.get_name() :
 			"Windows":
-				tinyStrings = OS.get_data_dir().split("/").slice(0,2)
+				tinyStrings = OS.get_data_dir().split("/")
 				homePath = ""
 				for i in tinyStrings:
 					if i != "" :
@@ -71,7 +71,11 @@ func _on_texture_button_autofind_pressed():
 				MinecraftFolder = homePath + "/.minecraft"
 				print(MinecraftFolder)
 			"macOS":
-				homePath = OS.get_data_dir().split("/")[0]
+				tinyStrings = OS.get_data_dir().split("/")
+				homePath = ""
+				for i in tinyStrings:
+					if i != "" :
+						homePath += "/" + i
 				MinecraftFolder = homePath + "/minecraft"
 			"Linux":
 				tinyStrings = OS.get_data_dir().split("/").slice(0,3)
