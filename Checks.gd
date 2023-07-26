@@ -91,6 +91,7 @@ func _on_texture_button_autofind_pressed():
 		print(MinecraftFolder)
 		MinecraftDir = DirAccess.open(MinecraftFolder)
 		if DirAccess.get_open_error() != 0 :
+			print(DirAccess.get_open_error())
 			$VBoxContainer/MarginContMinecraftFolder/VBoxContainer/HBoxContainer/TextureRect.texture = ErrorTexture
 			LogLabel.text = "There was an error with the autofind function! Please select your minecraft folder with the manual button."
 			LogLabel.label_settings.font_color = Color(1,0,0,1)
