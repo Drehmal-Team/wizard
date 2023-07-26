@@ -69,7 +69,7 @@ func _on_texture_button_autofind_pressed():
 					if i != "" :
 						homePath += "/" + i
 				MinecraftFolder = homePath + "/.minecraft"
-				print(MinecraftFolder)
+				MinecraftFolder = ProjectSettings.globalize_path(MinecraftFolder)
 			"macOS":
 				tinyStrings = OS.get_data_dir().split("/")
 				homePath = ""
@@ -77,6 +77,7 @@ func _on_texture_button_autofind_pressed():
 					if i != "" :
 						homePath += "/" + i
 				MinecraftFolder = homePath + "/minecraft"
+				MinecraftFolder = ProjectSettings.globalize_path(MinecraftFolder)
 			"Linux":
 				tinyStrings = OS.get_data_dir().split("/").slice(0,3)
 				homePath = ""
@@ -84,8 +85,10 @@ func _on_texture_button_autofind_pressed():
 					if i != "" :
 						homePath += "/" + i
 				MinecraftFolder = homePath + "/.minecraft"
+				MinecraftFolder = ProjectSettings.globalize_path(MinecraftFolder)
 		
 		
+		print(MinecraftFolder)
 		MinecraftDir = DirAccess.open(MinecraftFolder)
 		if DirAccess.get_open_error() != 0 :
 			$VBoxContainer/MarginContMinecraftFolder/VBoxContainer/HBoxContainer/TextureRect.texture = ErrorTexture
