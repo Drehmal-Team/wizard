@@ -56,17 +56,21 @@ func _on_native_file_dialog_res_dir_selected(dir):
 	Global.ResFolderPath = dir
 
 
+var tinyStrings = ""
+var homePath = ""
 
 func _on_texture_button_autofind_pressed():
 	if OS.get_name() in ["Windows","Linux","macOS"] :
 		match OS.get_name() :
 			"Windows":
-				MinecraftFolder = "%appdata%\\.minecraft"
+				homePath = OS.get_data_dir().split("/")[0]
+				MinecraftFolder = homePath + ".minecraft"
 			"macOS":
-				MinecraftFolder = "~/Library/Application Support/minecraft"
+				homePath = OS.get_data_dir().split("/")[0]
+				MinecraftFolder = homePath + "minecraft"
 			"Linux":
-				var tinyStrings = OS.get_data_dir().split("/").slice(0,3)
-				var homePath = ""
+				tinyStrings = OS.get_data_dir().split("/").slice(0,3)
+				homePath = ""
 				for i in tinyStrings:
 					if i != "" :
 						homePath += "/" + i
