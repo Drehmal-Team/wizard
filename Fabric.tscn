@@ -163,3 +163,4 @@ PrevStepButton = true
 
 [connection signal="pressed" from="VBoxContainer/VBoxContainer/HBoxContainerDL/TextureButton" to="." method="_on_download_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/VBoxContainer/HBoxContainerInstall/TextureButton" to="." method="_on_install_button_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
