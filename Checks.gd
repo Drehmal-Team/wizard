@@ -64,10 +64,10 @@ func _on_texture_button_autofind_pressed():
 		match OS.get_name() :
 			"Windows":
 				homePath = OS.get_data_dir().split("/")[0]
-				MinecraftFolder = homePath + ".minecraft"
+				MinecraftFolder = homePath + "/.minecraft"
 			"macOS":
 				homePath = OS.get_data_dir().split("/")[0]
-				MinecraftFolder = homePath + "minecraft"
+				MinecraftFolder = homePath + "/minecraft"
 			"Linux":
 				tinyStrings = OS.get_data_dir().split("/").slice(0,3)
 				homePath = ""
