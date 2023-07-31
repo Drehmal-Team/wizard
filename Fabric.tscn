@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cew7e6vstebj3"]
+[gd_scene load_steps=16 format=3 uid="uid://cew7e6vstebj3"]
 
 [ext_resource type="Script" path="res://Fabric.gd" id="1_b4l0v"]
 [ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="1_v012q"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://c45d338ivknj1" path="res://textures/DownloadButton/DownloadButton_ON.png" id="3_078ei"]
 [ext_resource type="Texture2D" uid="uid://b1xvsh80dlpb0" path="res://textures/FabricButton/FabricButton_OFF.png" id="5_ev44o"]
 [ext_resource type="Texture2D" uid="uid://n8wegsdb5u0u" path="res://textures/FabricButton/FabricButton_ON.png" id="6_et1j5"]
+[ext_resource type="Texture2D" uid="uid://ugcix41atog8" path="res://textures/FabricButton/FabricButton_DISABLED.png" id="8_nce0m"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_olk1x"]
 font = ExtResource("1_v012q")
@@ -28,6 +29,16 @@ outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_0j81u"]
+font = ExtResource("1_v012q")
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_pbw82"]
+font = ExtResource("1_v012q")
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_36b0e"]
 font = ExtResource("1_v012q")
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
@@ -71,6 +82,7 @@ autowrap_mode = 3
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 5.0
+theme_override_constants/separation = 10
 
 [node name="HBoxContainerDL" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -112,6 +124,11 @@ text = "Click on the \"download\" button on the left to download the Fabric Load
 label_settings = SubResource("LabelSettings_0j81u")
 autowrap_mode = 3
 
+[node name="LogLabel" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainerDL/VBoxContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_pbw82")
+autowrap_mode = 3
+
 [node name="HBoxContainerInstall" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -120,7 +137,7 @@ theme_override_constants/separation = 15
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/HBoxContainerInstall"]
 texture_filter = 1
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 0
 texture = ExtResource("2_333iq")
 expand_mode = 3
 stretch_mode = 5
@@ -132,6 +149,7 @@ size_flags_horizontal = 3
 texture_normal = ExtResource("5_ev44o")
 texture_pressed = ExtResource("6_et1j5")
 texture_hover = ExtResource("6_et1j5")
+texture_disabled = ExtResource("8_nce0m")
 stretch_mode = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainerInstall"]
@@ -147,11 +165,13 @@ label_settings = SubResource("LabelSettings_718en")
 
 [node name="Label2" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainerInstall/VBoxContainer"]
 layout_mode = 2
-text = "/!\\ READ THESE INSTRUCTIONS FIRST /!\\
-When installing Fabric, set the Fabric Loader version to the latest (highest one) and the Minecraft version to 1.17.1. The Install Location should be your minecraft folder by default. Make sure the \"Create profile\" option is selected, then click on \"Install\"
-
-Click on the Fabric button on the left to launch the Installer when you are ready."
+text = "Click on the Fabric button on the left to launch the Installer when you are ready."
 label_settings = SubResource("LabelSettings_0j81u")
+autowrap_mode = 3
+
+[node name="LogLabel" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainerInstall/VBoxContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_36b0e")
 autowrap_mode = 3
 
 [node name="NextPrevButtons" parent="VBoxContainer" instance=ExtResource("2_aywwt")]
@@ -159,8 +179,10 @@ layout_mode = 2
 NextStepButton = true
 PrevStepButton = true
 
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
+[node name="HTTPRequestVer" type="HTTPRequest" parent="."]
+
+[node name="HTTPRequestJar" type="HTTPRequest" parent="."]
 
 [connection signal="pressed" from="VBoxContainer/VBoxContainer/HBoxContainerDL/TextureButton" to="." method="_on_download_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/VBoxContainer/HBoxContainerInstall/TextureButton" to="." method="_on_install_button_pressed"]
-[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
+[connection signal="request_completed" from="HTTPRequestVer" to="." method="_on_http_request_request_completed"]

@@ -18,10 +18,11 @@ func _ready():
 	
 func _on_next_step_button_pressed():
 	Global.emit_signal(\"NextStep\")
-
+	Global.play_sound(\"FRWD\")
 
 func _on_prev_step_button_pressed():
 	Global.emit_signal(\"PrevStep\")
+	Global.play_sound(\"FRWD\")
 "
 
 [node name="NextPrevButtons" type="MarginContainer"]

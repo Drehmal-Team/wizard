@@ -68,6 +68,7 @@ func _on_texture_button_autofind_pressed():
 				for i in tinyStrings:
 					if i != "" :
 						homePath += "/" + i
+				print(DirAccess.open(MinecraftFolder).get_directories())
 				MinecraftFolder = homePath + "/.minecraft"
 				MinecraftFolder = ProjectSettings.globalize_path(MinecraftFolder)
 			"macOS":
@@ -105,6 +106,7 @@ func _on_texture_button_autofind_pressed():
 				EditMods.text = MinecraftFolder + "/mods"
 				TextureMods.texture = CheckTexture
 				LogLabel.text += "\nMods folder found successfully !"
+				Global.ModsFolderPath = MinecraftFolder + "/mods"
 			else :
 				MinecraftDir.make_dir("mods")
 				EditMods.text = MinecraftFolder + "/mods"
@@ -115,6 +117,7 @@ func _on_texture_button_autofind_pressed():
 				EditSaves.text = MinecraftFolder + "/saves"
 				TextureSaves.texture = CheckTexture
 				LogLabel.text += "\nSaves folder found successfully !"
+				Global.SavesFolderPath = MinecraftFolder + "/saves"
 			else :
 				MinecraftDir.make_dir("saves")
 				EditSaves.text = MinecraftFolder + "/saves"
@@ -125,6 +128,7 @@ func _on_texture_button_autofind_pressed():
 				EditRes.text = MinecraftFolder + "/resourcepacks"
 				TextureRes.texture = CheckTexture
 				LogLabel.text += "\nResourcepack folder found successfully !"
+				Global.ResFolderPath = MinecraftFolder + "/resourcepacks"
 			else :
 				MinecraftDir.make_dir("resourcepacks")
 				EditMods.text = MinecraftFolder + "/resourcepacks"

@@ -94,6 +94,7 @@ theme_override_constants/separation = 20
 [node name="HBoxContainer_LOCAL" type="HBoxContainer" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 15
 
 [node name="TextureButton" type="TextureButton" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer/HBoxContainer_LOCAL"]
 texture_filter = 1
@@ -115,6 +116,7 @@ label_settings = SubResource("LabelSettings_vem87")
 [node name="HBoxContainer_GLOBAL" type="HBoxContainer" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/separation = 15
 
 [node name="TextureButton" type="TextureButton" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer/HBoxContainer_GLOBAL"]
 texture_filter = 1
