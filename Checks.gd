@@ -101,6 +101,7 @@ func _on_texture_button_autofind_pressed():
 			TextEditPath.text = MinecraftFolder
 			LogLabel.text = "Minecraft Folder found successfully !"
 			LogLabel.label_settings.font_color = Color(0,1,0,1)
+			Global.MinecraftFolderPath = MinecraftFolder
 			
 			if "mods" in MinecraftDir.get_directories() :
 				EditMods.text = MinecraftFolder + "/mods"

@@ -1,14 +1,15 @@
 extends Node
 
-var RessourcePackMode = ""
-var MinecraftFolderPath = ""
-var ModsFolderPath = ""
-var ResFolderPath = ""
-var SavesFolderPath = ""
-var NecessMods = true
-var PerfMods = false
-var OptiMods = false
-var FabricInstalled = false
+var RessourcePackMode := ""
+var MinecraftFolderPath := ""
+var ModsFolderPath := ""
+var ResFolderPath := ""
+var SavesFolderPath := ""
+var NecessMods := true
+var PerfMods := false
+var OptiMods := false
+var FabricInstalled := false
+var InstallType : String
 
 var Music = AudioStreamPlayer.new()
 
@@ -18,8 +19,11 @@ signal PrevStep
 signal SeeMods
 signal OutMods
 
+
+
 func _ready():
 	add_child(Music)
+	Music.set_volume_db(-2.0)
 	Music.finished.connect(_finished)
 	Music.stream = load("res://assets/sounds/MainMenu.ogg")
 	_finished()
@@ -43,6 +47,11 @@ func play_sound(type):
 	else :
 		print("Argument not valid !")
 
-func _on_install_begin_button_pressed():
-	$VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxInstall/Button.process_mode = Node.PROCESS_MODE_DISABLED
-	SceneTransition.dissolve("res://InstallMain.tscn")
+func play_from_path(path, vol = 0.0):
+	var SFX = AudioStreamPlayer.new()
+	add_child(SFX)
+	SFX.set_volume_db(vol)
+	SFX.stream = load(path)
+	SFX.play()
+	await SFX.finished
+	SFX.queue_free()

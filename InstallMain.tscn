@@ -147,6 +147,7 @@ shader = SubResource("Shader_yciap")
 shader_parameter/pixelSize = 24.0
 
 [node name="InstallMenu" type="Control"]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

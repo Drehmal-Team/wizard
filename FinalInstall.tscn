@@ -1,17 +1,21 @@
-[gd_scene load_steps=8 format=3 uid="uid://rvajgvr2atcb"]
+[gd_scene load_steps=10 format=3 uid="uid://rvajgvr2atcb"]
 
 [ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="1_n2vdw"]
 [ext_resource type="Texture2D" uid="uid://c54rvk8eq0kgd" path="res://textures/InstallButton/InstallButton_OFF.png" id="2_2fcmv"]
 [ext_resource type="PackedScene" uid="uid://0bouryp2467i" path="res://NextPrevButtons.tscn" id="2_c8in2"]
+[ext_resource type="Texture2D" uid="uid://bntq7dtb74ifw" path="res://textures/ReadyButton/ReadyButton_OFF.png" id="2_ps1q4"]
 [ext_resource type="Texture2D" uid="uid://cepmo5hr2lcrk" path="res://textures/InstallButton/InstallButton_ON.png" id="3_bio4k"]
+[ext_resource type="Texture2D" uid="uid://cmefij3ts6lry" path="res://textures/ReadyButton/ReadyButton_ON.png" id="3_q62hq"]
 
 [sub_resource type="GDScript" id="GDScript_11vos"]
 resource_name = "FinalInstallPanel"
 script/source = "extends Control
 
-var Rune = preload(\"res://GlowRune.tscn\")
+var Rune := preload(\"res://GlowRune.tscn\")
 var rune
-var Runes = false
+var Runes := []
+var finalCheck : bool
+var tween : Tween
 
 func _ready():
 	for i in range(0,4):
@@ -19,34 +23,72 @@ func _ready():
 		rune.Text = [\"Folders\",\"Resourcepack\",\"Mods\",\"Fabric\"][i]
 		rune.ForegroundTexture = load([\"res://textures/FinalInstallChecks/FinalFolder.png\",\"res://textures/FinalInstallChecks/FinalRes.png\",\"res://textures/FinalInstallChecks/FinalModrinth.png\",\"res://textures/FinalInstallChecks/FinalFabric.png\"][i])
 		$VBoxContainer/HBoxContainer.add_child(rune)
+		$VBoxContainer/MarginContainer/TextureButtonReady.show()
+		$VBoxContainer/MarginContainer/TextureButtonInstall.hide()
+		
+		
 
-
-
-func _on_texture_button_install_pressed():
+func _on_texture_button_ready_pressed():
 	Runes = $VBoxContainer/HBoxContainer.get_children()
 	
-	if Global.MinecraftFolderPath != \"\" and Global.ResFolderPath != \"\" and Global.SavesFolderPath != \"\" and Global.ResFolderPath != \"\" :
+	finalCheck = true
+	
+	if not (Global.MinecraftFolderPath == \"\" or Global.ResFolderPath == \"\" or Global.SavesFolderPath == \"\" or Global.ResFolderPath == \"\") :
 		Runes[0]._to_green()
+		Global.play_from_path(\"res://assets/sounds/Runes/rune_1.ogg\",10.0)
 	else :
 		Runes[0]._to_red()
-	
+		Global.play_from_path(\"res://assets/sounds/RunesBad/RunesBad-001.ogg\",10.0)
+		finalCheck = false
+		
+		
 	await get_tree().create_timer(1.5).timeout
 	
 	if Global.RessourcePackMode != \"\":
 		Runes[1]._to_green()
+		Global.play_from_path(\"res://assets/sounds/Runes/rune_2.ogg\",10.0)
 	else :
 		Runes[1]._to_red()
+		Global.play_from_path(\"res://assets/sounds/RunesBad/RunesBad-002.ogg\",10.0)
+		finalCheck = false
 	
 	await get_tree().create_timer(1.5).timeout
 	
 	Runes[2]._to_green()
+	Global.play_from_path(\"res://assets/sounds/Runes/rune_3.ogg\",10.0)
 
 	await get_tree().create_timer(1.5).timeout
 	
 	if Global.FabricInstalled:
 		Runes[3]._to_green()
+		Global.play_from_path(\"res://assets/sounds/Runes/rune_4.ogg\",10.0)
 	else :
 		Runes[3]._to_red()
+		Global.play_from_path(\"res://assets/sounds/RunesBad/RunesBad-004.ogg\",10.0)
+		finalCheck = false
+	
+	await get_tree().create_timer(2).timeout
+	
+	if finalCheck :
+		Global.play_from_path(\"res://assets/sounds/Runes/rune_5.ogg\",3.0)
+		
+		$VBoxContainer/MarginContainer/TextureButtonReady.hide()
+		$VBoxContainer/MarginContainer/TextureButtonInstall.show()
+		
+		tween = create_tween()
+		tween.tween_property(self, \"modulate\", Color(20.0/100.0, 59.6/100.0, 29.4/100.0), 0.5).set_ease(Tween.EASE_IN)
+		await tween.finished
+		
+		tween = create_tween()
+		tween.tween_property(self, \"modulate\", Color(1,1,1), 2).set_ease(Tween.EASE_OUT)
+		await tween.finished
+		
+		
+
+
+
+func _on_texture_button_install_pressed():
+	SceneTransition.dissolve()
 "
 
 [sub_resource type="LabelSettings" id="LabelSettings_olk1x"]
@@ -91,7 +133,7 @@ vertical_alignment = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 7.06
+size_flags_stretch_ratio = 5.0
 theme_override_constants/separation = 15
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
@@ -103,7 +145,16 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 20
 
+[node name="TextureButtonReady" type="TextureButton" parent="VBoxContainer/MarginContainer"]
+texture_filter = 1
+layout_mode = 2
+texture_normal = ExtResource("2_ps1q4")
+texture_pressed = ExtResource("3_q62hq")
+texture_hover = ExtResource("3_q62hq")
+stretch_mode = 5
+
 [node name="TextureButtonInstall" type="TextureButton" parent="VBoxContainer/MarginContainer"]
+visible = false
 texture_filter = 1
 layout_mode = 2
 texture_normal = ExtResource("2_2fcmv")
@@ -125,4 +176,5 @@ layout_mode = 2
 size_flags_stretch_ratio = 2.0
 PrevStepButton = true
 
+[connection signal="pressed" from="VBoxContainer/MarginContainer/TextureButtonReady" to="." method="_on_texture_button_ready_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/TextureButtonInstall" to="." method="_on_texture_button_install_pressed"]

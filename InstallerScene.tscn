@@ -1,0 +1,150 @@
+[gd_scene load_steps=7 format=3 uid="uid://4pec0lenaunb"]
+
+[ext_resource type="Script" path="res://InstallerScene.gd" id="1_h0y2m"]
+[ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="1_q7dge"]
+[ext_resource type="Texture2D" uid="uid://1yn161gbf6y5" path="res://textures/ProgressBars/Circle/CircleFULL.png" id="3_ywggd"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_aryhb"]
+font = ExtResource("1_q7dge")
+font_size = 24
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xn357"]
+font = ExtResource("1_q7dge")
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_lmpam"]
+font = ExtResource("1_q7dge")
+font_size = 20
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="InstallerScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h0y2m")
+
+[node name="Background" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+text = "PLEASE WAIT WHILE WE INSTALL DREHMAL"
+label_settings = SubResource("LabelSettings_aryhb")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 10.0
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/PanelContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/VBoxContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="MarginContainer/PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ProgressBar" type="TextureProgressBar" parent="MarginContainer/PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/Control"]
+self_modulate = Color(1, 1, 1, 0.34902)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+step = 0.01
+fill_mode = 4
+texture_progress = ExtResource("3_ywggd")
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -17.5
+offset_right = 48.0
+offset_bottom = 17.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "TEST"
+label_settings = SubResource("LabelSettings_xn357")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBarDeco" type="TextureProgressBar" parent="MarginContainer/PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -506.0
+offset_top = -0.5
+offset_right = 506.0
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+value = 20.0
+fill_mode = 4
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Starting..."
+label_settings = SubResource("LabelSettings_lmpam")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+use_threads = true
+
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]

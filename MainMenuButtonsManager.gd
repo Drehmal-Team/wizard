@@ -8,7 +8,7 @@ extends HBoxContainer
 func _ready():
 	Socials.hide()
 	Install.hide()
-	$PanelContainer/MarginContainer/VBoxContainer_Info/Label.text = "PATCH NOTES :"
+	$PanelContainer/MarginContainer/VBoxContainer_Info/Label.text = "What is Drehmal 2.2 ?"
 	Info.show()
 	$MarginContainer/VBoxContainer/Button_Install.set_pressed_no_signal(false)
 	$MarginContainer/VBoxContainer/Button_Social.set_pressed_no_signal(false)
@@ -34,7 +34,7 @@ func _on_button_info_pressed():
 	if Socials.visible == true :
 		Socials.hide()
 	
-	$PanelContainer/MarginContainer/VBoxContainer_Info/Label.text = "PATCH NOTES :"
+	$PanelContainer/MarginContainer/VBoxContainer_Info/Label.text = "What is Drehmal 2.2 ?"
 	Info.show()
 
 

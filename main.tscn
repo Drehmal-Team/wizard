@@ -1,7 +1,7 @@
-[gd_scene load_steps=32 format=3 uid="uid://bq7ndyehv8jte"]
+[gd_scene load_steps=39 format=3 uid="uid://bq7ndyehv8jte"]
 
-[ext_resource type="Script" path="res://Global.gd" id="1_8d5yp"]
 [ext_resource type="Texture2D" uid="uid://cmufa4gmdmmu4" path="res://textures/DrehmalPrimordialLogo.png" id="1_cja0g"]
+[ext_resource type="Script" path="res://MainMenu.gd" id="1_x3wm2"]
 [ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="2_w1ona"]
 [ext_resource type="Texture2D" uid="uid://dmdl5rr0gcjv6" path="res://textures/buttonBasic_normal.png" id="3_eypmd"]
 [ext_resource type="Script" path="res://MainMenuButtonsManager.gd" id="3_ylpmv"]
@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://lp5bqvr60tst" path="res://textures/twitter-icon.png" id="10_o86tn"]
 [ext_resource type="Texture2D" uid="uid://c54rvk8eq0kgd" path="res://textures/InstallButton/InstallButton_OFF.png" id="14_sowgc"]
 [ext_resource type="Texture2D" uid="uid://cepmo5hr2lcrk" path="res://textures/InstallButton/InstallButton_ON.png" id="15_h6scu"]
+[ext_resource type="Texture2D" uid="uid://cpfvbhdtk8xom" path="res://textures/EmptyButton/EmptyButton_OFF.png" id="15_nu03o"]
+[ext_resource type="Texture2D" uid="uid://cre38q2dllhg2" path="res://textures/EmptyButton/EmptyButton_ON.png" id="16_3xb8a"]
 
 [sub_resource type="Shader" id="Shader_wadys"]
 code = "shader_type canvas_item;
@@ -127,14 +129,59 @@ font_size = 54
 font = ExtResource("2_w1ona")
 font_size = 32
 
+[sub_resource type="GDScript" id="GDScript_loab8"]
+resource_name = "PlayerManager"
+script/source = "extends MarginContainer
+
+
+
+
+func _on_texture_button_single_pressed():
+	Global.InstallType = \"SINGLE\"
+	SceneTransition.dissolve(\"res://InstallMain.tscn\")
+	
+func _on_texture_button_client_pressed():
+	Global.InstallType = \"CLIENT\"
+	SceneTransition.dissolve(\"res://InstallMain.tscn\")
+
+func _on_texture_button_server_pressed():
+	Global.InstallType = \"SERVER\"
+	SceneTransition.dissolve(\"res://InstallMain.tscn\")
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_v3ur3"]
+font = ExtResource("2_w1ona")
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8jf68"]
+font = ExtResource("2_w1ona")
+font_size = 28
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_8qjt1"]
+font = ExtResource("2_w1ona")
+font_size = 24
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_yy800"]
+font = ExtResource("2_w1ona")
+font_size = 24
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
 [node name="MainMenu" type="Control"]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_8d5yp")
+script = ExtResource("1_x3wm2")
 
 [node name="Background" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_buuqy")
@@ -155,6 +202,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -327,7 +375,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info"]
 layout_mode = 2
-text = "PATCH NOTES:"
+text = "What is Drehmal 2.2 ?"
 label_settings = SubResource("LabelSettings_kydu7")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info"]
@@ -491,8 +539,161 @@ texture_pressed = ExtResource("15_h6scu")
 texture_hover = ExtResource("15_h6scu")
 stretch_mode = 5
 
+[node name="ServerOrNotM8" type="MarginContainer" parent="."]
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+script = SubResource("GDScript_loab8")
+
+[node name="PanelContainer" type="PanelContainer" parent="ServerOrNotM8"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ServerOrNotM8/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Select an option"
+label_settings = SubResource("LabelSettings_v3ur3")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="TextureButtonSINGLE" type="TextureButton" parent="ServerOrNotM8/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("15_nu03o")
+texture_pressed = ExtResource("16_3xb8a")
+texture_hover = ExtResource("16_3xb8a")
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSINGLE"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 140
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 140
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSINGLE/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSINGLE/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Singleplayer"
+label_settings = SubResource("LabelSettings_8jf68")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSINGLE/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "I want to play solo on my computer / I'm hosting the game on local network."
+label_settings = SubResource("LabelSettings_8qjt1")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="TextureButtonCLIENT" type="TextureButton" parent="ServerOrNotM8/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("15_nu03o")
+texture_pressed = ExtResource("16_3xb8a")
+texture_hover = ExtResource("16_3xb8a")
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonCLIENT"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 140
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 140
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonCLIENT/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonCLIENT/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Multiplayer : client"
+label_settings = SubResource("LabelSettings_8jf68")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonCLIENT/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "I am going to play on someone else's server / local hosted game."
+label_settings = SubResource("LabelSettings_8qjt1")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="TextureButtonSERVER" type="TextureButton" parent="ServerOrNotM8/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("15_nu03o")
+texture_pressed = ExtResource("16_3xb8a")
+texture_hover = ExtResource("16_3xb8a")
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSERVER"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 140
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 140
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSERVER/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSERVER/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Multiplayer : server"
+label_settings = SubResource("LabelSettings_8jf68")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSERVER/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Not supported yet !"
+label_settings = SubResource("LabelSettings_8qjt1")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Label2" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "NOTE : if you intend to run a server, you need to install the server AND your client separately !"
+label_settings = SubResource("LabelSettings_yy800")
+horizontal_alignment = 1
+autowrap_mode = 3
+
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Install" to="VBoxContainer/MarginContainer2/MenuManagers" method="_on_button_install_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Info" to="VBoxContainer/MarginContainer2/MenuManagers" method="_on_button_info_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Social" to="VBoxContainer/MarginContainer2/MenuManagers" method="_on_button_social_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Quit" to="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Quit" method="_on_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxInstall/Button" to="." method="_on_install_begin_button_pressed"]
+[connection signal="pressed" from="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSINGLE" to="ServerOrNotM8" method="_on_texture_button_single_pressed"]
+[connection signal="pressed" from="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonCLIENT" to="ServerOrNotM8" method="_on_texture_button_client_pressed"]
+[connection signal="pressed" from="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSERVER" to="ServerOrNotM8" method="_on_texture_button_server_pressed"]
