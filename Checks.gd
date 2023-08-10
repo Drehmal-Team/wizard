@@ -67,9 +67,8 @@ func _on_texture_button_autofind_pressed():
 				homePath = ""
 				for i in tinyStrings:
 					if i != "" :
-						homePath += "/" + i
-				print(DirAccess.open(MinecraftFolder).get_directories())
-				MinecraftFolder = homePath + "/.minecraft"
+						homePath += i + "/"
+				MinecraftFolder = homePath + ".minecraft"
 				MinecraftFolder = ProjectSettings.globalize_path(MinecraftFolder)
 			"macOS":
 				tinyStrings = OS.get_data_dir().split("/")
