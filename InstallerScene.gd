@@ -234,6 +234,18 @@ func _ready():
 		
 		# CREATE PROFILE
 		
+		var profilesFilePath = Global.MinecraftFolderPath + "/launcher_profiles.json"
+		json = readJSON(profilesFilePath)
+		
+		var profiles = json["profiles"]
+		var profile = {
+			"name" : "Drehmal 2.2 : Apotheosis",
+			"type" : "custom",
+			"created" : Time.get_datetime_string_from_system() + ".000Z",
+			"lastUsed" : Time.get_datetime_string_from_system() + ".000Z",
+			"lastVersionId" : "fabric-loader-" + Global.FabricVersion.replace(" ","") + "-1.17.1",
+			"icon" : ""
+		}
 		
 		
 		
@@ -313,3 +325,10 @@ func sum(list : Array):
 	for each in list :
 		suma += each
 	return suma
+	
+func readJSON(json_file_path):
+	var file = FileAccess.open(json_file_path, FileAccess.READ)
+	var content = file.get_as_text()
+	var json = JSON.new()
+	var finish = json.parse_string(content)
+	return finish

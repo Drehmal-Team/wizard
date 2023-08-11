@@ -9,6 +9,7 @@ var NecessMods := true
 var PerfMods := false
 var OptiMods := false
 var FabricInstalled := false
+var FabricVersion := ""
 var InstallType : String
 
 var Music = AudioStreamPlayer.new()

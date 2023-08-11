@@ -44,7 +44,8 @@ func _on_install_button_pressed():
 func install_the_jar():
 	var output := []
 	OS.execute("java", PackedStringArray(["-jar", ProjectSettings.globalize_path("res://assets/fabric/FabricInstaller.jar"), "client", "-noprofile", "-mcversion", "1.17.1"]), output , true, true)
-
+	Global.FabricVersion = output[0].split("\n")[2].split(" ")[4]
+	
 func _change_label(label : Label, txt : String, color : Color):
 	label.text = txt
 	label.label_settings.font_color = color
