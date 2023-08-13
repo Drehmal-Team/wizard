@@ -15,6 +15,7 @@ func _ready():
 	$MarginContainer/VBoxContainer/Button_Info.set_pressed_no_signal(true)
 
 func _on_button_install_pressed():
+	$MarginContainer/VBoxContainer/Button_Install.set_pressed_no_signal(true)
 	$MarginContainer/VBoxContainer/Button_Info.set_pressed_no_signal(false)
 	$MarginContainer/VBoxContainer/Button_Social.set_pressed_no_signal(false)
 	if Socials.visible == true :
@@ -27,6 +28,7 @@ func _on_button_install_pressed():
 
 
 func _on_button_info_pressed():
+	$MarginContainer/VBoxContainer/Button_Info.set_pressed_no_signal(true)
 	$MarginContainer/VBoxContainer/Button_Install.set_pressed_no_signal(false)
 	$MarginContainer/VBoxContainer/Button_Social.set_pressed_no_signal(false)
 	if Install.visible == true :
@@ -39,6 +41,7 @@ func _on_button_info_pressed():
 
 
 func _on_button_social_pressed():
+	$MarginContainer/VBoxContainer/Button_Social.set_pressed_no_signal(true)
 	$MarginContainer/VBoxContainer/Button_Install.set_pressed_no_signal(false)
 	$MarginContainer/VBoxContainer/Button_Info.set_pressed_no_signal(false)
 	if Install.visible == true :

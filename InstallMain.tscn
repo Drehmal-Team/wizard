@@ -71,7 +71,7 @@ func OutMods():
 	
 "
 
-[sub_resource type="Shader" id="Shader_wadys"]
+[sub_resource type="Shader" id="Shader_w2ucw"]
 code = "shader_type canvas_item;
 
 uniform sampler2D noiseTexture ;
@@ -96,7 +96,7 @@ void fragment() {
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_d8yip"]
 frequency = 0.0138
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_v1ce4"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_678o5"]
 width = 256
 height = 256
 seamless = true
@@ -116,7 +116,7 @@ fractal_type = 2
 domain_warp_type = 2
 domain_warp_amplitude = 10.0
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4t728"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_s35ne"]
 generate_mipmaps = false
 seamless = true
 seamless_blend_skirt = 0.337
@@ -124,12 +124,12 @@ color_ramp = SubResource("Gradient_7qtm8")
 noise = SubResource("FastNoiseLite_frcx5")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_buuqy"]
-shader = SubResource("Shader_wadys")
+shader = SubResource("Shader_w2ucw")
 shader_parameter/pixelate = 0.024
-shader_parameter/noiseTexture = SubResource("NoiseTexture2D_4t728")
-shader_parameter/detailNoiseTexture = SubResource("NoiseTexture2D_v1ce4")
+shader_parameter/noiseTexture = SubResource("NoiseTexture2D_s35ne")
+shader_parameter/detailNoiseTexture = SubResource("NoiseTexture2D_678o5")
 
-[sub_resource type="Shader" id="Shader_yciap"]
+[sub_resource type="Shader" id="Shader_8q0hb"]
 code = "shader_type canvas_item;
 
 uniform sampler2D SCREEN_TEXTURE: hint_screen_texture, filter_linear;
@@ -143,7 +143,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dpnuv"]
-shader = SubResource("Shader_yciap")
+shader = SubResource("Shader_8q0hb")
 shader_parameter/pixelSize = 24.0
 
 [node name="InstallMenu" type="Control"]

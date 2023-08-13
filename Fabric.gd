@@ -32,7 +32,7 @@ func _on_http_request_request_completed(_result, _response_code, _headers, body)
 	
 
 func _on_install_button_pressed():
-	_change_label(LogLabelInstall, "Executing the installer...", Color("ORANGE"))
+	_change_label(LogLabelInstall, "Executing the installer... (this can freeze the installer, don't be alarmed)", Color("ORANGE"))
 	await get_tree().create_timer(0.5).timeout
 	var thread = Thread.new()
 	thread.start(install_the_jar)
