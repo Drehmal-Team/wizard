@@ -141,5 +141,5 @@ NextStepButton = true
 PrevStepButton = true
 
 [connection signal="toggled" from="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer/HBoxContainer_LOCAL/TextureButton" to="." method="_on_texture_button_LOCAL_toggled"]
-[connection signal="toggled" from="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer/HBoxContainer_GLOBAL/TextureButton" to="." method="_on_texture_button_toggled_GLOBAL"]
 [connection signal="toggled" from="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer/HBoxContainer_GLOBAL/TextureButton" to="." method="_on_texture_button_GLOBAL_toggled"]
+[connection signal="toggled" from="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer/HBoxContainer_GLOBAL/TextureButton" to="." method="_on_texture_button_toggled_GLOBAL"]

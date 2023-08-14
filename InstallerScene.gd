@@ -68,13 +68,17 @@ func _ready():
 		# EXTRACT THE MAP PACKAGE
 		extractMapPackage()
 		await PackageExtracted
+		print("Extracted signal went through !")
 		await get_tree().create_timer(0.5).timeout
 		# MOVE THE RES IF NEEDED
 		if Global.RessourcePackMode == "BOTH" or Global.RessourcePackMode == "GLOBAL" :
+			print("Needing to move res : ", Global.RessourcePackMode)
 			moveRes()
 			await ResMoved
+			print("ResMoved signal went through !")
 			await get_tree().create_timer(0.5).timeout
 		MoveResProgress = 1
+		print("MoveRes fully done")
 		# RECURSIVELY DOWNLOAD MODS
 		CurrentAction = "MODS"
 		LogLabel.text = "Starting mod processing..."
@@ -274,6 +278,7 @@ var output = []
 func extractMapPackage():
 	CurrentAction = "EXTRACT_MAP"
 	LogLabel.text = "Extracting map package... (this can freeze the installer, don't be alarmed)"
+	await get_tree().create_timer(0.5).timeout
 	
 	var dirName = Global.SavesFolderPath + "/Drehmal 2.2 Apotheosis"
 	DirAccess.make_dir_absolute(dirName)
@@ -285,6 +290,10 @@ func extractMapPackage():
 	
 	CurrentAction = "NONE"
 	
+	emit_signal("PackageExtracted")
+	await get_tree().create_timer(0.5).timeout
+	emit_signal("PackageExtracted")
+	await get_tree().create_timer(0.5).timeout
 	emit_signal("PackageExtracted")
 
 func moveRes():
