@@ -25,7 +25,7 @@ signal OutMods
 
 func _ready():
 	add_child(Music)
-	Music.set_volume_db(-2.0)
+	Music.set_volume_db(5.0)
 	Music.finished.connect(_finished)
 	Music.stream = load("res://assets/sounds/MainMenu.ogg")
 	_finished()

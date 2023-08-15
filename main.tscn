@@ -211,16 +211,17 @@ grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.8
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer"]
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/MarginContainer/VBoxContainer"]
 texture_filter = 1
-custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.07
@@ -239,7 +240,7 @@ vertical_alignment = 3
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
+theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
@@ -251,20 +252,22 @@ script = ExtResource("3_ylpmv")
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer2/MenuManagers"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer"]
 layout_mode = 2
-size_flags_stretch_ratio = 3.08
 
 [node name="Button_Install" type="TextureButton" parent="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer"]
 texture_filter = 1
 custom_minimum_size = Vector2(500, 100)
 layout_mode = 2
+size_flags_vertical = 3
 toggle_mode = true
 texture_normal = ExtResource("3_eypmd")
 texture_pressed = ExtResource("4_2lw83")
 texture_hover = ExtResource("5_6j0lm")
-stretch_mode = 0
+stretch_mode = 5
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Install"]
 layout_mode = 1
@@ -285,12 +288,13 @@ vertical_alignment = 1
 texture_filter = 1
 custom_minimum_size = Vector2(500, 100)
 layout_mode = 2
+size_flags_vertical = 3
 toggle_mode = true
 button_pressed = true
 texture_normal = ExtResource("3_eypmd")
 texture_pressed = ExtResource("4_2lw83")
 texture_hover = ExtResource("5_6j0lm")
-stretch_mode = 0
+stretch_mode = 5
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Info"]
 layout_mode = 1
@@ -311,11 +315,12 @@ vertical_alignment = 1
 texture_filter = 1
 custom_minimum_size = Vector2(500, 100)
 layout_mode = 2
+size_flags_vertical = 3
 toggle_mode = true
 texture_normal = ExtResource("3_eypmd")
 texture_pressed = ExtResource("4_2lw83")
 texture_hover = ExtResource("5_6j0lm")
-stretch_mode = 0
+stretch_mode = 5
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Social"]
 layout_mode = 1
@@ -332,14 +337,41 @@ text = "Socials"
 label_settings = SubResource("LabelSettings_pdi5q")
 vertical_alignment = 1
 
+[node name="Button_Credits" type="TextureButton" parent="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(500, 100)
+layout_mode = 2
+size_flags_vertical = 3
+toggle_mode = true
+texture_normal = ExtResource("3_eypmd")
+texture_pressed = ExtResource("4_2lw83")
+texture_hover = ExtResource("5_6j0lm")
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Credits"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 39
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Credits/MarginContainer"]
+layout_mode = 2
+text = "Credits"
+label_settings = SubResource("LabelSettings_pdi5q")
+vertical_alignment = 1
+
 [node name="Button_Quit" type="TextureButton" parent="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer"]
 texture_filter = 1
 custom_minimum_size = Vector2(500, 100)
 layout_mode = 2
+size_flags_vertical = 3
 texture_normal = ExtResource("3_eypmd")
 texture_pressed = ExtResource("4_2lw83")
 texture_hover = ExtResource("5_6j0lm")
-stretch_mode = 0
+stretch_mode = 5
 script = SubResource("GDScript_62i8x")
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Quit"]
@@ -538,6 +570,32 @@ texture_pressed = ExtResource("15_h6scu")
 texture_hover = ExtResource("15_h6scu")
 stretch_mode = 5
 
+[node name="RichLabelCredits" type="RichTextLabel" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_fonts/normal_font = ExtResource("2_w1ona")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "A project by the Primordial Team.
+
+LEAD DEVELOPERS :
+
+	Keeko100
+	Rift
+	DomeMaster
+
+BUILDERS
+
+	KoalaDave
+	Penngo
+
+
+Thank you to all of our Patreons, and anyone who donated to support the project.
+Thank you to our community for being supportive during every step of development.
+
+Nothing to lose."
+
 [node name="ServerOrNotM8" type="MarginContainer" parent="."]
 visible = false
 layout_mode = 2
@@ -692,6 +750,7 @@ autowrap_mode = 3
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Install" to="VBoxContainer/MarginContainer2/MenuManagers" method="_on_button_install_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Info" to="VBoxContainer/MarginContainer2/MenuManagers" method="_on_button_info_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Social" to="VBoxContainer/MarginContainer2/MenuManagers" method="_on_button_social_pressed"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Credits" to="VBoxContainer/MarginContainer2/MenuManagers" method="_on_button_credits_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Quit" to="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Quit" method="_on_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxInstall/Button" to="." method="_on_install_begin_button_pressed"]
 [connection signal="pressed" from="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSINGLE" to="ServerOrNotM8" method="_on_texture_button_single_pressed"]

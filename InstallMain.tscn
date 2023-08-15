@@ -26,7 +26,14 @@ func _ready():
 	Global.SeeMods.connect(SeeMods)
 	Global.OutMods.connect(OutMods)
 	resize()
-
+	
+	for child in get_all_nodes($\".\") :
+		print(child)
+		if child is TextureButton:
+			print(child)
+			child.mouse_entered.connect(buttonHovered)
+			child.pressed.connect(buttonPressed)
+	
 func resize():
 	var ScreenDim = DisplayServer.window_get_size(0)
 	PanelModList.set_size(Vector2(ScreenDim.x - 20,ScreenDim.y- 20))
@@ -69,6 +76,20 @@ func OutMods():
 	tween = create_tween()
 	tween.tween_property($MainContainer, \"position:y\", 10,1).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
 	
+	
+func buttonHovered():
+	Global.play_from_path(\"res://assets/sounds/Buttons/Hover.ogg\")
+
+func buttonPressed():
+	Global.play_from_path(\"res://assets/sounds/Buttons/Click.ogg\")
+
+func get_all_nodes(node : Node) -> Array:
+	var children := []
+	for N in node.get_children():
+		children.append(N)
+		if N.get_child_count() > 0:
+			children.append_array(get_all_nodes(N))
+	return children
 "
 
 [sub_resource type="Shader" id="Shader_w2ucw"]
