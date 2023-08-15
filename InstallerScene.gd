@@ -62,6 +62,7 @@ func _ready():
 	# Checking different types of installs
 	if InstallType == "SINGLE" :
 		# DOWNLOAD MAP PACKAGE
+		"""
 		downloadMapPackage()
 		await PackageDownloaded
 		await get_tree().create_timer(0.5).timeout
@@ -79,6 +80,7 @@ func _ready():
 			await get_tree().create_timer(0.5).timeout
 		MoveResProgress = 1
 		print("MoveRes fully done")
+		"""
 		# RECURSIVELY DOWNLOAD MODS
 		CurrentAction = "MODS"
 		LogLabel.text = "Starting mod processing..."
@@ -312,6 +314,7 @@ func moveRes():
 	emit_signal("ResMoved")
 	
 var lines
+var error : Error
 
 func mods(mode):
 	var urlList = []
@@ -350,8 +353,11 @@ func mods(mode):
 	for slug in urlList:
 		
 		LogLabel.text = "Collecting slug " + slug + " ..."
-		$HTTPRequest.request("https://api.modrinth.com/v2/project/" + slug +"/version?loaders=[%22fabric%22]&game_versions=[%221.17.1%22]",["User-Agent: Drehmal_Installer_beta (drehmal.net)"])
-		
+		error = $HTTPRequest.request("https://api.modrinth.com/v2/project/" + slug +"/version?loaders=[%22fabric%22]&game_versions=[%221.17.1%22]",["User-Agent: Drehmal_Installer_beta (drehmal.net)"])
+		if error != OK :
+			print("Failed to resolve slug : ", slug)
+			print("Reason : ",error)
+			break
 		await RequestFullyCompleted
 		
 		urlOfJars.append(json[0]["files"][0]["url"])
