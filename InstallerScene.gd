@@ -14,7 +14,8 @@ signal ResDownloaded
 signal ModsFinished
 signal ProfileCreated
 
-var timeSpentDownloading
+var timeTime := 0.0
+var timeSpentDownloading : float
 
 var value := 0.0
 var progress := 0.0
@@ -58,7 +59,8 @@ func _ready():
 	LogLabel.text = "Starting..."
 	await get_tree().create_timer(1).timeout
 	
-
+	
+	
 	# Checking different types of installs
 	if InstallType == "SINGLE" :
 		# DOWNLOAD MAP PACKAGE
@@ -140,6 +142,21 @@ var bodySize : int
 
 func _process(_delta):
 	
+	timeTime += _delta
+	
+	if CurrentAction == "DL_RES" :
+		dlBytes = signed_to_none($HTTPRequest.get_downloaded_bytes())
+		bodySize = signed_to_none($HTTPRequest.get_body_size())
+		
+		if bodySize == -1 :
+			PackageProgress = clampf(float(dlBytes) / 4187593113.0,0,1)
+			print(PackageProgress)
+		else :
+			PackageProgress = clampf(float(dlBytes) / float(bodySize), 0, 1)
+		
+		LogLabel.text = "Downloading resource package... (" + str(PackageProgress*100).pad_decimals(1) + " %)"
+		
+	
 	if CurrentAction.split(".")[0] == "NECESS_MODS_DOWNLOAD":
 		while int(CurrentAction.split(".")[1]) >= len(bytesGotten) :
 			bytesGotten.append(0)
@@ -208,7 +225,7 @@ func _process(_delta):
 	elif InstallType == "SINGLE" :
 		value = (PackageProgress*5 + PackageExtractProgress*2 + MoveResProgress*0.2 + sum(ModsProgress)/len(ModsProgress) + ProfileProgress * 0.2) / 10.4
 	elif InstallType == "CLIENT" :
-		value = (ResProgress + sum(ModsProgress)/len(ModsProgress) + ProfileProgress)/3.0	
+		value = (ResProgress + sum(ModsProgress)/len(ModsProgress) + ProfileProgress * 0.2)/2.2	
 	
 	progress = snapped(value*100,0.1)
 	ProgBar.value = progress
@@ -231,9 +248,9 @@ func _urls_to_list(txt : String):
 
 func _on_http_request_request_completed(_result, _response_code, _headers, body):
 	if CurrentAction == "MODS_COLLECT":
+		print("Body : ", body.get_string_from_utf8())
 		json = JSON.parse_string(body.get_string_from_utf8())
 		emit_signal("RequestFullyCompleted")
-
 
 
 func sum(list : Array):
@@ -263,8 +280,9 @@ func downloadMapPackage():
 	
 	LogLabel.text = "Downloading map package..."
 	timeSpentDownloading = 0
-	var error = $HTTPRequest.request("https://d12u6931kx3xji.cloudfront.net/drehmal-2.2internal-v0.7.4.tar.gz")
+	error = $HTTPRequest.request("https://d12u6931kx3xji.cloudfront.net/drehmal-2.2internal-v0.7.4.tar.gz",["User-Agent: Drehmal_Installer_beta (drehmal.net)"])
 	await $HTTPRequest.request_completed
+	$HTTPRequest.download_file = ""
 	
 	if error != OK :
 		print("INSTALLER FAILED")
@@ -301,7 +319,7 @@ func extractMapPackage():
 func moveRes():
 	CurrentAction = "RES"
 	LogLabel.text = "Moving/copying resource pack..."
-	OS.execute("unzip", [Global.SavesFolderPath + "/Drehmal 2.2 Apotheosis/resources.zip","-d",Global.ResFolderPath + "/Drehmal 2.2 - Ressourcepack"], output)
+	DirAccess.copy_absolute(Global.SavesFolderPath + "/Drehmal 2.2 Apotheosis/resources.zip", Global.ResFolderPath + "/Drehmal 2.2 -- Resource Pack")
 	if Global.RessourcePackMode == "GLOBAL" :
 		MoveResProgress = 0.7
 		DirAccess.remove_absolute(Global.SavesFolderPath + "/Drehmal 2.2 Apotheosis/resources.zip")
@@ -322,6 +340,8 @@ func mods(mode):
 	var denom : String
 	var pref : String
 	
+	print($HTTPRequest.download_file)
+	
 	match mode:
 		"Necess":
 			urlPath = "res://assets/url_list_necess.txt"
@@ -336,13 +356,28 @@ func mods(mode):
 			denom = "Optimisation"
 			pref = "OPTI"
 	
+	var dirpath : String
 	var pastMods := DirAccess.get_files_at(Global.ModsFolderPath)
 	if pastMods != PackedStringArray([]):
 		LogLabel.text = "Detecting mods in the mods folder ! Moving them to a new folder..."
-		DirAccess.make_dir_absolute(Global.ModsFolderPath + "/Before_Drehmal")
+		# CREATING FOLDER
+		if DirAccess.dir_exists_absolute(Global.ModsFolderPath + "/Before_Drehmal") :
+			var getTfOut := false
+			var addit := 2
+			dirpath = Global.ModsFolderPath + "/Before_Drehmal"
+			while not getTfOut :
+				if DirAccess.dir_exists_absolute(Global.ModsFolderPath + "/Before_Drehmal_" + str(addit)) :
+					addit += 1
+				else :
+					DirAccess.make_dir_absolute(Global.ModsFolderPath + "/Before_Drehmal_" + str(addit))
+					dirpath = Global.ModsFolderPath + "/Before_Drehmal_" + str(addit)
+					getTfOut = true
+					
+		else : 
+			DirAccess.make_dir_absolute(Global.ModsFolderPath + "/Before_Drehmal")
 		for file in pastMods:
 			LogLabel.text = "Moving " + file + " ..."
-			move_file(file, Global.ModsFolderPath + "/Before_Drehmal")
+			move_file(file, dirpath)
 	
 	lines = FileAccess.get_file_as_string(urlPath)
 	urlList = _urls_to_list(lines)
@@ -353,6 +388,9 @@ func mods(mode):
 	for slug in urlList:
 		
 		LogLabel.text = "Collecting slug " + slug + " ..."
+		print()
+		print()
+		print("https://api.modrinth.com/v2/project/" + slug +"/version?loaders=[%22fabric%22]&game_versions=[%221.17.1%22]")
 		error = $HTTPRequest.request("https://api.modrinth.com/v2/project/" + slug +"/version?loaders=[%22fabric%22]&game_versions=[%221.17.1%22]",["User-Agent: Drehmal_Installer_beta (drehmal.net)"])
 		if error != OK :
 			print("Failed to resolve slug : ", slug)
@@ -379,8 +417,17 @@ func mods(mode):
 		LogLabel.text = "Downloading " + str(fileNames[i]) + " ..."
 		CurrentAction = pref + "_MODS_DOWNLOAD." + str(i)
 		$HTTPRequest.download_file = (Global.ModsFolderPath + "/" + fileNames[i])
-		$HTTPRequest.request(urlOfJars[i])
+		$HTTPRequest.request(urlOfJars[i],["User-Agent: Drehmal_Installer_beta (drehmal.net)"])
 		await $HTTPRequest.request_completed
+	
+	if mode == "Necess" :
+		LogLabel.text = "Downloading CEM (YoungSoulluoS Fork) ..."
+		CurrentAction = "CEM"
+		$HTTPRequest.download_file = (Global.ModsFolderPath + "/cem-0.7.1_S8_1.17.jar")
+		$HTTPRequest.request("https://github.com/YoungSoulluoS/cem_Fork/releases/download/Soul_Fork_10_1.19.4/cem-0.7.1_S8_1.17.jar",["User-Agent: Drehmal_Installer_beta (drehmal.net)"])
+		await $HTTPRequest.request_completed
+	
+	
 	
 	CurrentAction = "NONE"
 	LogLabel.text = "All necessary mods downloaded !"
@@ -395,6 +442,8 @@ func mods(mode):
 	byteSizes = []
 	bytesGotten = []
 	fileNames = []
+	
+	$HTTPRequest.download_file = ""
 	await get_tree().create_timer(0.2).timeout
 	emit_signal("ModsFinished")
 
@@ -402,7 +451,7 @@ func mods(mode):
 func createProfile():
 	CurrentAction = "PROFILE"
 	LogLabel.text = "Creating Minecraft profile..."
-	var profilesFilePath = "/home/lae/.minecraft/launcher_profiles.json"#Global.MinecraftFolderPath + "/launcher_profiles.json"
+	var profilesFilePath = Global.MinecraftFolderPath + "/launcher_profiles.json"#Global.MinecraftFolderPath + "/launcher_profiles.json"
 	json = readJSON(profilesFilePath)
 	
 	var profile = {
@@ -411,7 +460,7 @@ func createProfile():
 		"javaArgs": "-Xmx" + str(Global.RamValue) + "G",
 		"created" : Time.get_datetime_string_from_system() + ".000Z",
 		"lastUsed" : Time.get_datetime_string_from_system() + ".000Z",
-		# "lastVersionId" : "fabric-loader-" + Global.FabricVersion.replace(" ","") + "-1.17.1",
+		"lastVersionId" : "fabric-loader-" + Global.FabricVersion.replace(" ","") + "-1.17.1",
 		# "lastVersionId" : "1.17.1",
 		"icon" : "data:image/png;base64,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"
 	}
@@ -426,6 +475,17 @@ func createProfile():
 	emit_signal("ProfileCreated")
 
 func downloadRes():
+	CurrentAction = "DL_RES"
+	LogLabel.text = "Downloading Resource Pack..."
+	var resFilePath := Global.ResFolderPath + "/Drehmal 2.2 -- Resource Pack"
+	$HTTPRequest.download_file = resFilePath
+	$HTTPRequest.request("",["User-Agent: Drehmal_Installer_beta (drehmal.net)"])
+	await $HTTPRequest.request_completed
+	
+	$HTTPRequest.download_file = ""
+	LogLabel.text = "Resource Pack successfully downloaded !"
+	CurrentAction = "NONE"
+	ResProgress = 1
 	emit_signal("ResDownloaded")
 
 func installComplete():
@@ -438,6 +498,8 @@ func installComplete():
 	tween = create_tween()
 	tween.tween_property(self, "modulate", Color(1,1,1), 2).set_ease(Tween.EASE_OUT)
 	await tween.finished
+	
+	SceneTransition.dissolve("res://InstallComplete.tscn")
 
 func signed_to_none(x):
 	if x < -1 :

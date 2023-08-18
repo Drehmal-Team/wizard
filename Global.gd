@@ -12,6 +12,7 @@ var RamValue := 0
 var FabricInstalled := false
 var FabricVersion := ""
 var InstallType : String
+var TimeSpent := 0.0
 
 var Music = AudioStreamPlayer.new()
 

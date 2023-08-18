@@ -81,7 +81,9 @@ theme_override_constants/separation = 25
 layout_mode = 2
 text = "Drehmal's resource pack, the \"Primordial Pack\" is necessary for all audio-visual features of the Drehmal experience. From item textures to the soundtrack to essential story visuals, the resource pack is essential.
 
-Here you can choose to install the resource pack locally, globally, or both. A local installation will simply install the resource pack within the Drehmal world folder, loading and enabling the resource pack when you load Drehmal. A global installation will add it to your resource packs folder where it can be used on any world/server. A global installation is necessary if you intend to join any multiplayer servers hosting Drehmal."
+Here you can choose to install the resource pack locally, globally, or both.
+A local installation will simply install the resource pack within the Drehmal world folder, loading and enabling the resource pack when you load Drehmal.
+A global installation will add it to your resource packs folder where it can be used on any world/server, which is necessary if you intend to join any multiplayer servers hosting Drehmal."
 label_settings = SubResource("LabelSettings_u0qt2")
 horizontal_alignment = 1
 autowrap_mode = 3
@@ -140,6 +142,11 @@ layout_mode = 2
 NextStepButton = true
 PrevStepButton = true
 
+[node name="ConfirmationDialog" type="AcceptDialog" parent="."]
+title = "Wait a second..."
+ok_button_text = "Got it !"
+dialog_text = "The LOCAL resource pack is only useful if you're having a singleplayer installation, as it installs the resource pack in the save folder.
+Toggling it on will have no effect in your case."
+
 [connection signal="toggled" from="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer/HBoxContainer_LOCAL/TextureButton" to="." method="_on_texture_button_LOCAL_toggled"]
-[connection signal="toggled" from="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer/HBoxContainer_GLOBAL/TextureButton" to="." method="_on_texture_button_toggled_GLOBAL"]
 [connection signal="toggled" from="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer/HBoxContainer_GLOBAL/TextureButton" to="." method="_on_texture_button_GLOBAL_toggled"]

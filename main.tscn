@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://bq7ndyehv8jte"]
+[gd_scene load_steps=40 format=3 uid="uid://bq7ndyehv8jte"]
 
 [ext_resource type="Texture2D" uid="uid://cmufa4gmdmmu4" path="res://textures/DrehmalPrimordialLogo.png" id="1_cja0g"]
 [ext_resource type="Script" path="res://MainMenu.gd" id="1_x3wm2"]
@@ -12,12 +12,13 @@
 [ext_resource type="PackedScene" uid="uid://blobb1em1f15d" path="res://Item.tscn" id="8_ht514"]
 [ext_resource type="Texture2D" uid="uid://bf7y8tx6wrxhy" path="res://textures/discord.png" id="8_nkbtr"]
 [ext_resource type="Texture2D" uid="uid://lp5bqvr60tst" path="res://textures/twitter-icon.png" id="10_o86tn"]
+[ext_resource type="Texture2D" uid="uid://cxttl4f13wdrt" path="res://textures/MKDocs.png" id="11_n8k2h"]
 [ext_resource type="Texture2D" uid="uid://c54rvk8eq0kgd" path="res://textures/InstallButton/InstallButton_OFF.png" id="14_sowgc"]
 [ext_resource type="Texture2D" uid="uid://cepmo5hr2lcrk" path="res://textures/InstallButton/InstallButton_ON.png" id="15_h6scu"]
 [ext_resource type="Texture2D" uid="uid://cpfvbhdtk8xom" path="res://textures/EmptyButton/EmptyButton_OFF.png" id="15_nu03o"]
 [ext_resource type="Texture2D" uid="uid://cre38q2dllhg2" path="res://textures/EmptyButton/EmptyButton_ON.png" id="16_3xb8a"]
 
-[sub_resource type="Shader" id="Shader_wadys"]
+[sub_resource type="Shader" id="Shader_23ews"]
 code = "shader_type canvas_item;
 
 uniform sampler2D noiseTexture ;
@@ -42,7 +43,7 @@ void fragment() {
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_d8yip"]
 frequency = 0.0138
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_v1ce4"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4koqi"]
 width = 256
 height = 256
 seamless = true
@@ -62,7 +63,7 @@ fractal_type = 2
 domain_warp_type = 2
 domain_warp_amplitude = 10.0
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4t728"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6bbc3"]
 generate_mipmaps = false
 seamless = true
 seamless_blend_skirt = 0.337
@@ -70,12 +71,12 @@ color_ramp = SubResource("Gradient_7qtm8")
 noise = SubResource("FastNoiseLite_frcx5")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_buuqy"]
-shader = SubResource("Shader_wadys")
+shader = SubResource("Shader_23ews")
 shader_parameter/pixelate = 0.024
-shader_parameter/noiseTexture = SubResource("NoiseTexture2D_4t728")
-shader_parameter/detailNoiseTexture = SubResource("NoiseTexture2D_v1ce4")
+shader_parameter/noiseTexture = SubResource("NoiseTexture2D_6bbc3")
+shader_parameter/detailNoiseTexture = SubResource("NoiseTexture2D_4koqi")
 
-[sub_resource type="Shader" id="Shader_yciap"]
+[sub_resource type="Shader" id="Shader_hwnud"]
 code = "shader_type canvas_item;
 
 uniform sampler2D SCREEN_TEXTURE: hint_screen_texture, filter_linear;
@@ -89,7 +90,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dpnuv"]
-shader = SubResource("Shader_yciap")
+shader = SubResource("Shader_hwnud")
 shader_parameter/pixelSize = 24.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_opgfu"]
@@ -138,14 +139,17 @@ script/source = "extends MarginContainer
 
 func _on_texture_button_single_pressed():
 	Global.InstallType = \"SINGLE\"
+	Global.RessourcePackMode = \"LOCAL\"
 	SceneTransition.dissolve(\"res://InstallMain.tscn\")
 	
 func _on_texture_button_client_pressed():
 	Global.InstallType = \"CLIENT\"
+	Global.RessourcePackMode = \"GLOBAL\"
 	SceneTransition.dissolve(\"res://InstallMain.tscn\")
 
 func _on_texture_button_server_pressed():
 	Global.InstallType = \"SERVER\"
+	Global.RessourcePackMode = \"GLOBAL\"
 	SceneTransition.dissolve(\"res://InstallMain.tscn\")
 "
 
@@ -202,6 +206,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -479,7 +484,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 15
 
-[node name="Discord2" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials" instance=ExtResource("8_ht514")]
+[node name="Discord" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials" instance=ExtResource("8_ht514")]
 layout_mode = 2
 Icon = ExtResource("8_nkbtr")
 Title = "Discord"
@@ -497,9 +502,10 @@ Desc = "Our website has all the information you need on installation or on the m
 
 [node name="Wiki" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials" instance=ExtResource("8_ht514")]
 layout_mode = 2
-Title = "Wiki lmao"
-Link = "drehmal.fandom.com"
-Href = "https://drehmal.fandom.com/wiki/Drehmal_Wiki"
+Icon = ExtResource("11_n8k2h")
+Title = "Wiki"
+Link = "wiki.drehmal.cyou"
+Href = "https://wiki.drehmal.cyou"
 Desc = "Our community-managed wiki can help you with your understanding of the world of Drehmal! Careful, it's full of spoilers."
 
 [node name="Twitter" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer/VBoxSocials" instance=ExtResource("8_ht514")]
@@ -571,6 +577,7 @@ texture_hover = ExtResource("15_h6scu")
 stretch_mode = 5
 
 [node name="RichLabelCredits" type="RichTextLabel" parent="VBoxContainer/MarginContainer2/MenuManagers/PanelContainer/MarginContainer/VBoxContainer_Info/ScrollContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -661,7 +668,6 @@ We hope that one day, Drehmal will be its own separate game.
 Nothing to lose."
 
 [node name="ServerOrNotM8" type="MarginContainer" parent="."]
-visible = false
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -713,6 +719,7 @@ size_flags_vertical = 4
 
 [node name="Label" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSINGLE/MarginContainer/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 text = "Singleplayer"
 label_settings = SubResource("LabelSettings_8jf68")
 horizontal_alignment = 1
@@ -720,6 +727,7 @@ vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSINGLE/MarginContainer/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 text = "I want to play solo on my computer / I'm hosting the game on local network."
 label_settings = SubResource("LabelSettings_8qjt1")
 horizontal_alignment = 1
@@ -752,6 +760,7 @@ size_flags_vertical = 4
 
 [node name="Label" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonCLIENT/MarginContainer/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 text = "Multiplayer : client"
 label_settings = SubResource("LabelSettings_8jf68")
 horizontal_alignment = 1
@@ -759,6 +768,7 @@ vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonCLIENT/MarginContainer/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 text = "I am going to play on someone else's server / local hosted game."
 label_settings = SubResource("LabelSettings_8qjt1")
 horizontal_alignment = 1
@@ -791,6 +801,7 @@ size_flags_vertical = 4
 
 [node name="Label" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSERVER/MarginContainer/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 text = "Multiplayer : server"
 label_settings = SubResource("LabelSettings_8jf68")
 horizontal_alignment = 1
@@ -798,6 +809,7 @@ vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSERVER/MarginContainer/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 text = "Not supported yet !"
 label_settings = SubResource("LabelSettings_8qjt1")
 horizontal_alignment = 1

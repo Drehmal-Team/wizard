@@ -11,9 +11,7 @@ func _ready():
 	PlayerSelectionNode.modulate = Color(1,1,1,0) 
 
 	for child in get_all_nodes($".") :
-		print(child)
 		if child is TextureButton:
-			print(child)
 			child.mouse_entered.connect(buttonHovered)
 			child.pressed.connect(buttonPressed)
 
