@@ -64,7 +64,7 @@ func _ready():
 	# Checking different types of installs
 	if InstallType == "SINGLE" :
 		# DOWNLOAD MAP PACKAGE
-		"""
+		
 		downloadMapPackage()
 		await PackageDownloaded
 		await get_tree().create_timer(0.5).timeout
@@ -82,7 +82,8 @@ func _ready():
 			await get_tree().create_timer(0.5).timeout
 		MoveResProgress = 1
 		print("MoveRes fully done")
-		"""
+		
+		
 		# RECURSIVELY DOWNLOAD MODS
 		CurrentAction = "MODS"
 		LogLabel.text = "Starting mod processing..."
