@@ -384,28 +384,23 @@ layout_mode = 2
 NextStepButton = true
 PrevStepButton = true
 
-[node name="NativeFileDialog" type="NativeFileDialog" parent="."]
-title = "Open a Directory"
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Select your minecraft directory..."
+position = Vector2i(10, 50)
+size = Vector2i(1118, 600)
+mode = 2
+wrap_controls = false
+always_on_top = true
+popup_window = true
+ok_button_text = "Select This Folder"
+dialog_hide_on_ok = true
+mode_overrides_title = false
 file_mode = 2
-
-[node name="NativeFileDialogMODS" type="NativeFileDialog" parent="."]
-title = "Open a Directory"
-file_mode = 2
-
-[node name="NativeFileDialogSAVES" type="NativeFileDialog" parent="."]
-title = "Open a Directory"
-file_mode = 2
-
-[node name="NativeFileDialogRES" type="NativeFileDialog" parent="."]
-title = "Open a Directory"
-file_mode = 2
+access = 2
+show_hidden_files = true
 
 [connection signal="pressed" from="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/HBoxContainer/TextureButton_AUTOFIND" to="." method="_on_texture_button_autofind_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/HBoxContainer/TextureButton_FIND" to="." method="_on_texture_button_find_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_MODS/HBoxContainer/TextureButtonMODS" to="." method="_on_texture_button_mods_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES/HBoxContainer/TextureButtonSAVES" to="." method="_on_texture_button_saves_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer/TextureButtonRES" to="." method="_on_texture_button_res_pressed"]
-[connection signal="dir_selected" from="NativeFileDialog" to="." method="_on_native_file_dialog_dir_selected"]
-[connection signal="dir_selected" from="NativeFileDialogMODS" to="." method="_on_native_file_dialog_mods_dir_selected"]
-[connection signal="dir_selected" from="NativeFileDialogSAVES" to="." method="_on_native_file_dialog_saves_dir_selected"]
-[connection signal="dir_selected" from="NativeFileDialogRES" to="." method="_on_native_file_dialog_res_dir_selected"]

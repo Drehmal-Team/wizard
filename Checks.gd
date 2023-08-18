@@ -14,22 +14,60 @@ var UncheckedTexture = load("res://textures/Checks/unchecked.png")
 @onready var EditSaves = $VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_SAVES/HBoxContainer2/TextEdit_SAVES
 @onready var TextureRes = $VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer/TextureRect
 @onready var EditRes = $VBoxContainer/MarginContainerMisc/ScrollContainer/VBoxContainer/VBoxCont_RES/HBoxContainer2/TextEdit_RES
+@onready var FileDial = $FileDialog
+
+var FileDialMAIN : FileDialog
+var FileDialMODS : FileDialog
+var FileDialSAVES : FileDialog
+var FileDialRES : FileDialog
 
 var MinecraftDir
 
+func _ready():
+	FileDialMAIN = FileDial.duplicate()
+	FileDialMAIN.current_dir = OS.get_data_dir()
+	FileDialMAIN.connect("dir_selected",_on_native_file_dialog_dir_selected)
+	FileDialMAIN.hide()
+	FileDialMAIN.position = Vector2(10.0,50.0)
+	$".".add_child(FileDialMAIN)
+	
+	FileDialMODS = FileDial.duplicate()
+	FileDialMODS.current_dir = OS.get_data_dir()
+	FileDialMODS.title = "Select your mods directory..."
+	FileDialMODS.connect("dir_selected",_on_native_file_dialog_mods_dir_selected)
+	FileDialMODS.hide()
+	FileDialMODS.position = Vector2(10.0,50.0)
+	$".".add_child(FileDialMODS)
+	
+	FileDialSAVES = FileDial.duplicate()
+	FileDialSAVES.title = "Select your saves directory..."
+	FileDialSAVES.current_dir = OS.get_data_dir()
+	FileDialSAVES.connect("dir_selected",_on_native_file_dialog_saves_dir_selected)
+	FileDialSAVES.hide()
+	FileDialSAVES.position = Vector2(10.0,50.0)
+	$".".add_child(FileDialSAVES)
+	
+	FileDialRES = FileDial.duplicate()
+	FileDialRES.title = "Select your resourcepack directory..."
+	FileDialRES.current_dir = OS.get_data_dir()
+	FileDialRES.connect("dir_selected",_on_native_file_dialog_res_dir_selected)
+	FileDialRES.hide()
+	FileDialRES.position = Vector2(10.0,50.0)
+	$".".add_child(FileDialRES)
+
 func _on_texture_button_find_pressed():
-	$NativeFileDialog.show()
+	FileDialMAIN.show()
 
 func _on_texture_button_mods_pressed():
-	$NativeFileDialogMODS.show()
+	FileDialMODS.show()
 
 
 func _on_texture_button_saves_pressed():
-	$NativeFileDialogSAVES.show()
+	FileDialSAVES.show()
 
 
 func _on_texture_button_res_pressed():
-	$NativeFileDialogRES.show()
+	FileDialRES.show()
 
 
 
@@ -39,6 +77,9 @@ func _on_native_file_dialog_dir_selected(dir):
 	print(dir)
 	$VBoxContainer/MarginContMinecraftFolder/VBoxContainer/HBoxContainer/TextureRect.texture = CheckTexture
 	TextEditPath.text = MinecraftFolder
+	FileDialMODS.current_dir = MinecraftFolder
+	FileDialSAVES.current_dir = MinecraftFolder
+	FileDialRES.current_dir = MinecraftFolder
 
 func _on_native_file_dialog_mods_dir_selected(dir):
 	TextureMods.texture = CheckTexture

@@ -403,11 +403,12 @@ size_flags_stretch_ratio = 2.0
 NextStepButton = true
 PrevStepButton = true
 
-[node name="NativeConfirmationDialog" type="NativeConfirmationDialog" parent="."]
-buttons_texts = 1
+[node name="NativeConfirmationDialog" type="ConfirmationDialog" parent="."]
+initial_position = 2
 title = "Are you sure ?"
-dialog_text = "The \"Necessary\" pack is essential to Drehmal... This WILL negatively affect your experience. Are you SURE you want to play without it ?"
-dialog_icon = 1
+dialog_text = "The \"Necessary\" pack is essential to Drehmal...
+ This WILL negatively affect your experience. 
+Are you SURE you want to play without it ?"
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/TextureButton" to="." method="_on_see_mods_button_pressed"]
 [connection signal="toggled" from="VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer_NECESS/TextureButton" to="." method="_on_necessary_button_toggled"]
@@ -415,5 +416,3 @@ dialog_icon = 1
 [connection signal="toggled" from="VBoxContainer/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer_OPTI/TextureButton" to="." method="_on_opti_button_toggled"]
 [connection signal="value_changed" from="VBoxContainer/MarginContainer/VBoxContainer/VBoxContainerRAM/HBoxContainer/HSlider" to="." method="_on_h_slider_changed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer/VBoxContainer/VBoxContainerMAX/HBoxContainer/TextureButton" to="." method="_on_RAM_texture_button_pressed"]
-[connection signal="canceled" from="NativeConfirmationDialog" to="." method="_on_native_confirmation_dialog_canceled"]
-[connection signal="confirmed" from="NativeConfirmationDialog" to="." method="_on_native_confirmation_dialog_confirmed"]
