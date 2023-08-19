@@ -63,7 +63,6 @@ func _on_RAM_texture_button_pressed():
 	RamSlider.value = 5.0
 	
 
-var val : int
 
 func _on_h_slider_changed(val):
 	Global.RamValue = val
@@ -396,6 +395,7 @@ theme_override_constants/underline_spacing = 4
 theme_override_fonts/font = ExtResource("2_kqokj")
 theme_override_font_sizes/font_size = 24
 text = "RAM Guide"
+uri = "https://www.pcmag.com/how-to/how-much-ram-do-i-have-pc"
 
 [node name="NextPrevButtons" parent="VBoxContainer" instance=ExtResource("6_2fbmp")]
 layout_mode = 2

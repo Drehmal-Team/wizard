@@ -49,10 +49,12 @@ var NecessList := []
 var PerfList := []
 var OptiList := []
 
+
+
 func _ready():
 	$MarginContainer/PanelContainer/VBoxContainer/TextureButton.hide()
 	if InstallType == "" :
-		InstallType = "SINGLE"
+		InstallType = "SINGLE"	
 	PercentLabel.text = ""
 	ProgBar.value = 0
 	ProgBarDeco.value = 0
@@ -65,6 +67,7 @@ func _ready():
 	if InstallType == "SINGLE" :
 		# DOWNLOAD MAP PACKAGE
 		
+		"""
 		downloadMapPackage()
 		await PackageDownloaded
 		await get_tree().create_timer(0.5).timeout
@@ -82,7 +85,7 @@ func _ready():
 			await get_tree().create_timer(0.5).timeout
 		MoveResProgress = 1
 		print("MoveRes fully done")
-		
+		"""
 		
 		# RECURSIVELY DOWNLOAD MODS
 		CurrentAction = "MODS"
@@ -97,14 +100,9 @@ func _ready():
 			mods("Opti")
 			await ModsFinished
 		CurrentAction = "NONE"
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(0.1).timeout
 		# CREATE PROFILE
 		createProfile()
-		await ProfileCreated
-		# FINISHED !
-		CurrentAction = "COMPLETED"
-		LogLabel.text = "Drehmal successfully installed !"
-		installComplete()
 		
 	if InstallType == "CLIENT" :
 		# DOWNLOAD MAP PACKAGE
@@ -249,7 +247,6 @@ func _urls_to_list(txt : String):
 
 func _on_http_request_request_completed(_result, _response_code, _headers, body):
 	if CurrentAction == "MODS_COLLECT":
-		print("Body : ", body.get_string_from_utf8())
 		json = JSON.parse_string(body.get_string_from_utf8())
 		emit_signal("RequestFullyCompleted")
 
@@ -281,7 +278,7 @@ func downloadMapPackage():
 	
 	LogLabel.text = "Downloading map package..."
 	timeSpentDownloading = 0
-	error = $HTTPRequest.request("https://d12u6931kx3xji.cloudfront.net/drehmal-2.2internal-v0.7.4.tar.gz",["User-Agent: Drehmal_Installer_beta (drehmal.net)"])
+	error = $HTTPRequest.request("https://storage.cloud.google.com/apotheosis_beta/Drehmal%202.2%20Apotheosis%20Beta%20-%201.0.0.tar.gz",["User-Agent: Drehmal_Installer_beta (drehmal.net)"])
 	await $HTTPRequest.request_completed
 	$HTTPRequest.download_file = ""
 	
@@ -305,6 +302,8 @@ func extractMapPackage():
 	DirAccess.make_dir_absolute(dirName)
 	output = []
 	OS.execute("tar", ["-xvf", TempPackagePath,"-C", dirName], output)
+	PackageExtractProgress = 0.7
+	DirAccess.remove_absolute(TempPackagePath)
 	PackageExtractProgress = 1
 	
 	LogLabel.text = "Map Package extracted !"
@@ -330,10 +329,14 @@ func moveRes():
 	
 	CurrentAction = "NONE"
 	
-	emit_signal("ResMoved")
+	ResMoved.emit()
+	ResMoved.emit()
+	ResMoved.emit()
+	ResMoved.emit()
 	
 var lines
 var error : Error
+var started_mods = false
 
 func mods(mode):
 	var urlList = []
@@ -357,29 +360,39 @@ func mods(mode):
 			denom = "Optimisation"
 			pref = "OPTI"
 	
-	var dirpath : String
-	var pastMods := DirAccess.get_files_at(Global.ModsFolderPath)
-	if pastMods != PackedStringArray([]):
-		LogLabel.text = "Detecting mods in the mods folder ! Moving them to a new folder..."
-		# CREATING FOLDER
-		if DirAccess.dir_exists_absolute(Global.ModsFolderPath + "/Before_Drehmal") :
-			var getTfOut := false
-			var addit := 2
-			dirpath = Global.ModsFolderPath + "/Before_Drehmal"
-			while not getTfOut :
-				if DirAccess.dir_exists_absolute(Global.ModsFolderPath + "/Before_Drehmal_" + str(addit)) :
-					addit += 1
-				else :
-					DirAccess.make_dir_absolute(Global.ModsFolderPath + "/Before_Drehmal_" + str(addit))
-					dirpath = Global.ModsFolderPath + "/Before_Drehmal_" + str(addit)
-					getTfOut = true
+	if started_mods == false :
+		var dirpath : String
+		var pastMods := DirAccess.get_files_at(Global.ModsFolderPath)
+		if pastMods != PackedStringArray([]):
+			LogLabel.text = "Detecting mods in the mods folder ! Moving them to a new folder..."
+			await get_tree().create_timer(1).timeout
+			# CREATING FOLDER
+			if DirAccess.dir_exists_absolute(Global.ModsFolderPath + "/Before_Drehmal") :
+				var getTfOut := false
+				var addit := 2
+				dirpath = Global.ModsFolderPath + "/Before_Drehmal"
+				while not getTfOut :
+					if DirAccess.dir_exists_absolute(Global.ModsFolderPath + "/Before_Drehmal_" + str(addit)) :
+						addit += 1
+					else :
+						DirAccess.make_dir_absolute(Global.ModsFolderPath + "/Before_Drehmal_" + str(addit))
+						dirpath = Global.ModsFolderPath + "/Before_Drehmal_" + str(addit)
+						getTfOut = true
 					
-		else : 
-			DirAccess.make_dir_absolute(Global.ModsFolderPath + "/Before_Drehmal")
-		for file in pastMods:
-			LogLabel.text = "Moving " + file + " ..."
-			move_file(file, dirpath)
-	
+			else : 
+				DirAccess.make_dir_absolute(Global.ModsFolderPath + "/Before_Drehmal")
+				dirpath = Global.ModsFolderPath + "/Before_Drehmal"
+			for file in pastMods:
+				LogLabel.text = "Moving " + file + " ..."
+				error = move_file(Global.ModsFolderPath + "/" + file, dirpath)
+				if error != OK :
+					print("Failed!")
+					print("Error : ", error)
+					LogLabel.text = "Failed moving " + file + " : " + str(error)
+				await get_tree().create_timer(0.2).timeout
+			
+			started_mods = true
+			
 	lines = FileAccess.get_file_as_string(urlPath)
 	urlList = _urls_to_list(lines)
 	
@@ -473,14 +486,18 @@ func createProfile():
 	CurrentAction = "NONE"
 	LogLabel.text = "Minecraft profile created !"
 	
-	emit_signal("ProfileCreated")
+	ProfileCreated.connect(installComplete)
+	ProfileCreated.emit()
+	
+	print("Emitted!")
 
 func downloadRes():
+	
 	CurrentAction = "DL_RES"
 	LogLabel.text = "Downloading Resource Pack..."
 	var resFilePath := Global.ResFolderPath + "/Drehmal 2.2 -- Resource Pack"
 	$HTTPRequest.download_file = resFilePath
-	$HTTPRequest.request("",["User-Agent: Drehmal_Installer_beta (drehmal.net)"])
+	$HTTPRequest.request("https://www.drehmal.net/_files/archives/a539b0_813ec06a45c34d31a634264df7f58649.zip?dn=Primordial%20Pack%202.2%20BETA.zip",["User-Agent: Drehmal_Installer_beta (drehmal.net)"])
 	await $HTTPRequest.request_completed
 	
 	$HTTPRequest.download_file = ""
@@ -490,6 +507,9 @@ func downloadRes():
 	emit_signal("ResDownloaded")
 
 func installComplete():
+	Global.TimeSpent = timeTime
+	CurrentAction = "COMPLETED"
+	LogLabel.text = "Drehmal successfully installed !"
 	$MarginContainer/PanelContainer/VBoxContainer/TextureButton.show()
 	
 	tween = create_tween()
@@ -524,5 +544,9 @@ func move_file(file : String, folder : String):
 	if folder[-1] != "/" :
 		filename = "/" + filename
 	
+	print(filename)
+	
 	DirAccess.copy_absolute(file,folder + filename)
 	DirAccess.remove_absolute(file)
+	
+	return OK
