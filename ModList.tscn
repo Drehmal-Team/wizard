@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://buumrt6abcnyv"]
+[gd_scene load_steps=11 format=3 uid="uid://buumrt6abcnyv"]
 
 [ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="1_34ehl"]
 [ext_resource type="Texture2D" uid="uid://4rmds46ima60" path="res://textures/NextStepButton/BackToInstallButton_OFF.png" id="2_aly23"]
 [ext_resource type="Texture2D" uid="uid://cgj8crlipe718" path="res://textures/NextStepButton/BackToInstallButton_ON.png" id="3_vl433"]
+[ext_resource type="Texture2D" uid="uid://b1jxwpemgyr2d" path="res://textures/RefressButton/RefreshButton_OFF.png" id="4_ydeux"]
+[ext_resource type="Texture2D" uid="uid://bpgivxuab2724" path="res://textures/RefressButton/RefreshButton_ON.png" id="5_2q4ad"]
 
 [sub_resource type="GDScript" id="GDScript_licpc"]
 resource_name = "ModList"
@@ -219,7 +221,7 @@ theme_override_constants/separation = 15
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.15
+size_flags_stretch_ratio = 0.25
 
 [node name="BackToInstallButton" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
 texture_filter = 1
@@ -232,10 +234,15 @@ texture_pressed = ExtResource("3_vl433")
 texture_hover = ExtResource("3_vl433")
 stretch_mode = 5
 
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Button" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Make an API call !"
+size_flags_stretch_ratio = 2.63
+texture_normal = ExtResource("4_ydeux")
+texture_pressed = ExtResource("5_2q4ad")
+texture_hover = ExtResource("5_2q4ad")
+stretch_mode = 5
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 use_threads = true
