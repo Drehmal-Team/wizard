@@ -14,7 +14,7 @@ config/name="Drehmal Installer"
 run/main_scene="res://main.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="Primordial Team/Drehmal Installer"
-config/features=PackedStringArray("4.0", "Mobile")
+config/features=PackedStringArray("4.1", "Mobile")
 config/icon="res://textures/icon.svg"
 
 [autoload]

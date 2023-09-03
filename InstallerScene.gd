@@ -6,13 +6,22 @@ extends Control
 @onready var PercentLabel = $MarginContainer/PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/Control/Label
 @onready var ShaderRect = $Background
 
-signal RequestFullyCompleted
-signal PackageDownloaded
-signal PackageExtracted
-signal ResMoved
-signal ResDownloaded
-signal ModsFinished
-signal ProfileCreated
+signal InstallFinished
+signal ActionFinished(action)
+
+signal MoveMods
+signal InstallMods(pack)
+
+signal DownloadRes
+
+signal DownloadMapPackage
+signal ExtractMapPackage
+signal MoveRes
+
+signal CreateProfile
+
+
+var ActionList := []
 
 var timeTime := 0.0
 var timeSpentDownloading : float
@@ -59,81 +68,83 @@ func _ready():
 	ProgBar.value = 0
 	ProgBarDeco.value = 0
 	LogLabel.text = "Starting..."
+	
+	DownloadMapPackage.connect(downloadMapPackage)
+	ExtractMapPackage.connect(extractMapPackage)
+	MoveMods.connect(moveMods)
+	InstallMods.connect(mods)
+	MoveRes.connect(moveRes)
+	CreateProfile.connect(createProfile)
+	ActionFinished.connect(actionFinished)
+	
 	await get_tree().create_timer(1).timeout
 	
 	
 	
 	# Checking different types of installs
 	if InstallType == "SINGLE" :
-		# DOWNLOAD MAP PACKAGE
-		
-		
-		downloadMapPackage()
-		await PackageDownloaded
-		await get_tree().create_timer(0.5).timeout
-		# EXTRACT THE MAP PACKAGE
-		extractMapPackage()
-		await PackageExtracted
-		print("Extracted signal went through !")
-		await get_tree().create_timer(0.5).timeout
-		# MOVE THE RES IF NEEDED
-		if Global.RessourcePackMode == "BOTH" or Global.RessourcePackMode == "GLOBAL" :
-			print("Needing to move res : ", Global.RessourcePackMode)
-			moveRes()
-			await ResMoved
-			print("ResMoved signal went through !")
-			await get_tree().create_timer(0.5).timeout
-		MoveResProgress = 1
-		print("MoveRes fully done")
-		
-		# RECURSIVELY DOWNLOAD MODS
-		CurrentAction = "MODS"
-		LogLabel.text = "Starting mod processing..."
-		if Global.NecessMods :
-			mods("Necess")
-			await ModsFinished
-		if Global.PerfMods :
-			mods("Perf")
-			await ModsFinished
-		if Global.OptiMods :
-			mods("Opti")
-			await ModsFinished
-		CurrentAction = "NONE"
-		await get_tree().create_timer(0.1).timeout
-		# CREATE PROFILE
-		createProfile()
+		ActionList.append_array(["MAP_PACK","EXTRACT","MOVE_MODS"])
+		ActionList.append("MODS_NECESS") if Global.NecessMods else null
+		ActionList.append("MODS_PERF") if Global.PerfMods else null
+		ActionList.append("MODS_OPTI") if Global.OptiMods else null
+		ActionList.append("MOVE_RES")
+		ActionList.append("PROFILE")
 		
 	if InstallType == "CLIENT" :
-		# DOWNLOAD MAP PACKAGE
-		downloadRes()
-		await ResDownloaded
-		await get_tree().create_timer(0.5).timeout
-		# RECURSIVELY DOWNLOAD MODS
-		CurrentAction = "MODS"
-		LogLabel.text = "Starting mod processing..."
-		if Global.NecessMods :
-			mods("Necess")
-			await ModsFinished
-		if Global.PerfMods :
-			mods("Perf")
-			await ModsFinished
-		if Global.OptiMods :
-			mods("Opti")
-			await ModsFinished
-		CurrentAction = "NONE"
-		await get_tree().create_timer(0.5).timeout
-		# CREATE PROFILE
-		createProfile()
-		await ProfileCreated
-		# FINISHED !
-		CurrentAction = "COMPLETED"
-		LogLabel.text = "Drehmal successfully installed !"
-		installComplete()
+		ActionList.append_array(["RES_PACK","MOVE_MODS"])
+		ActionList.append("MODS_NECESS") if Global.NecessMods else null
+		ActionList.append("MODS_PERF") if Global.PerfMods else null
+		ActionList.append("MODS_OPTI") if Global.OptiMods else null
+		ActionList.append("PROFILE")
 		
 	if InstallType == "SERVER":
-		print("We don't do those yet...")
+		print("'SERVER' type install !?")
+		print("We don't do those yet... How the fuck did you choose that option ??")
 		pass
 		
+
+func actionFinished(action):
+	if action == "START":
+		print("First actionFinished called!")
+	else:
+		print(">=-=-=-=> ActionFinished call with argument : ",action)
+		
+	if ActionList == []:
+		InstallFinished.emit()
+		print("Signal emitted : InstallFinished")
+		return
+		
+	var new_action : String = ActionList[0]
+	print("New action : ", new_action)
+	ActionList.remove_at(0)
+	
+	if new_action == "MAP_PACK":
+		DownloadMapPackage.emit()
+		print("Signal emitted : DownloadMapPackage")
+	
+	if new_action == "EXTRACT":
+		ExtractMapPackage.emit()
+		print("Signal emitted : ExtractMapPackage")
+		
+	if new_action == "MOVE_MODS":
+		MoveMods.emit()
+		print("Signal emitted : MoveMods")
+	
+	if new_action.split("_")[0] == "MODS":
+		var packType = new_action.split("_")[1]
+		InstallMods.emit(packType)
+		print("Signal emitted : ExtractMapPackage")
+
+	if new_action == "PROFILE":
+		CreateProfile.emit()
+		print("Signal emitted : CreateProfile")
+		
+	if new_action == "RES_PACK":
+		DownloadRes.emit()
+		print("Signal emitted : DownloadRes")
+		
+	print("End of the ActionFinished function call")
+	print()
 
 var dlBytes : int
 var bodySize : int
@@ -229,8 +240,6 @@ func _process(_delta):
 	ProgBar.value = progress
 	ProgBarDeco.value = remap(progress,0,100,12.5,100)
 	PercentLabel.text = str(progress).pad_decimals(1) + "%"
-	
-	
 func _urls_to_list(txt : String):
 	var tempList = []
 	for line in txt.split("\n") :
@@ -241,15 +250,10 @@ func _urls_to_list(txt : String):
 		elif line[0] != "#" :
 			tempList.append(line.split(" : ")[0])
 	return tempList
-
-
-
 func _on_http_request_request_completed(_result, _response_code, _headers, body):
 	if CurrentAction == "MODS_COLLECT":
 		json = JSON.parse_string(body.get_string_from_utf8())
 		emit_signal("RequestFullyCompleted")
-
-
 func sum(list : Array):
 	var suma := 0.0
 	for each in list :
@@ -288,7 +292,8 @@ func downloadMapPackage():
 	
 	CurrentAction = "NONE"
 	
-	emit_signal("PackageDownloaded")
+	ActionFinished.emit()
+	print("ActionFinished signal emitted !")
 
 var output = []
 
@@ -309,11 +314,8 @@ func extractMapPackage():
 	
 	CurrentAction = "NONE"
 	
-	emit_signal("PackageExtracted")
-	await get_tree().create_timer(0.5).timeout
-	emit_signal("PackageExtracted")
-	await get_tree().create_timer(0.5).timeout
-	emit_signal("PackageExtracted")
+	ActionFinished.emit()
+	print("ActionFinished signal emitted !")
 
 func moveRes():
 	CurrentAction = "RES"
@@ -346,52 +348,19 @@ func mods(mode):
 	print($HTTPRequest.download_file)
 	
 	match mode:
-		"Necess":
+		"NECESS":
 			urlPath = "res://assets/url_list_necess.txt"
 			denom = "Necessary"
 			pref = "NECESS"
-		"Perf":
+		"PERF":
 			urlPath = "res://assets/url_list_perf.txt"
 			denom = "Performance"
 			pref = "PERF"
-		"Opti":
+		"OPTI":
 			urlPath = "res://assets/url_list_opti.txt"
 			denom = "Optimisation"
 			pref = "OPTI"
 	
-	if started_mods == false :
-		var dirpath : String
-		var pastMods := DirAccess.get_files_at(Global.ModsFolderPath)
-		if pastMods != PackedStringArray([]):
-			LogLabel.text = "Detecting mods in the mods folder ! Moving them to a new folder..."
-			await get_tree().create_timer(1).timeout
-			# CREATING FOLDER
-			if DirAccess.dir_exists_absolute(Global.ModsFolderPath + "/Before_Drehmal") :
-				var getTfOut := false
-				var addit := 2
-				dirpath = Global.ModsFolderPath + "/Before_Drehmal"
-				while not getTfOut :
-					if DirAccess.dir_exists_absolute(Global.ModsFolderPath + "/Before_Drehmal_" + str(addit)) :
-						addit += 1
-					else :
-						DirAccess.make_dir_absolute(Global.ModsFolderPath + "/Before_Drehmal_" + str(addit))
-						dirpath = Global.ModsFolderPath + "/Before_Drehmal_" + str(addit)
-						getTfOut = true
-					
-			else : 
-				DirAccess.make_dir_absolute(Global.ModsFolderPath + "/Before_Drehmal")
-				dirpath = Global.ModsFolderPath + "/Before_Drehmal"
-			for file in pastMods:
-				LogLabel.text = "Moving " + file + " ..."
-				error = move_file(Global.ModsFolderPath + "/" + file, dirpath)
-				if error != OK :
-					print("Failed!")
-					print("Error : ", error)
-					LogLabel.text = "Failed moving " + file + " : " + str(error)
-				await get_tree().create_timer(0.2).timeout
-			
-			started_mods = true
-			
 	lines = FileAccess.get_file_as_string(urlPath)
 	urlList = _urls_to_list(lines)
 	
@@ -460,6 +429,40 @@ func mods(mode):
 	await get_tree().create_timer(0.2).timeout
 	emit_signal("ModsFinished")
 
+func moveMods():
+	var dirpath : String
+	var pastMods := DirAccess.get_files_at(Global.ModsFolderPath)
+	if pastMods != PackedStringArray([]):
+		LogLabel.text = "Detecting mods in the mods folder ! Moving them to a new folder..."
+		await get_tree().create_timer(1).timeout
+		# CREATING FOLDER
+		if DirAccess.dir_exists_absolute(Global.ModsFolderPath + "/Before_Drehmal") :
+			var getTfOut := false
+			var addit := 2
+			dirpath = Global.ModsFolderPath + "/Before_Drehmal"
+			while not getTfOut :
+				if DirAccess.dir_exists_absolute(Global.ModsFolderPath + "/Before_Drehmal_" + str(addit)) :
+					addit += 1
+				else :
+					DirAccess.make_dir_absolute(Global.ModsFolderPath + "/Before_Drehmal_" + str(addit))
+					dirpath = Global.ModsFolderPath + "/Before_Drehmal_" + str(addit)
+					getTfOut = true
+				
+		else : 
+			DirAccess.make_dir_absolute(Global.ModsFolderPath + "/Before_Drehmal")
+			dirpath = Global.ModsFolderPath + "/Before_Drehmal"
+		for file in pastMods:
+			LogLabel.text = "Moving " + file + " ..."
+			error = move_file(Global.ModsFolderPath + "/" + file, dirpath)
+			if error != OK :
+				print("Failed!")
+				print("Error : ", error)
+				LogLabel.text = "Failed moving " + file + " : " + str(error)
+			await get_tree().create_timer(0.2).timeout
+			
+			
+	ActionFinished.emit("MOVE_MODS")
+	print("ActionFinished signal emitted !")
 
 func createProfile():
 	CurrentAction = "PROFILE"
@@ -485,10 +488,8 @@ func createProfile():
 	CurrentAction = "NONE"
 	LogLabel.text = "Minecraft profile created !"
 	
-	ProfileCreated.connect(installComplete)
-	ProfileCreated.emit()
-	
-	print("Emitted!")
+	ActionFinished.emit()
+	print("ActionFinished signal emitted !")
 
 func downloadRes():
 	
@@ -503,7 +504,9 @@ func downloadRes():
 	LogLabel.text = "Resource Pack successfully downloaded !"
 	CurrentAction = "NONE"
 	ResProgress = 1
-	emit_signal("ResDownloaded")
+	
+	ActionFinished.emit()
+	print("ActionFinished signal emitted !")
 
 func installComplete():
 	Global.TimeSpent = timeTime
