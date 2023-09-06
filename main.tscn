@@ -431,7 +431,9 @@ Drehmal: PRIMORDIAL takes what makes Minecraft so great and brings it to the nex
 
 While most maps strive for realism or taking directly from our real world, Drehmal aims instead for fresh, unique, and sometimes whimsical terrain. Survival gameplay experience is the top priority in Drehmal, ensuring that your time with the map will always be fun. This isn’t just a survival map with some extra features, though…
 
-Drehmal: PRIMORDIAL is a fresh experience that provides much more depth to basic Survival gameplay."
+Drehmal: PRIMORDIAL is a fresh experience that provides much more depth to basic Survival gameplay.
+
+Copyright Primordial Team 2023"
 label_settings = SubResource("LabelSettings_nlmmf")
 autowrap_mode = 3
 
@@ -621,7 +623,9 @@ Thank you to our community for being supportive during every step of development
 
 We hope that one day, Drehmal will be its own separate game.
 
-Nothing to lose."
+Nothing to lose.
+
+Copyright Primordial Team 2023"
 
 [node name="ServerOrNotM8" type="MarginContainer" parent="."]
 visible = false
@@ -665,6 +669,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 140
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 140
@@ -673,10 +678,10 @@ theme_override_constants/margin_bottom = 30
 [node name="VBoxContainer" type="VBoxContainer" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSINGLE/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 4
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSINGLE/MarginContainer/VBoxContainer"]
 layout_mode = 2
-mouse_filter = 1
 text = "Singleplayer"
 label_settings = SubResource("LabelSettings_8jf68")
 horizontal_alignment = 1
@@ -684,7 +689,6 @@ vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSINGLE/MarginContainer/VBoxContainer"]
 layout_mode = 2
-mouse_filter = 1
 text = "I want to play solo on my computer / I'm hosting the game on local network."
 label_settings = SubResource("LabelSettings_8qjt1")
 horizontal_alignment = 1
@@ -706,6 +710,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 140
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 140
@@ -714,10 +719,10 @@ theme_override_constants/margin_bottom = 30
 [node name="VBoxContainer" type="VBoxContainer" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonCLIENT/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 4
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonCLIENT/MarginContainer/VBoxContainer"]
 layout_mode = 2
-mouse_filter = 1
 text = "Multiplayer : client"
 label_settings = SubResource("LabelSettings_8jf68")
 horizontal_alignment = 1
@@ -725,7 +730,6 @@ vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonCLIENT/MarginContainer/VBoxContainer"]
 layout_mode = 2
-mouse_filter = 1
 text = "I am going to play on someone else's server / local hosted game."
 label_settings = SubResource("LabelSettings_8qjt1")
 horizontal_alignment = 1
@@ -747,6 +751,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 140
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 140
@@ -755,10 +760,10 @@ theme_override_constants/margin_bottom = 30
 [node name="VBoxContainer" type="VBoxContainer" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSERVER/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 4
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSERVER/MarginContainer/VBoxContainer"]
 layout_mode = 2
-mouse_filter = 1
 text = "Multiplayer : server"
 label_settings = SubResource("LabelSettings_8jf68")
 horizontal_alignment = 1
@@ -766,7 +771,6 @@ vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="ServerOrNotM8/PanelContainer/VBoxContainer/TextureButtonSERVER/MarginContainer/VBoxContainer"]
 layout_mode = 2
-mouse_filter = 1
 text = "Not supported yet !"
 label_settings = SubResource("LabelSettings_8qjt1")
 horizontal_alignment = 1

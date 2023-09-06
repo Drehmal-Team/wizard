@@ -11,16 +11,24 @@ config_version=5
 [application]
 
 config/name="Drehmal Installer"
+config/description="The Official Installer for Drehmal 2.2 : Apotheosis, made by MoutonDemocrate"
 run/main_scene="res://main.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="Primordial Team/Drehmal Installer"
 config/features=PackedStringArray("4.1", "Mobile")
+boot_splash/bg_color=Color(0.301961, 0.152941, 0.278431, 1)
+boot_splash/image="res://icon.png"
 config/icon="res://textures/icon.svg"
+config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
 Global="*res://Global.gd"
 SceneTransition="*res://scene_transition.tscn"
+
+[debug]
+
+file_logging/enable_file_logging=true
 
 [display]
 
