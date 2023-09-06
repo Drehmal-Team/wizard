@@ -6,6 +6,8 @@ extends Control
 @onready var PercentLabel = $MarginContainer/PanelContainer/VBoxContainer/MarginContainer/PanelContainer/VBoxContainer/Control/Label
 @onready var ShaderRect = $Background
 
+signal RequestFullyCompleted
+
 signal InstallFinished
 signal ActionFinished(action)
 
@@ -61,6 +63,7 @@ var OptiList := []
 
 
 func _ready():
+	timeTime = Time.get_unix_time_from_system()
 	$MarginContainer/PanelContainer/VBoxContainer/TextureButton.hide()
 	if InstallType == "" :
 		InstallType = "SINGLE"	
@@ -151,8 +154,6 @@ var bodySize : int
 
 func _process(_delta):
 	
-	timeTime += _delta
-	
 	if CurrentAction == "DL_RES" :
 		dlBytes = signed_to_none($HTTPRequest.get_downloaded_bytes())
 		bodySize = signed_to_none($HTTPRequest.get_body_size())
@@ -240,7 +241,7 @@ func _process(_delta):
 	ProgBar.value = progress
 	ProgBarDeco.value = remap(progress,0,100,12.5,100)
 	PercentLabel.text = str(progress).pad_decimals(1) + "%"
-func _urls_to_list(txt : String):
+func _urls_to_list(txt : String) -> Array:
 	var tempList = []
 	for line in txt.split("\n") :
 		if "\n" in line :
@@ -254,7 +255,7 @@ func _on_http_request_request_completed(_result, _response_code, _headers, body)
 	if CurrentAction == "MODS_COLLECT":
 		json = JSON.parse_string(body.get_string_from_utf8())
 		emit_signal("RequestFullyCompleted")
-func sum(list : Array):
+func sum(list : Array) -> float:
 	var suma := 0.0
 	for each in list :
 		suma += each
@@ -266,7 +267,7 @@ func readJSON(json_file_path):
 	var finish = JSON.parse_string(content)
 	return finish
 
-func writeJSON(dict, json_file_path):
+func writeJSON(dict, json_file_path) -> void:
 	var file = FileAccess.open(json_file_path, FileAccess.WRITE) 
 	var stringified = JSON.stringify(dict, "\t")
 	file.store_string(stringified)
@@ -275,6 +276,7 @@ func writeJSON(dict, json_file_path):
 var TempPackagePath
 
 func downloadMapPackage():
+	print("Function downloadMapPackage called")
 	CurrentAction = "MAP"
 	TempPackagePath = Global.SavesFolderPath + "/TempMapPackage.tar.gz"
 	$HTTPRequest.download_file = TempPackagePath
@@ -289,6 +291,7 @@ func downloadMapPackage():
 		print("INSTALLER FAILED")
 	else :
 		LogLabel.text = "Map package successfully downloaded !"
+		print("Map package succesfully installed")
 	
 	CurrentAction = "NONE"
 	
@@ -298,6 +301,7 @@ func downloadMapPackage():
 var output = []
 
 func extractMapPackage():
+	print("Function extractMapPackage called")
 	CurrentAction = "EXTRACT_MAP"
 	LogLabel.text = "Extracting map package... (this can freeze the installer, don't be alarmed)"
 	await get_tree().create_timer(0.5).timeout
@@ -330,16 +334,14 @@ func moveRes():
 	
 	CurrentAction = "NONE"
 	
-	ResMoved.emit()
-	ResMoved.emit()
-	ResMoved.emit()
-	ResMoved.emit()
+	ActionFinished.emit("MOVE_RES")
 	
 var lines
 var error : Error
 var started_mods = false
 
 func mods(mode):
+	print("Function mods called")
 	var urlList = []
 	var urlPath : String
 	var denom : String
@@ -360,6 +362,9 @@ func mods(mode):
 			urlPath = "res://assets/url_list_opti.txt"
 			denom = "Optimisation"
 			pref = "OPTI"
+		"":
+			print("[ERROR] Mods function called with null string parameter")
+			return ERR_INVALID_PARAMETER
 	
 	lines = FileAccess.get_file_as_string(urlPath)
 	urlList = _urls_to_list(lines)
@@ -427,9 +432,10 @@ func mods(mode):
 	
 	$HTTPRequest.download_file = ""
 	await get_tree().create_timer(0.2).timeout
-	emit_signal("ModsFinished")
+	ActionFinished.emit("MODS_"+mode)
 
 func moveMods():
+	print("Function moveMods called")
 	var dirpath : String
 	var pastMods := DirAccess.get_files_at(Global.ModsFolderPath)
 	if pastMods != PackedStringArray([]):
@@ -488,7 +494,7 @@ func createProfile():
 	CurrentAction = "NONE"
 	LogLabel.text = "Minecraft profile created !"
 	
-	ActionFinished.emit()
+	ActionFinished.emit("CREATE_PROFILE")
 	print("ActionFinished signal emitted !")
 
 func downloadRes():
@@ -505,11 +511,11 @@ func downloadRes():
 	CurrentAction = "NONE"
 	ResProgress = 1
 	
-	ActionFinished.emit()
+	ActionFinished.emit("RES")
 	print("ActionFinished signal emitted !")
 
 func installComplete():
-	Global.TimeSpent = timeTime
+	Global.TimeSpent = Time.get_unix_time_from_system() - timeTime
 	CurrentAction = "COMPLETED"
 	LogLabel.text = "Drehmal successfully installed !"
 	$MarginContainer/PanelContainer/VBoxContainer/TextureButton.show()
