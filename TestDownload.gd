@@ -3,7 +3,7 @@ extends Node
 func _on_TestDL_button_pressed():
 	var output = []
 	OS.execute("unzip", ["/home/laerian/Desktop/test.zip","-d","/home/laerian/Desktop/test"], output)
-	print(output)
+	print("[" + Time.get_time_string_from_system() + "]", output)
 	
 	"""
 	$HTTPRequest.request_completed.connect(_on_request_completed)

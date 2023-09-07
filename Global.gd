@@ -44,11 +44,12 @@ func play_sound(type):
 		var SFX = AudioStreamPlayer.new()
 		add_child(SFX)
 		SFX.stream = load(path)
+		SFX.set_volume_db(0.0 - 8.0)
 		SFX.play()
 		await SFX.finished
 		SFX.queue_free()
 	else :
-		print("Argument not valid !")
+		print("[" + Time.get_time_string_from_system() + "]", "Argument not valid !")
 
 func play_from_path(path, vol = 0.0):
 	var SFX = AudioStreamPlayer.new()

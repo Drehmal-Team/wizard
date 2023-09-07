@@ -20,25 +20,25 @@ browser = webdriver.Firefox(options=options)
 def get_mod_info(BaseUrl = "https://modrinth.com/mod/sodium/",id=0):
     browser.get(BaseUrl)
     html = browser.page_source
-    print(f"{BaseUrl} get, parsing...")
+    print("[" + Time.get_time_string_from_system() + "]", f"{BaseUrl} get, parsing...")
     soup = bs4.BeautifulSoup(html,"lxml")
     
     try :
         ModName = soup.find("h1",class_="title").text
     except :
-        print("ERROR : Failed to retrieve name !")
+        print("[" + Time.get_time_string_from_system() + "]", "ERROR : Failed to retrieve name !")
         ModName = ""
         with open("problem" + str(id) + ".html","w") as file :
             file.write(html)
     try :
         ModDesc = soup.find("p",class_="description").text
     except :
-        print("ERROR : Failed to retrieve description !")
+        print("[" + Time.get_time_string_from_system() + "]", "ERROR : Failed to retrieve description !")
         ModDesc = ""
     try :
         ImgUrl = soup.find("img", class_="avatar").get("src")
     except :
-        print("ERROR : Failed to retrieve icon url !")
+        print("[" + Time.get_time_string_from_system() + "]", "ERROR : Failed to retrieve icon url !")
         ImgUrl = ""
 
     browser.get(BaseUrl + "/versions?g=1.17.1&l=fabric")
@@ -48,22 +48,22 @@ def get_mod_info(BaseUrl = "https://modrinth.com/mod/sodium/",id=0):
     try :
         card = juice.find("div", id="all-versions").findChildren(class_="version-button")[0]
     except :
-        print("ERROR : Failed to retrieve version card !")
+        print("[" + Time.get_time_string_from_system() + "]", "ERROR : Failed to retrieve version card !")
         card = ""
     try :
         DownloadUrl = card.find("a", class_="download-button").get("href")
     except :
-        print("ERROR : Failed to retrieve download URL !")
+        print("[" + Time.get_time_string_from_system() + "]", "ERROR : Failed to retrieve download URL !")
         DownloadUrl = ""
     try :
         VersionUrl = card.find("a", class_="version__title").get("href")
     except :
-        print("ERROR : Failed to retrieve version URL !")
+        print("[" + Time.get_time_string_from_system() + "]", "ERROR : Failed to retrieve version URL !")
         VersionUrl = ""
     try :
         VersionID = card.find("a", class_="version__title").text
     except :
-        print("ERROR : Failed to retrieve version ID !")
+        print("[" + Time.get_time_string_from_system() + "]", "ERROR : Failed to retrieve version ID !")
         VersionID = ""
 
     ModData = {
@@ -76,7 +76,7 @@ def get_mod_info(BaseUrl = "https://modrinth.com/mod/sodium/",id=0):
         "version_name" : VersionID
     }
 
-    print(f"{BaseUrl} parsed !")
+    print("[" + Time.get_time_string_from_system() + "]", f"{BaseUrl} parsed !")
 
     return ModData
 
@@ -96,16 +96,16 @@ def get_all(listA,dictA) :
     for line in listA :
         global x
         x += 1
-        print(line)
+        print("[" + Time.get_time_string_from_system() + "]", line)
         if "\n" in line :
             line = line.replace("\n","")
         if line == "" :
             pass
         elif line[0] != "#" :
-            print(f"Solving {line}...")
+            print("[" + Time.get_time_string_from_system() + "]", f"Solving {line}...")
             ModData = get_mod_info(line,x)
             dictA[ModData["name"].lower()] = ModData
-            print()
+            print("[" + Time.get_time_string_from_system() + "]", )
     return dictA
 
 final = {

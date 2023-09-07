@@ -79,6 +79,7 @@ func _ready():
 	MoveRes.connect(moveRes)
 	CreateProfile.connect(createProfile)
 	ActionFinished.connect(actionFinished)
+	InstallFinished.connect(installComplete)
 	
 	await get_tree().create_timer(1).timeout
 	
@@ -87,9 +88,12 @@ func _ready():
 	# Checking different types of installs
 	if InstallType == "SINGLE" :
 		ActionList.append_array(["MAP_PACK","EXTRACT","MOVE_MODS"])
-		ActionList.append("MODS_NECESS") if Global.NecessMods else null
-		ActionList.append("MODS_PERF") if Global.PerfMods else null
-		ActionList.append("MODS_OPTI") if Global.OptiMods else null
+		if Global.NecessMods:
+			ActionList.append("MODS_NECESS") 
+		if Global.PerfMods:
+			ActionList.append("MODS_PERF") 
+		if Global.OptiMods:
+			ActionList.append("MODS_OPTI") 
 		ActionList.append("MOVE_RES")
 		ActionList.append("PROFILE")
 		
@@ -101,53 +105,68 @@ func _ready():
 		ActionList.append("PROFILE")
 		
 	if InstallType == "SERVER":
-		print("'SERVER' type install !?")
-		print("We don't do those yet... How the fuck did you choose that option ??")
+		print("[" + Time.get_time_string_from_system() + "]", "'SERVER' type install !?")
+		print("[" + Time.get_time_string_from_system() + "]", "We don't do those yet... How the fuck did you choose that option ??")
 		pass
 		
-
-func actionFinished(action):
+	ActionFinished.emit("START")
+	
+func actionFinished(action) -> void:
+	await get_tree().create_timer(1).timeout
 	if action == "START":
-		print("First actionFinished called!")
+		print("[" + Time.get_time_string_from_system() + "]", "First actionFinished called!")
 	else:
-		print(">=-=-=-=> ActionFinished call with argument : ",action)
+		print("[" + Time.get_time_string_from_system() + "]", ">=-=-=-=> ActionFinished call with argument : ",action)
 		
 	if ActionList == []:
 		InstallFinished.emit()
-		print("Signal emitted : InstallFinished")
+		print("[" + Time.get_time_string_from_system() + "]", "Signal emitted : InstallFinished")
 		return
-		
+	
+	print("[" + Time.get_time_string_from_system() + "]","Remaining actions : ",ActionList)
 	var new_action : String = ActionList[0]
-	print("New action : ", new_action)
+	print("[" + Time.get_time_string_from_system() + "]", "New action : ", new_action)
 	ActionList.remove_at(0)
+	
 	
 	if new_action == "MAP_PACK":
 		DownloadMapPackage.emit()
-		print("Signal emitted : DownloadMapPackage")
+		print("[" + Time.get_time_string_from_system() + "]", "Signal emitted : DownloadMapPackage")
+		return
 	
-	if new_action == "EXTRACT":
+	elif new_action == "EXTRACT":
 		ExtractMapPackage.emit()
-		print("Signal emitted : ExtractMapPackage")
+		print("[" + Time.get_time_string_from_system() + "]", "Signal emitted : ExtractMapPackage")
+		return
 		
-	if new_action == "MOVE_MODS":
+	elif new_action == "MOVE_MODS":
 		MoveMods.emit()
-		print("Signal emitted : MoveMods")
+		print("[" + Time.get_time_string_from_system() + "]", "Signal emitted : MoveMods")
+		return
 	
-	if new_action.split("_")[0] == "MODS":
+	elif new_action.split("_")[0] == "MODS":
 		var packType = new_action.split("_")[1]
 		InstallMods.emit(packType)
-		print("Signal emitted : ExtractMapPackage")
+		print("[" + Time.get_time_string_from_system() + "]", "Signal emitted : InstallMods, with args : "+packType)
+		return
 
-	if new_action == "PROFILE":
+	elif new_action == "PROFILE":
 		CreateProfile.emit()
-		print("Signal emitted : CreateProfile")
+		print("[" + Time.get_time_string_from_system() + "]", "Signal emitted : CreateProfile")
+		return
 		
-	if new_action == "RES_PACK":
+	elif new_action == "RES_PACK":
 		DownloadRes.emit()
-		print("Signal emitted : DownloadRes")
+		print("[" + Time.get_time_string_from_system() + "]", "Signal emitted : DownloadRes")
+		return
+	
+	elif new_action == "MOVE_RES":
+		MoveRes.emit()
+		print("[" + Time.get_time_string_from_system() + "]", "Signal emitted : MoveRes")
+		return
 		
-	print("End of the ActionFinished function call")
-	print()
+	print("[" + Time.get_time_string_from_system() + "]", "End of the ActionFinished function call")
+	return
 
 var dlBytes : int
 var bodySize : int
@@ -160,7 +179,6 @@ func _process(_delta):
 		
 		if bodySize == -1 :
 			PackageProgress = clampf(float(dlBytes) / 4187593113.0,0,1)
-			print(PackageProgress)
 		else :
 			PackageProgress = clampf(float(dlBytes) / float(bodySize), 0, 1)
 		
@@ -205,7 +223,6 @@ func _process(_delta):
 		
 		if bodySize == -1 :
 			PackageProgress = clampf(float(dlBytes) / 4187593113.0,0,1)
-			print(PackageProgress)
 		else :
 			PackageProgress = clampf(float(dlBytes) / float(bodySize), 0, 1)
 		
@@ -276,32 +293,34 @@ func writeJSON(dict, json_file_path) -> void:
 var TempPackagePath
 
 func downloadMapPackage():
-	print("Function downloadMapPackage called")
+	print("[" + Time.get_time_string_from_system() + "]", "Function downloadMapPackage called")
 	CurrentAction = "MAP"
 	TempPackagePath = Global.SavesFolderPath + "/TempMapPackage.tar.gz"
 	$HTTPRequest.download_file = TempPackagePath
 	
 	LogLabel.text = "Downloading map package..."
 	timeSpentDownloading = 0
-	error = $HTTPRequest.request("https://storage.cloud.google.com/apotheosis_beta/Drehmal%202.2%20Apotheosis%20Beta%20-%201.0.0.tar.gz",["User-Agent: Drehmal_Installer_beta (drehmal.net)"])
+	error = $HTTPRequest.request("https://storage.cloud.google.com/apotheosis_beta/Drehmal%202.2%20Apotheosis%20Beta%20-%201.0.0.tar.gz")	
 	await $HTTPRequest.request_completed
 	$HTTPRequest.download_file = ""
 	
 	if error != OK :
-		print("INSTALLER FAILED")
+		print("[" + Time.get_time_string_from_system() + "]", "INSTALLER FAILED")
 	else :
 		LogLabel.text = "Map package successfully downloaded !"
-		print("Map package succesfully installed")
+		print("[" + Time.get_time_string_from_system() + "]", "Map package succesfully downloaded")
 	
 	CurrentAction = "NONE"
 	
-	ActionFinished.emit()
-	print("ActionFinished signal emitted !")
+	await get_tree().create_timer(0.5).timeout
+	ActionFinished.emit("MAP_PACK")
+	print("[" + Time.get_time_string_from_system() + "]", "ActionFinished signal emitted from downloadMapPackage function")
+	return
 
 var output = []
 
 func extractMapPackage():
-	print("Function extractMapPackage called")
+	print("[" + Time.get_time_string_from_system() + "]", "Function extractMapPackage called")
 	CurrentAction = "EXTRACT_MAP"
 	LogLabel.text = "Extracting map package... (this can freeze the installer, don't be alarmed)"
 	await get_tree().create_timer(0.5).timeout
@@ -318,10 +337,12 @@ func extractMapPackage():
 	
 	CurrentAction = "NONE"
 	
-	ActionFinished.emit()
-	print("ActionFinished signal emitted !")
-
+	ActionFinished.emit("EXTRACT")
+	print("[" + Time.get_time_string_from_system() + "]", "ActionFinished signal emitted from extract map package")
+	return
+	
 func moveRes():
+	print("[" + Time.get_time_string_from_system() + "]", "Function moveRes called !")
 	CurrentAction = "RES"
 	LogLabel.text = "Moving/copying resource pack..."
 	DirAccess.copy_absolute(Global.SavesFolderPath + "/Drehmal 2.2 Apotheosis/resources.zip", Global.ResFolderPath + "/Drehmal 2.2 -- Resource Pack")
@@ -335,19 +356,21 @@ func moveRes():
 	CurrentAction = "NONE"
 	
 	ActionFinished.emit("MOVE_RES")
+	print("[" + Time.get_time_string_from_system() + "]", "ActionFinished signal emitted from moveRes !")
+	return
 	
 var lines
 var error : Error
 var started_mods = false
 
 func mods(mode):
-	print("Function mods called")
+	print("[" + Time.get_time_string_from_system() + "]", "Function mods called")
 	var urlList = []
 	var urlPath : String
 	var denom : String
 	var pref : String
 	
-	print($HTTPRequest.download_file)
+	print("[" + Time.get_time_string_from_system() + "]", "Download file set to :", $HTTPRequest.download_file)
 	
 	match mode:
 		"NECESS":
@@ -363,7 +386,7 @@ func mods(mode):
 			denom = "Optimisation"
 			pref = "OPTI"
 		"":
-			print("[ERROR] Mods function called with null string parameter")
+			print("[" + Time.get_time_string_from_system() + "]", "[ERROR] Mods function called with null string parameter")
 			return ERR_INVALID_PARAMETER
 	
 	lines = FileAccess.get_file_as_string(urlPath)
@@ -375,13 +398,11 @@ func mods(mode):
 	for slug in urlList:
 		
 		LogLabel.text = "Collecting slug " + slug + " ..."
-		print()
-		print()
-		print("https://api.modrinth.com/v2/project/" + slug +"/version?loaders=[%22fabric%22]&game_versions=[%221.17.1%22]")
+		$HTTPRequest.download_file = ""
 		error = $HTTPRequest.request("https://api.modrinth.com/v2/project/" + slug +"/version?loaders=[%22fabric%22]&game_versions=[%221.17.1%22]",["User-Agent: Drehmal_Installer_beta (drehmal.net)"])
 		if error != OK :
-			print("Failed to resolve slug : ", slug)
-			print("Reason : ",error)
+			print("[" + Time.get_time_string_from_system() + "]", "Failed to resolve slug : ", slug)
+			print("[" + Time.get_time_string_from_system() + "]", "Reason : ",error)
 			break
 		await RequestFullyCompleted
 		
@@ -431,11 +452,12 @@ func mods(mode):
 	fileNames = []
 	
 	$HTTPRequest.download_file = ""
-	await get_tree().create_timer(0.2).timeout
 	ActionFinished.emit("MODS_"+mode)
+	print("[" + Time.get_time_string_from_system() + "]", "ActionFinished signal emitted from mods with arg MODS_"+mode)
+	return
 
 func moveMods():
-	print("Function moveMods called")
+	print("[" + Time.get_time_string_from_system() + "]", "Function moveMods called")
 	var dirpath : String
 	var pastMods := DirAccess.get_files_at(Global.ModsFolderPath)
 	if pastMods != PackedStringArray([]):
@@ -459,16 +481,18 @@ func moveMods():
 			dirpath = Global.ModsFolderPath + "/Before_Drehmal"
 		for file in pastMods:
 			LogLabel.text = "Moving " + file + " ..."
+			print("[" + Time.get_time_string_from_system() + "]", "Moving ", file)
 			error = move_file(Global.ModsFolderPath + "/" + file, dirpath)
 			if error != OK :
-				print("Failed!")
-				print("Error : ", error)
+				print("[" + Time.get_time_string_from_system() + "]", "Failed!")
+				print("[" + Time.get_time_string_from_system() + "]", "Error : ", error)
 				LogLabel.text = "Failed moving " + file + " : " + str(error)
 			await get_tree().create_timer(0.2).timeout
 			
 			
 	ActionFinished.emit("MOVE_MODS")
-	print("ActionFinished signal emitted !")
+	print("[" + Time.get_time_string_from_system() + "]", "ActionFinished signal emitted from moveMods")
+	return
 
 func createProfile():
 	CurrentAction = "PROFILE"
@@ -495,7 +519,8 @@ func createProfile():
 	LogLabel.text = "Minecraft profile created !"
 	
 	ActionFinished.emit("CREATE_PROFILE")
-	print("ActionFinished signal emitted !")
+	print("[" + Time.get_time_string_from_system() + "]", "ActionFinished signal emitted from createProfile")
+	return
 
 func downloadRes():
 	
@@ -512,7 +537,8 @@ func downloadRes():
 	ResProgress = 1
 	
 	ActionFinished.emit("RES")
-	print("ActionFinished signal emitted !")
+	print("[" + Time.get_time_string_from_system() + "]", "ActionFinished signal emitted from downloadRes")
+	return
 
 func installComplete():
 	Global.TimeSpent = Time.get_unix_time_from_system() - timeTime
@@ -527,8 +553,6 @@ func installComplete():
 	tween = create_tween()
 	tween.tween_property(self, "modulate", Color(1,1,1), 2).set_ease(Tween.EASE_OUT)
 	await tween.finished
-	
-	SceneTransition.dissolve("res://InstallComplete.tscn")
 
 func signed_to_none(x):
 	if x < -1 :
@@ -552,9 +576,13 @@ func move_file(file : String, folder : String):
 	if folder[-1] != "/" :
 		filename = "/" + filename
 	
-	print(filename)
+	print("[" + Time.get_time_string_from_system() + "]", filename)
 	
 	DirAccess.copy_absolute(file,folder + filename)
 	DirAccess.remove_absolute(file)
 	
 	return OK
+
+
+func _on_texture_button_pressed_leave():
+	SceneTransition.dissolve("res://InstallComplete.tscn")

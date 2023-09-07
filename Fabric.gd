@@ -17,7 +17,7 @@ func _on_download_button_pressed():
 	_change_label(LogLabelDownload, "Most recent version found !", Color("GREEN"))
 	await get_tree().create_timer(0.5).timeout
 	_change_label(LogLabelDownload, "Downloading the installer...", Color("ORANGE"))
-	$HTTPRequestJar.download_file = "res://assets/fabric/FabricInstaller.jar"
+	$HTTPRequestJar.download_file = "user://FabricInstaller.jar"
 	$HTTPRequestJar.request(InstallerUrl,["User-Agent: Drehmal_Installer_beta (drehmal.net)"])
 	await $HTTPRequestJar.request_completed
 	
@@ -46,8 +46,9 @@ func _on_install_button_pressed():
 
 func install_the_jar():
 	var output := []
-	OS.execute("java", PackedStringArray(["-jar", ProjectSettings.globalize_path("res://assets/fabric/FabricInstaller.jar"), "client", "-noprofile", "-mcversion", "1.17.1"]), output , true, true)
+	OS.execute("java", PackedStringArray(["-jar", ProjectSettings.globalize_path("user://FabricInstaller.jar"), "client", "-noprofile", "-mcversion", "1.17.1"]), output , true, true)
 	Global.FabricVersion = output[0].split("\n")[2].split(" ")[4]
+	print("[" + Time.get_time_string_from_system() + "]", "Fabric Version found : ", Global.FabricVersion)
 	
 func _change_label(label : Label, txt : String, color : Color):
 	label.text = txt

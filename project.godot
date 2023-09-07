@@ -16,8 +16,9 @@ run/main_scene="res://main.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="Primordial Team/Drehmal Installer"
 config/features=PackedStringArray("4.1", "Mobile")
-boot_splash/bg_color=Color(0.301961, 0.152941, 0.278431, 1)
-boot_splash/image="res://icon.png"
+boot_splash/bg_color=Color(0.0862745, 0.0431373, 0.0784314, 1)
+boot_splash/image="res://icon_full_length.png"
+boot_splash/fullsize=false
 config/icon="res://textures/icon.svg"
 config/windows_native_icon="res://icon.ico"
 

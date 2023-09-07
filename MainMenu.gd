@@ -31,10 +31,10 @@ func _on_install_begin_button_pressed():
 	await tween.finished
 
 func buttonHovered():
-	Global.play_from_path("res://assets/sounds/Buttons/Hover.ogg")
+	Global.play_from_path("res://assets/sounds/Buttons/Hover.ogg",-6.0)
 
 func buttonPressed():
-	Global.play_from_path("res://assets/sounds/Buttons/Click.ogg")
+	Global.play_from_path("res://assets/sounds/Buttons/Click.ogg",-6.0)
 
 func get_all_nodes(node : Node) -> Array:
 	var children := []

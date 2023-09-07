@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bmcp21nfcxnnc"]
+[gd_scene load_steps=22 format=3 uid="uid://bmcp21nfcxnnc"]
 
 [ext_resource type="PackedScene" uid="uid://bpevw2r2jiwyn" path="res://Checks.tscn" id="1_qfx2f"]
 [ext_resource type="PackedScene" uid="uid://doq8uefudtoga" path="res://Mods.tscn" id="2_hpugn"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://buumrt6abcnyv" path="res://ModList.tscn" id="4_5wdwl"]
 [ext_resource type="PackedScene" uid="uid://cew7e6vstebj3" path="res://Fabric.tscn" id="5_4xb7k"]
 [ext_resource type="PackedScene" uid="uid://rvajgvr2atcb" path="res://FinalInstall.tscn" id="6_m42nw"]
+[ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="7_lxbeb"]
 
 [sub_resource type="GDScript" id="GDScript_ys4wk"]
 resource_name = "InstallMenu"
@@ -26,6 +27,8 @@ func _ready():
 	Global.SeeMods.connect(SeeMods)
 	Global.OutMods.connect(OutMods)
 	resize()
+	
+	$AcceptDialog.show()
 	
 	for child in get_all_nodes($\".\") :
 		if child is TextureButton:
@@ -76,10 +79,10 @@ func OutMods():
 	
 	
 func buttonHovered():
-	Global.play_from_path(\"res://assets/sounds/Buttons/Hover.ogg\")
+	Global.play_from_path(\"res://assets/sounds/Buttons/Hover.ogg\",-6.0)
 
 func buttonPressed():
-	Global.play_from_path(\"res://assets/sounds/Buttons/Click.ogg\")
+	Global.play_from_path(\"res://assets/sounds/Buttons/Click.ogg\",-6.0)
 
 func get_all_nodes(node : Node) -> Array:
 	var children := []
@@ -164,6 +167,30 @@ void fragment() {
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dpnuv"]
 shader = SubResource("Shader_8q0hb")
 shader_parameter/pixelSize = 24.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sbuea"]
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_me4qg"]
+content_margin_bottom = 124.0
+bg_color = Color(0.137255, 0.137255, 0.137255, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.137255, 0.137255, 0.137255, 1)
+border_blend = true
+shadow_color = Color(0, 0, 0, 0.733333)
+
+[sub_resource type="Theme" id="Theme_2q2wm"]
+default_font = ExtResource("7_lxbeb")
+/fonts/font1 = ExtResource("7_lxbeb")
+/styles/back1 = SubResource("StyleBoxFlat_sbuea")
+AcceptDialog/styles/panel = SubResource("StyleBoxFlat_me4qg")
 
 [node name="InstallMenu" type="Control"]
 texture_filter = 1
@@ -297,3 +324,16 @@ theme_override_constants/margin_bottom = 15
 
 [node name="FinalInstall" parent="MainContainer/PanelFinalInstall/MarginContainer" instance=ExtResource("6_m42nw")]
 layout_mode = 2
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+title = "Warning !"
+initial_position = 1
+size = Vector2i(640, 357)
+visible = true
+theme = SubResource("Theme_2q2wm")
+ok_button_text = "I understand"
+dialog_text = "This installer is in a beta state ! It might not work properly.
+If you end up encountering a bug, please visit our GitHub page to report it, this is the most helpful thing you could do.
+
+Also, you're going to need an internet connection, as this installer downloads files from our servers and doesn't contain the actual map."
+dialog_autowrap = true

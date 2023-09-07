@@ -15,7 +15,7 @@ for pack in modlist :
                 response = requests.get(pic_url, stream=True)
 
                 if not response.ok:
-                    print(response)
+                    print("[" + Time.get_time_string_from_system() + "]", response)
 
                 for block in response.iter_content(1024):
                     if not block:

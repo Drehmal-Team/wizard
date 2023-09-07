@@ -184,12 +184,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -200.0
-offset_right = 200.0
-offset_bottom = 200.0
+offset_left = -216.0
+offset_top = -216.0
+offset_right = 248.0
+offset_bottom = 248.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(200, 200)
 size_flags_horizontal = 6
 size_flags_vertical = 6
 step = 0.01
@@ -261,4 +263,5 @@ stretch_mode = 5
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 use_threads = true
 
+[connection signal="pressed" from="MarginContainer/PanelContainer/VBoxContainer/TextureButton" to="." method="_on_texture_button_pressed_leave"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]

@@ -74,7 +74,7 @@ func _on_texture_button_res_pressed():
 
 func _on_native_file_dialog_dir_selected(dir):
 	MinecraftFolder = dir
-	print(dir)
+	print("[" + Time.get_time_string_from_system() + "]", dir)
 	$VBoxContainer/MarginContMinecraftFolder/VBoxContainer/HBoxContainer/TextureRect.texture = CheckTexture
 	TextEditPath.text = MinecraftFolder
 	FileDialMODS.current_dir = MinecraftFolder
@@ -129,10 +129,10 @@ func _on_texture_button_autofind_pressed():
 				MinecraftFolder = ProjectSettings.globalize_path(MinecraftFolder)
 		
 		
-		print(MinecraftFolder)
+		print("[" + Time.get_time_string_from_system() + "]", MinecraftFolder)
 		MinecraftDir = DirAccess.open(MinecraftFolder)
 		if DirAccess.get_open_error() != 0 :
-			print(DirAccess.get_open_error())
+			print("[" + Time.get_time_string_from_system() + "]", DirAccess.get_open_error())
 			$VBoxContainer/MarginContMinecraftFolder/VBoxContainer/HBoxContainer/TextureRect.texture = ErrorTexture
 			LogLabel.text = "There was an error with the autofind function! Please select your minecraft folder with the manual button."
 			LogLabel.label_settings.font_color = Color(1,0,0,1)
