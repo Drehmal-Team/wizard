@@ -300,7 +300,7 @@ func downloadMapPackage():
 	
 	LogLabel.text = "Downloading map package..."
 	timeSpentDownloading = 0
-	error = $HTTPRequest.request("https://storage.cloud.google.com/apotheosis_beta/Drehmal%202.2%20Apotheosis%20Beta%20-%201.0.0.tar.gz")	
+	error = $HTTPRequest.request(Global.config["MapPackageUrl"],["User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/116.0"])
 	await $HTTPRequest.request_completed
 	$HTTPRequest.download_file = ""
 	
@@ -325,10 +325,12 @@ func extractMapPackage():
 	LogLabel.text = "Extracting map package... (this can freeze the installer, don't be alarmed)"
 	await get_tree().create_timer(0.5).timeout
 	
-	var dirName = Global.SavesFolderPath + "/Drehmal 2.2 Apotheosis"
-	DirAccess.make_dir_absolute(dirName)
+	var dirName = await createFolder(Global.SavesFolderPath + "/Drehmal 2.2 Apotheosis")
 	output = []
-	OS.execute("tar", ["-xvf", TempPackagePath,"-C", dirName], output)
+	OS.execute("tar", ["-xvf", TempPackagePath,"-C", Global.SavesFolderPath], output)
+	print("[" + Time.get_time_string_from_system() + "]", "Output from tar :")
+	print(" --- ", output)
+	print()
 	PackageExtractProgress = 0.7
 	DirAccess.remove_absolute(TempPackagePath)
 	PackageExtractProgress = 1
@@ -462,23 +464,10 @@ func moveMods():
 	var pastMods := DirAccess.get_files_at(Global.ModsFolderPath)
 	if pastMods != PackedStringArray([]):
 		LogLabel.text = "Detecting mods in the mods folder ! Moving them to a new folder..."
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(1.0).timeout
 		# CREATING FOLDER
-		if DirAccess.dir_exists_absolute(Global.ModsFolderPath + "/Before_Drehmal") :
-			var getTfOut := false
-			var addit := 2
-			dirpath = Global.ModsFolderPath + "/Before_Drehmal"
-			while not getTfOut :
-				if DirAccess.dir_exists_absolute(Global.ModsFolderPath + "/Before_Drehmal_" + str(addit)) :
-					addit += 1
-				else :
-					DirAccess.make_dir_absolute(Global.ModsFolderPath + "/Before_Drehmal_" + str(addit))
-					dirpath = Global.ModsFolderPath + "/Before_Drehmal_" + str(addit)
-					getTfOut = true
-				
-		else : 
-			DirAccess.make_dir_absolute(Global.ModsFolderPath + "/Before_Drehmal")
-			dirpath = Global.ModsFolderPath + "/Before_Drehmal"
+		dirpath = await createFolder(Global.ModsFolderPath + "/Before_Drehmal")
+		
 		for file in pastMods:
 			LogLabel.text = "Moving " + file + " ..."
 			print("[" + Time.get_time_string_from_system() + "]", "Moving ", file)
@@ -528,7 +517,7 @@ func downloadRes():
 	LogLabel.text = "Downloading Resource Pack..."
 	var resFilePath := Global.ResFolderPath + "/Drehmal 2.2 -- Resource Pack"
 	$HTTPRequest.download_file = resFilePath
-	$HTTPRequest.request("https://www.drehmal.net/_files/archives/a539b0_813ec06a45c34d31a634264df7f58649.zip?dn=Primordial%20Pack%202.2%20BETA.zip",["User-Agent: Drehmal_Installer_beta (drehmal.net)"])
+	$HTTPRequest.request(Global.config["RessourcePackUrl"],["User-Agent: Drehmal_Installer_beta (drehmal.net)"])
 	await $HTTPRequest.request_completed
 	
 	$HTTPRequest.download_file = ""
@@ -583,6 +572,23 @@ func move_file(file : String, folder : String):
 	
 	return OK
 
+func createFolder(path) -> String:
+	var dirpath = path
+	if DirAccess.dir_exists_absolute(path) :
+		var getTfOut := false
+		var addit := 2
+		while not getTfOut :
+			if DirAccess.dir_exists_absolute(path + "_" + str(addit)) :
+				addit += 1
+			else :
+				DirAccess.make_dir_absolute(path + "_" + str(addit))
+				dirpath = path + "_" + str(addit)
+				getTfOut = true
+			
+	else : 
+		DirAccess.make_dir_absolute(dirpath)
+	return dirpath
+		
 
 func _on_texture_button_pressed_leave():
 	SceneTransition.dissolve("res://InstallComplete.tscn")

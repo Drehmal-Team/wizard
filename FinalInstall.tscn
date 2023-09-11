@@ -35,8 +35,8 @@ func _on_texture_button_ready_pressed():
 	else :
 		checking = true
 		Runes = $VBoxContainer/HBoxContainer.get_children()
-		for rune in Runes :
-			rune._to_purple()
+		for eep in Runes :
+			eep._to_purple()
 		
 		finalCheck = true
 		

@@ -1,0 +1,7 @@
+RessourcePackUrl=https://www.drehmal.net/_files/archives/a539b0_813ec06a45c34d31a634264df7f58649.zip?dn=Primordial%20Pack%202.2%20BETA.zip
+MapPackageUrl=https://download848.mediafire.com/id2jxwgkrujg2svZ-Q5cyE9rRVDS8E3nQLCmSajCAv3QgezoS82dnwTXNkugCFKPLhRGHOdWGSTPEJj_BXZbfaqG--n-OLN2_B4j1qqctnV20DQnDpMMP42MiXNDoyynErkWT23-C9MEd19RZ-yf1tlbQMW7LO6dSsTUZ1tZJF0miQ/4y75dnlei0zszxc/Drehmal+2.2+Apotheosis+Beta+-+1.0.1.zip
+
+
+
+#https://storage.cloud.google.com/apotheosis_beta/Drehmal%202.2%20Apotheosis%20Beta%20-%201.0.0.tar.gz
+#https://dl.dropboxusercontent.com/scl/fi/ubn75767k2brtuzj9zzk9/Drehmal-2.2-Apotheosis-Beta-1.0.1.zip?rlkey=xbdar3xgi8qvhs030krfj67rd&dl=0

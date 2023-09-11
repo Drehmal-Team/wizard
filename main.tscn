@@ -1,9 +1,10 @@
-[gd_scene load_steps=40 format=3 uid="uid://bq7ndyehv8jte"]
+[gd_scene load_steps=47 format=3 uid="uid://bq7ndyehv8jte"]
 
 [ext_resource type="Texture2D" uid="uid://cmufa4gmdmmu4" path="res://textures/DrehmalPrimordialLogo.png" id="1_cja0g"]
 [ext_resource type="Script" path="res://MainMenu.gd" id="1_x3wm2"]
 [ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="2_w1ona"]
 [ext_resource type="Texture2D" uid="uid://dmdl5rr0gcjv6" path="res://textures/buttonBasic_normal.png" id="3_eypmd"]
+[ext_resource type="Texture2D" uid="uid://fn2oe36l78nc" path="res://textures/star-sheet.png" id="3_omgjl"]
 [ext_resource type="Script" path="res://MainMenuButtonsManager.gd" id="3_ylpmv"]
 [ext_resource type="Texture2D" uid="uid://dcts8ls7fvhm0" path="res://textures/buttonBasic_pressed.png" id="4_2lw83"]
 [ext_resource type="Texture2D" uid="uid://clgm1pkmj38vf" path="res://textures/buttonBasic_hover.png" id="5_6j0lm"]
@@ -18,7 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://cpfvbhdtk8xom" path="res://textures/EmptyButton/EmptyButton_OFF.png" id="15_nu03o"]
 [ext_resource type="Texture2D" uid="uid://cre38q2dllhg2" path="res://textures/EmptyButton/EmptyButton_ON.png" id="16_3xb8a"]
 
-[sub_resource type="Shader" id="Shader_23ews"]
+[sub_resource type="Shader" id="Shader_s8oqd"]
 code = "shader_type canvas_item;
 
 uniform sampler2D noiseTexture ;
@@ -43,7 +44,7 @@ void fragment() {
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_d8yip"]
 frequency = 0.0138
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4koqi"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_psd3x"]
 width = 256
 height = 256
 seamless = true
@@ -63,7 +64,7 @@ fractal_type = 2
 domain_warp_type = 2
 domain_warp_amplitude = 10.0
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6bbc3"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_voajw"]
 generate_mipmaps = false
 seamless = true
 seamless_blend_skirt = 0.337
@@ -71,12 +72,12 @@ color_ramp = SubResource("Gradient_7qtm8")
 noise = SubResource("FastNoiseLite_frcx5")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_buuqy"]
-shader = SubResource("Shader_23ews")
+shader = SubResource("Shader_s8oqd")
 shader_parameter/pixelate = 0.024
-shader_parameter/noiseTexture = SubResource("NoiseTexture2D_6bbc3")
-shader_parameter/detailNoiseTexture = SubResource("NoiseTexture2D_4koqi")
+shader_parameter/noiseTexture = SubResource("NoiseTexture2D_voajw")
+shader_parameter/detailNoiseTexture = SubResource("NoiseTexture2D_psd3x")
 
-[sub_resource type="Shader" id="Shader_hwnud"]
+[sub_resource type="Shader" id="Shader_y365g"]
 code = "shader_type canvas_item;
 
 uniform sampler2D SCREEN_TEXTURE: hint_screen_texture, filter_linear;
@@ -90,8 +91,47 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dpnuv"]
-shader = SubResource("Shader_hwnud")
+shader = SubResource("Shader_y365g")
 shader_parameter/pixelSize = 24.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uyodk"]
+atlas = ExtResource("3_omgjl")
+region = Rect2(0, 0, 23, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ducuc"]
+atlas = ExtResource("3_omgjl")
+region = Rect2(23, 0, 23, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nb8yt"]
+atlas = ExtResource("3_omgjl")
+region = Rect2(46, 0, 23, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y8ron"]
+atlas = ExtResource("3_omgjl")
+region = Rect2(69, 0, 23, 23)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yt10p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uyodk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ducuc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nb8yt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y8ron")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j81yl"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="LabelSettings" id="LabelSettings_opgfu"]
 font = ExtResource("2_w1ona")
@@ -228,15 +268,45 @@ layout_mode = 2
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/MarginContainer/VBoxContainer"]
 texture_filter = 1
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.07
 texture = ExtResource("1_cja0g")
 expand_mode = 3
 stretch_mode = 5
 
+[node name="Glow1" type="Marker2D" parent="VBoxContainer/MarginContainer/VBoxContainer/TextureRect"]
+position = Vector2(130, 44)
+
+[node name="ColorRect" type="AnimatedSprite2D" parent="VBoxContainer/MarginContainer/VBoxContainer/TextureRect/Glow1"]
+scale = Vector2(0.505, 0.505)
+sprite_frames = SubResource("SpriteFrames_yt10p")
+autoplay = "default"
+frame = 3
+frame_progress = 1.0
+
+[node name="Button" type="Button" parent="VBoxContainer/MarginContainer/VBoxContainer/TextureRect/Glow1/ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -11.5
+offset_top = -11.5
+offset_right = -11.5
+offset_bottom = -11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_j81yl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_j81yl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_j81yl")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_j81yl")
+theme_override_styles/focus = SubResource("StyleBoxFlat_j81yl")
+
+[node name="TimerGlow1" type="Timer" parent="VBoxContainer/MarginContainer/VBoxContainer/TextureRect/Glow1"]
+wait_time = 2.0
+
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Official Installer - Version 2.2.b1"
+text = "Official Installer - Version 2.2.b.3"
 label_settings = SubResource("LabelSettings_opgfu")
 horizontal_alignment = 1
 vertical_alignment = 3
@@ -784,6 +854,7 @@ label_settings = SubResource("LabelSettings_yy800")
 horizontal_alignment = 1
 autowrap_mode = 3
 
+[connection signal="pressed" from="VBoxContainer/MarginContainer/VBoxContainer/TextureRect/Glow1/ColorRect/Button" to="." method="_on_button_glow1_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Install" to="VBoxContainer/MarginContainer2/MenuManagers" method="_on_button_install_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Info" to="VBoxContainer/MarginContainer2/MenuManagers" method="_on_button_info_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/MenuManagers/MarginContainer/VBoxContainer/Button_Social" to="VBoxContainer/MarginContainer2/MenuManagers" method="_on_button_social_pressed"]
