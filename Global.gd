@@ -1,7 +1,7 @@
 extends Node
 
 var configRaw := "RessourcePackUrl=https://www.drehmal.net/_files/archives/a539b0_813ec06a45c34d31a634264df7f58649.zip?dn=Primordial%20Pack%202.2%20BETA.zip
-MapPackageUrl=https://download848.mediafire.com/id2jxwgkrujg2svZ-Q5cyE9rRVDS8E3nQLCmSajCAv3QgezoS82dnwTXNkugCFKPLhRGHOdWGSTPEJj_BXZbfaqG--n-OLN2_B4j1qqctnV20DQnDpMMP42MiXNDoyynErkWT23-C9MEd19RZ-yf1tlbQMW7LO6dSsTUZ1tZJF0miQ/4y75dnlei0zszxc/Drehmal+2.2+Apotheosis+Beta+-+1.0.1.zip"
+MapPackageUrl=https://download1322.mediafire.com/bg7si122bxmgGvFSqrJ0XD2VdPME6IzknC55N-2ZjOinxnjfbt4vzpyv1-G0q4SznMSPpryjLMmp1ANe4Hpg8O_1IktFJTihqPprIwgjjcIs7rd6PFtoriGlfvAVrzzqrNoItKtN6USttxQ2pqxoV6MpV7Z2J4Gv3VjajF0mO6am/z2a85i5ccsntb5k/Drehmal+2.2+Apotheosis+Beta+-+1.0.1.tar.gz"
 var config : Dictionary
 var RessourcePackMode := ""
 var MinecraftFolderPath := ""

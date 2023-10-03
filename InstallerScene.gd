@@ -368,7 +368,7 @@ var started_mods = false
 func mods(mode):
 	print("[" + Time.get_time_string_from_system() + "]", "Function mods called")
 	var urlList = []
-	var urlPath : String
+	var urlRaw : String
 	var denom : String
 	var pref : String
 	
@@ -376,23 +376,41 @@ func mods(mode):
 	
 	match mode:
 		"NECESS":
-			urlPath = "res://assets/url_list_necess.txt"
+			urlRaw = "otVJckYQ : cit-resewn
+BVzZfTc1 : entitytexturefeatures
+YBz7DOs8 : fabricskyboxes
+Orvt0mRa : indium
+yBW8D80W : lambdynamiclights
+P7dR8mSH : fabric-api
+PRN43VSY : animatica"
 			denom = "Necessary"
 			pref = "NECESS"
 		"PERF":
-			urlPath = "res://assets/url_list_perf.txt"
+			urlRaw = "PtjYWJkn : sodium-extra
+Bh37bMuy : reeses-sodium-options
+LQ3K71Q1 : dynamic-fps
+NNAgCjsB : entityculling
+hvFnDODi : lazydfu
+gvQqBUqZ : lithium
+H8CaAYZC : starlight
+AANobbMI : sodium
+OVuFYfre : ebe"
 			denom = "Performance"
 			pref = "PERF"
 		"OPTI":
-			urlPath = "res://assets/url_list_opti.txt"
+			urlRaw = "FWumhS4T : smoothboot-fabric
+GNxdLCoP : cull-leaves
+uXXizFIs : ferrite-core
+DZ81JNQ1 : audio-engine-tweaks
+NRjRiSSD : memoryleakfix
+VSNURh3q : c2me-fabric"
 			denom = "Optimisation"
 			pref = "OPTI"
 		"":
 			print("[" + Time.get_time_string_from_system() + "]", "[ERROR] Mods function called with null string parameter")
 			return ERR_INVALID_PARAMETER
 	
-	lines = FileAccess.get_file_as_string(urlPath)
-	urlList = _urls_to_list(lines)
+	urlList = _urls_to_list(urlRaw)
 	
 	LogLabel.text = "Collecting " + denom.to_lower() + " mods..."
 	
@@ -564,8 +582,6 @@ func move_file(file : String, folder : String):
 		
 	if folder[-1] != "/" :
 		filename = "/" + filename
-	
-	print("[" + Time.get_time_string_from_system() + "]", filename)
 	
 	DirAccess.copy_absolute(file,folder + filename)
 	DirAccess.remove_absolute(file)
