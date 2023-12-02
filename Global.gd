@@ -3,7 +3,7 @@ extends Node
 var configRaw := "RessourcePackUrl=https://www.drehmal.net/_files/archives/a539b0_813ec06a45c34d31a634264df7f58649.zip?dn=Primordial%20Pack%202.2%20BETA.zip
 MapPackageUrl=https://download1322.mediafire.com/bg7si122bxmgGvFSqrJ0XD2VdPME6IzknC55N-2ZjOinxnjfbt4vzpyv1-G0q4SznMSPpryjLMmp1ANe4Hpg8O_1IktFJTihqPprIwgjjcIs7rd6PFtoriGlfvAVrzzqrNoItKtN6USttxQ2pqxoV6MpV7Z2J4Gv3VjajF0mO6am/z2a85i5ccsntb5k/Drehmal+2.2+Apotheosis+Beta+-+1.0.1.tar.gz"
 var config : Dictionary
-var RessourcePackMode := ""
+var RessourcePackMode := "LOCAL"
 var MinecraftFolderPath := ""
 var ModsFolderPath := ""
 var ResFolderPath := ""
@@ -16,6 +16,7 @@ var FabricInstalled := false
 var FabricVersion := ""
 var InstallType : String
 var TimeSpent := 0.0
+var ArchivePath := ""
 
 
 var Music = AudioStreamPlayer.new()
@@ -30,7 +31,7 @@ signal OutMods
 
 func _ready():
 	add_child(Music)
-	Music.set_volume_db(5.0)
+	Music.set_volume_db(-5.0)
 	Music.finished.connect(_finished)
 	Music.stream = load("res://assets/sounds/MainMenu.ogg")
 	_finished()
@@ -54,7 +55,7 @@ func play_sound(type):
 		var SFX = AudioStreamPlayer.new()
 		add_child(SFX)
 		SFX.stream = load(path)
-		SFX.set_volume_db(0.0 - 8.0)
+		SFX.set_volume_db(0.0 - 12.0)
 		SFX.play()
 		await SFX.finished
 		SFX.queue_free()

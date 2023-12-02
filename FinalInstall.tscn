@@ -21,8 +21,8 @@ var checking := false
 func _ready():
 	for i in range(0,4):
 		rune = Rune.instantiate()
-		rune.Text = [\"Folders\",\"Resourcepack\",\"Mods\",\"Fabric\"][i]
-		rune.ForegroundTexture = load([\"res://textures/FinalInstallChecks/FinalFolder.png\",\"res://textures/FinalInstallChecks/FinalRes.png\",\"res://textures/FinalInstallChecks/FinalModrinth.png\",\"res://textures/FinalInstallChecks/FinalFabric.png\"][i])
+		rune.Text = [\"Folders\",\"Mods\",\"Fabric\",\"Archive\"][i]
+		rune.ForegroundTexture = load([\"res://textures/FinalInstallChecks/FinalFolder.png\",\"res://textures/FinalInstallChecks/FinalModrinth.png\",\"res://textures/FinalInstallChecks/FinalFabric.png\",\"res://textures/FinalInstallChecks/FinalArchive.png\"][i])
 		$VBoxContainer/HBoxContainer.add_child(rune)
 		$VBoxContainer/MarginContainer/TextureButtonReady.show()
 		$VBoxContainer/MarginContainer/TextureButtonInstall.hide()
@@ -42,47 +42,47 @@ func _on_texture_button_ready_pressed():
 		
 		if not (Global.MinecraftFolderPath == \"\" or Global.ResFolderPath == \"\" or Global.SavesFolderPath == \"\" or Global.ResFolderPath == \"\") :
 			Runes[0]._to_green()
-			Global.play_from_path(\"res://assets/sounds/Runes/rune_1.ogg\",15.0)
+			Global.play_from_path(\"res://assets/sounds/Runes/rune_1.ogg\",5.0)
 		else :
 			Runes[0]._to_red()
-			Global.play_from_path(\"res://assets/sounds/RunesBad/RunesBad-001.ogg\",15.0)
+			Global.play_from_path(\"res://assets/sounds/RunesBad/RunesBad-001.ogg\",5.0)
 			finalCheck = false
 			
-			
-		await get_tree().create_timer(1.5).timeout
-		
-		if Global.RessourcePackMode != \"\":
-			Runes[1]._to_green()
-			Global.play_from_path(\"res://assets/sounds/Runes/rune_2.ogg\",15.0)
-		else :
-			Runes[1]._to_red()
-			Global.play_from_path(\"res://assets/sounds/RunesBad/RunesBad-002.ogg\",15.0)
-			finalCheck = false
 		
 		await get_tree().create_timer(1.5).timeout
 		
 		if Global.RamValue != 0 :
-			Runes[2]._to_green()
-			Global.play_from_path(\"res://assets/sounds/Runes/rune_3.ogg\",15.0)
+			Runes[1]._to_green()
+			Global.play_from_path(\"res://assets/sounds/Runes/rune_2.ogg\",5.0)
 		else :
-			Runes[2]._to_red()
-			Global.play_from_path(\"res://assets/sounds/RunesBad/RunesBad-003.ogg\",15.0)
+			Runes[1]._to_red()
+			Global.play_from_path(\"res://assets/sounds/RunesBad/RunesBad-002.ogg\",5.0)
 			finalCheck = false
 
 		await get_tree().create_timer(1.5).timeout
 		
 		if Global.FabricInstalled:
+			Runes[2]._to_green()
+			Global.play_from_path(\"res://assets/sounds/Runes/rune_3.ogg\",5.0)
+		else :
+			Runes[2]._to_red()
+			Global.play_from_path(\"res://assets/sounds/RunesBad/RunesBad-004.ogg\",5.0)
+			finalCheck = false
+		
+		await get_tree().create_timer(1.5).timeout
+		
+		if Global.ArchivePath != \"\":
 			Runes[3]._to_green()
-			Global.play_from_path(\"res://assets/sounds/Runes/rune_4.ogg\",15.0)
+			Global.play_from_path(\"res://assets/sounds/Runes/rune_4.ogg\",5.0)
 		else :
 			Runes[3]._to_red()
-			Global.play_from_path(\"res://assets/sounds/RunesBad/RunesBad-004.ogg\",15.0)
+			Global.play_from_path(\"res://assets/sounds/RunesBad/RunesBad-004.ogg\",5.0)
 			finalCheck = false
 		
 		await get_tree().create_timer(2).timeout
 		
 		if finalCheck :
-			Global.play_from_path(\"res://assets/sounds/Runes/rune_5.ogg\",13.0)
+			Global.play_from_path(\"res://assets/sounds/Runes/rune_5.ogg\",5.0)
 			
 			$VBoxContainer/MarginContainer/TextureButtonReady.hide()
 			$VBoxContainer/MarginContainer/TextureButtonInstall.show()

@@ -72,7 +72,7 @@ func _ready():
 	ProgBarDeco.value = 0
 	LogLabel.text = "Starting..."
 	
-	DownloadMapPackage.connect(downloadMapPackage)
+	DownloadMapPackage.connect(moveMapPackage)
 	ExtractMapPackage.connect(extractMapPackage)
 	MoveMods.connect(moveMods)
 	InstallMods.connect(mods)
@@ -172,17 +172,6 @@ var dlBytes : int
 var bodySize : int
 
 func _process(_delta):
-	
-	if CurrentAction == "DL_RES" :
-		dlBytes = signed_to_none($HTTPRequest.get_downloaded_bytes())
-		bodySize = signed_to_none($HTTPRequest.get_body_size())
-		
-		if bodySize == -1 :
-			PackageProgress = clampf(float(dlBytes) / 4187593113.0,0,1)
-		else :
-			PackageProgress = clampf(float(dlBytes) / float(bodySize), 0, 1)
-		
-		LogLabel.text = "Downloading resource package... (" + str(PackageProgress*100).pad_decimals(1) + " %)"
 		
 	
 	if CurrentAction.split(".")[0] == "NECESS_MODS_DOWNLOAD":
@@ -214,43 +203,11 @@ func _process(_delta):
 		ModsProgress.append(ModsOptiUrl)
 		ModsProgress.append(ModsOpti)
 	
-	
-	if CurrentAction == "MAP":
-		timeSpentDownloading += _delta
-		
-		dlBytes = signed_to_none($HTTPRequest.get_downloaded_bytes())
-		bodySize = signed_to_none($HTTPRequest.get_body_size())
-		
-		if bodySize == -1 :
-			PackageProgress = clampf(float(dlBytes) / 4187593113.0,0,1)
-		else :
-			PackageProgress = clampf(float(dlBytes) / float(bodySize), 0, 1)
-		
-		LogLabel.text = "Downloading map package... (" + str(PackageProgress*100).pad_decimals(1) + " %)"
-		
-		if timeSpentDownloading/60 > 120 :
-			LogLabel.text += " (Well, have a nice time waiting some more, hope you have a nice day.)"
-		elif timeSpentDownloading/60 > 100 :
-			LogLabel.text += " (Oh hey, glad you're here ! No, it's still not done.)"
-		elif timeSpentDownloading/60 > 80 :
-			LogLabel.text += " (Nice weather, eh ? I don't really know, I'm just trying to entertain you.)"
-		elif timeSpentDownloading/60 > 60 :
-			LogLabel.text += " (Also, don't forget to vary your diet, get some veggies once in a while.)"
-		elif timeSpentDownloading/60 > 40 :
-			LogLabel.text += " (You should sleep about 8 hours a night, by the way.)"
-		elif timeSpentDownloading/60 > 20 :
-			LogLabel.text += " (Make some tea if you don't like caffeine, or not sleeping.)"
-		elif timeSpentDownloading/60 > 10 :
-			LogLabel.text += " (You know what ? You should make yourself some coffee to wait.)"
-		elif timeSpentDownloading/60 > 5 :
-			LogLabel.text += " (You should go do something else meanhile...)"
-		elif timeSpentDownloading/60 > 1 :
-			LogLabel.text += " (It can take some time...)"
 			
 	if InstallType == "" :
 		return
 	elif InstallType == "SINGLE" :
-		value = (PackageProgress*5 + PackageExtractProgress*2 + MoveResProgress*0.2 + sum(ModsProgress)/len(ModsProgress) + ProfileProgress * 0.2) / 10.4
+		value = (PackageProgress*2 + PackageExtractProgress*2 + MoveResProgress*0.2 + sum(ModsProgress)/len(ModsProgress)*3 + ProfileProgress * 0.2) / 10.4
 	elif InstallType == "CLIENT" :
 		value = (ResProgress + sum(ModsProgress)/len(ModsProgress) + ProfileProgress * 0.2)/2.2	
 	
@@ -292,29 +249,24 @@ func writeJSON(dict, json_file_path) -> void:
 
 var TempPackagePath
 
-func downloadMapPackage():
-	print("[" + Time.get_time_string_from_system() + "]", "Function downloadMapPackage called")
+func moveMapPackage():
+	print("[" + Time.get_time_string_from_system() + "]", "Function moveMapPackage called")
 	CurrentAction = "MAP"
+	LogLabel.text = "Copying map archive to the extract location..."
+	
 	TempPackagePath = Global.SavesFolderPath + "/TempMapPackage.tar.gz"
-	$HTTPRequest.download_file = TempPackagePath
 	
-	LogLabel.text = "Downloading map package..."
-	timeSpentDownloading = 0
-	error = $HTTPRequest.request(Global.config["MapPackageUrl"],["User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/116.0"])
-	await $HTTPRequest.request_completed
-	$HTTPRequest.download_file = ""
+	DirAccess.copy_absolute(Global.ArchivePath, Global.SavesFolderPath + "/TempMapPackage.tar.gz")
+	PackageProgress = 0.5
 	
-	if error != OK :
-		print("[" + Time.get_time_string_from_system() + "]", "INSTALLER FAILED")
-	else :
-		LogLabel.text = "Map package successfully downloaded !"
-		print("[" + Time.get_time_string_from_system() + "]", "Map package succesfully downloaded")
+	LogLabel.text = "Removing map archive from its original location..."
 	
-	CurrentAction = "NONE"
+	DirAccess.remove_absolute(Global.SavesFolderPath + "/Drehmal 2.2 Apotheosis/resources.zip")
+	PackageProgress = 1.0
 	
 	await get_tree().create_timer(0.5).timeout
 	ActionFinished.emit("MAP_PACK")
-	print("[" + Time.get_time_string_from_system() + "]", "ActionFinished signal emitted from downloadMapPackage function")
+	print("[" + Time.get_time_string_from_system() + "]", "ActionFinished signal emitted from moveMapPackage function")
 	return
 
 var output = []
@@ -327,7 +279,7 @@ func extractMapPackage():
 	
 	var dirName = await createFolder(Global.SavesFolderPath + "/Drehmal 2.2 Apotheosis")
 	output = []
-	OS.execute("tar", ["-xvf", TempPackagePath,"-C", Global.SavesFolderPath], output)
+	OS.execute("tar", ["-xvf", TempPackagePath,"-C", Global.SavesFolderPath + "/Drehmal 2.2 Apotheosis"], output)
 	print("[" + Time.get_time_string_from_system() + "]", "Output from tar :")
 	print(" --- ", output)
 	print()

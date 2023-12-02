@@ -34,6 +34,7 @@ file_logging/enable_file_logging=true
 
 [display]
 
+window/size/viewport_height=700
 window/size/mode=2
 
 [editor_plugins]

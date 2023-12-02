@@ -143,8 +143,8 @@ NextStepButton = true
 PrevStepButton = true
 
 [node name="ConfirmationDialog" type="AcceptDialog" parent="."]
-initial_position = 2
 title = "Wait a second..."
+initial_position = 2
 size = Vector2i(1027, 109)
 ok_button_text = "Got it !"
 dialog_text = "The LOCAL resource pack is only useful if you're having a singleplayer installation, as it installs the resource pack in the save folder.

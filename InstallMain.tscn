@@ -1,10 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://bmcp21nfcxnnc"]
+[gd_scene load_steps=23 format=3 uid="uid://bmcp21nfcxnnc"]
 
 [ext_resource type="PackedScene" uid="uid://bpevw2r2jiwyn" path="res://Checks.tscn" id="1_qfx2f"]
 [ext_resource type="PackedScene" uid="uid://doq8uefudtoga" path="res://Mods.tscn" id="2_hpugn"]
 [ext_resource type="PackedScene" uid="uid://d2e45cw8bbhfj" path="res://Choices.tscn" id="3_do7np"]
 [ext_resource type="PackedScene" uid="uid://buumrt6abcnyv" path="res://ModList.tscn" id="4_5wdwl"]
 [ext_resource type="PackedScene" uid="uid://cew7e6vstebj3" path="res://Fabric.tscn" id="5_4xb7k"]
+[ext_resource type="PackedScene" uid="uid://beoqmtfflemsi" path="res://Archive.tscn" id="6_8odft"]
 [ext_resource type="PackedScene" uid="uid://rvajgvr2atcb" path="res://FinalInstall.tscn" id="6_m42nw"]
 [ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="7_lxbeb"]
 
@@ -46,7 +47,7 @@ func resize():
 		$MainContainer.position.y = ScreenDim.y if mods else 0
 
 func next_step():
-	if step <= 3 :
+	if step <= 4 :
 		var ScreenDim = DisplayServer.window_get_size(0)
 		step += 1
 		
@@ -307,6 +308,22 @@ theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
 
 [node name="Fabric" parent="MainContainer/PanelFabric/MarginContainer" instance=ExtResource("5_4xb7k")]
+layout_mode = 2
+
+[node name="PanelArchive" type="PanelContainer" parent="MainContainer"]
+layout_mode = 0
+offset_right = 1112.0
+offset_bottom = 608.0
+
+[node name="MarginContainer" type="MarginContainer" parent="MainContainer/PanelArchive"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="Archive" parent="MainContainer/PanelArchive/MarginContainer" instance=ExtResource("6_8odft")]
 layout_mode = 2
 
 [node name="PanelFinalInstall" type="PanelContainer" parent="MainContainer"]
