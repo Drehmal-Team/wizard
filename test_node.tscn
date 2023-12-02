@@ -17,7 +17,7 @@ offset_left = 405.0
 offset_top = 243.0
 offset_right = 754.0
 offset_bottom = 309.0
-text = "Download a mod to this folder"
+text = "Try and send a request"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="."]
 
