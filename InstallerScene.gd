@@ -207,7 +207,7 @@ func _process(_delta):
 	if InstallType == "" :
 		return
 	elif InstallType == "SINGLE" :
-		value = (PackageProgress*2 + PackageExtractProgress*2 + MoveResProgress*0.2 + sum(ModsProgress)/len(ModsProgress)*3 + ProfileProgress * 0.2) / 10.4
+		value = (PackageProgress*2 + PackageExtractProgress*2 + MoveResProgress*0.2 + sum(ModsProgress)/len(ModsProgress)*3 + ProfileProgress * 0.2) / 7.4
 	elif InstallType == "CLIENT" :
 		value = (ResProgress + sum(ModsProgress)/len(ModsProgress) + ProfileProgress * 0.2)/2.2	
 	
@@ -512,6 +512,15 @@ func installComplete():
 	tween = create_tween()
 	tween.tween_property(self, "modulate", Color(1,1,1), 2).set_ease(Tween.EASE_OUT)
 	await tween.finished
+	
+	print("PackageProgress :",PackageProgress)
+	print("PackageExtractProgress :",PackageExtractProgress)
+	print("MoveResProgress :",MoveResProgress)
+	print("sum(ModsProgress)/len(ModsProgress) :",sum(ModsProgress)/len(ModsProgress))
+	print("ModsProgress",ModsProgress)
+	print("sum(ModsProgress)",sum(ModsProgress))
+	print("len(ModsProgress)",len(ModsProgress))
+	print("ProfileProgress :",ProfileProgress)
 
 func signed_to_none(x):
 	if x < -1 :

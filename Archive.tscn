@@ -113,7 +113,7 @@ size_flags_vertical = 3
 [node name="Label" type="Label" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxDownload"]
 layout_mode = 2
 size_flags_vertical = 6
-text = "Step 1 : if you have not, download the map tar.gz archive !"
+text = "Step 1 : If you have not, download the map tar.gz archive !"
 label_settings = SubResource("LabelSettings_a4ltd")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxDownload"]
@@ -145,15 +145,18 @@ underline = 1
 [node name="VBoxFindThePath" type="VBoxContainer" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 4.54
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxFindThePath"]
 layout_mode = 2
 size_flags_vertical = 6
-text = "Step 2 : locate the archive"
+text = "Step 2 : Locate the archive"
 label_settings = SubResource("LabelSettings_a4ltd")
 
 [node name="VBoxCont_MODS" type="VBoxContainer" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxFindThePath"]
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxFindThePath/VBoxCont_MODS"]
 layout_mode = 2
@@ -179,7 +182,7 @@ stretch_mode = 5
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxFindThePath/VBoxCont_MODS/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 7.73
+size_flags_stretch_ratio = 3.12
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxFindThePath/VBoxCont_MODS/HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -188,13 +191,17 @@ label_settings = SubResource("LabelSettings_p0i8t")
 
 [node name="Label2" type="Label" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxFindThePath/VBoxCont_MODS/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 6
+size_flags_vertical = 3
 text = "If you cannot find the downloaded archive, maybe you've placed it somewhere the installer does not have access to, in which case you'll need to move it somewhere else."
 label_settings = SubResource("LabelSettings_pry5d")
+horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxFindThePath/VBoxCont_MODS"]
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxFindThePath/VBoxCont_MODS/HBoxContainer2"]
 layout_mode = 2
