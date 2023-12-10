@@ -141,6 +141,7 @@ theme_override_fonts/font = ExtResource("2_3wyc7")
 theme_override_font_sizes/font_size = 24
 text = "Link to the Archive"
 underline = 1
+uri = "https://drive.google.com/file/d/1yC9OyLTg7apIPJ5K5DZrLtnZHpROi2IG/view?usp=sharing"
 
 [node name="VBoxFindThePath" type="VBoxContainer" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer"]
 layout_mode = 2
