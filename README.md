@@ -9,7 +9,6 @@ Made by MoutonDemocrate, you can find me in the [Drehmal Discord](https://discor
 
 > ### Warning : this is a BETA build ! This installer is unstable and may not work properly !
 
-===
 
 ## How to use :
 
@@ -34,7 +33,6 @@ The installer will also give you the link when installing Drehmal, in case you f
 Finally, start the installer by executing the files provided in releases.
 If you do not know how to so that, look it up yourself ! It's easier than me explaining it.
 
-===
 
 ## Support :
 
