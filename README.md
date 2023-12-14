@@ -51,9 +51,9 @@ Additionally, please upload your log file too, it's the most important thing you
 > 
 > - Linux-based distros : `~/.local/share/Primordial Team/Drehmal Installer/logs` 
 > 
-> - Windows : `~/Library/Application Support/Primordial Team/Drehmal Installer/logs` 
+> - Windows : `%APPDATA%/Primordial Team/Drehmal Installer/logs`
 > 
-> - macOS : `%APPDATA%/Primordial Team/Drehmal Installer/logs` 
+> - macOS : `~/Library/Application Support/Primordial Team/Drehmal Installer/logs` 
 > 
 > In that folder, your log file is the most recent one.
 > Contact us on the discord if you experience any issues.
