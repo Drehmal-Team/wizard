@@ -38,7 +38,7 @@ def compress_split(output_dir, source_dir):
 def extract_split(source_dir, output_file):
     with os.scandir(path=source_dir) as dir:
         for entry in dir:
-            print(entry.name, entry.path, output_file)
+            print(f'Extracting {entry.name}')
             with tarfile.open(entry.path, 'r:gz') as tar:
                 tar.extractall(output_file)
 

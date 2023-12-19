@@ -1,16 +1,18 @@
 import os
 import platform
-import tarfile
-import gdown
+import shutil
 import requests
 import subprocess
 from os import path
 import json
 from time import sleep
 
+from split import extract_split
+
 PLATFORM = platform.system()
 
 DREHMAL_VERSION_NAME = 'Drehmal 2.2 Apotheosis Beta - 1.0.1'
+DREHMAL_VERSION_FILENAME = 'drehmal-2.2-apotheosis-beta-1.0.1'
 DREHMAL_ICON_BASE64 = 'data:image/png;base64,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'
 RESOURCE_PACK_URL = 'https://www.drehmal.net/_files/archives/a539b0_813ec06a45c34d31a634264df7f58649.zip?dn'
 DREHMAL_DOWNLOAD_SOURCES = {
@@ -21,6 +23,21 @@ DREHMAL_DOWNLOAD_SOURCES = {
         'https://drive.google.com/u/0/uc?id=1K-Rfx7DuRt894n9t9xoixw0jbZZBQMfg',
         # Hosted by Keeko
         'https://drive.google.com/u/0/uc?id=1wgDS2SexMTfKMDpJIQlGJA3aTt5bMl2V'
+    ],
+    'drehmal.net': [
+        # 'https://www.drehmal.net/_files/archives/a539b0_813ec06a45c34d31a634264df7f58649.zip?dn'
+        'https://5b92a8a6-6d33-4119-8522-53f0f5e49ea3.usrfiles.com/archives/5b92a8_8e925ea6299e47418cdaa66028baedd5.gz',
+        'https://5b92a8a6-6d33-4119-8522-53f0f5e49ea3.usrfiles.com/archives/5b92a8_e5a2493e8de946499cd71da713dfb19a.gz',
+        'https://5b92a8a6-6d33-4119-8522-53f0f5e49ea3.usrfiles.com/archives/5b92a8_c1eeae44689847579b8b9efa810dd0ae.gz',
+        'https://5b92a8a6-6d33-4119-8522-53f0f5e49ea3.usrfiles.com/archives/5b92a8_57ea04020fe24d198768333dffeef9bb.gz',
+        'https://5b92a8a6-6d33-4119-8522-53f0f5e49ea3.usrfiles.com/archives/5b92a8_3c187c3db300467eab209935ca0e2a3b.gz',
+        'https://5b92a8a6-6d33-4119-8522-53f0f5e49ea3.usrfiles.com/archives/5b92a8_d45d6dce2cab4242ac754b4b24f8b062.gz',
+        'https://5b92a8a6-6d33-4119-8522-53f0f5e49ea3.usrfiles.com/archives/5b92a8_d841d94fd8334f58b63ab8aa83ab5662.gz',
+        'https://5b92a8a6-6d33-4119-8522-53f0f5e49ea3.usrfiles.com/archives/5b92a8_716e90b4fa9d4d70b61e457a5ddbce06.gz',
+        'https://5b92a8a6-6d33-4119-8522-53f0f5e49ea3.usrfiles.com/archives/5b92a8_8934d61b88594e7ebcd8e157d9e5dcef.gz',
+        'https://5b92a8a6-6d33-4119-8522-53f0f5e49ea3.usrfiles.com/archives/5b92a8_8674399f1aaf4bdc90c10db48f5b29eb.gz',
+        'https://5b92a8a6-6d33-4119-8522-53f0f5e49ea3.usrfiles.com/archives/5b92a8_2e05191da7f84d4a829c0a887a216d2f.gz',
+        'https://5b92a8a6-6d33-4119-8522-53f0f5e49ea3.usrfiles.com/archives/5b92a8_e10c25be92704b45bf34c49cf6f2685e.gz',
     ]
 }
 
@@ -63,30 +80,26 @@ def get_mc_path():
 
 def get_map_file(saves_path):
     print(f'Downloading map file to {saves_path}')
-    # GDrive downloads are a tarball -- save with .tar.gz
-    download_path = path.join(saves_path, DREHMAL_VERSION_NAME + '.tar.gz')
-    gdrive_download = ''
-    # Loop through GDrive sources until one works
-    for i, source in enumerate(DREHMAL_DOWNLOAD_SOURCES['gdrive']):
-        print(f'Trying Google Drive #{i+1}') 
-        gdrive_download = gdown.download(source, output=download_path, quiet=False)
-        if gdrive_download: break # download success -- break loop
-    # After all GDRive sources have been tried
-    # If successful download, extract tarball
-    if gdrive_download: 
-        print(f'Map tarball downloaded')
-        print(f'Extracting map tarball')
-        tar = tarfile.open(download_path)
-        tar.extractall(download_path.rstrip('.tar.gz'))
-        tar.close()
-        print(f'Map successfully downloaded and extracted')
-        print(f'Cleaning up files')
-        if os.path.exists(download_path): os.remove(download_path)
-    # If no successful download, print failed message, directing user to manual download and folder location
-    else:
-        print(f'Automatic download failed, please try one of the following URLs:\n', '\n'.join(DREHMAL_DOWNLOAD_SOURCES['gdrive']))
-        print(f'Place the downloaded file in your saves folder at {saves_path}')
-        input('Press enter to continue...') # Pause until user input to ensure they don't miss the directions
+    download_path = path.join(saves_path, DREHMAL_VERSION_NAME) # Final map folder path + name
+    shard_path = path.join(saves_path, f'shards-{DREHMAL_VERSION_FILENAME}') # Temporary map shard folder
+    # Create temp shard download folder
+    if not os.path.exists(shard_path): os.makedirs(shard_path)
+    # Loop through each shard and download them
+    for i, source in enumerate(DREHMAL_DOWNLOAD_SOURCES['drehmal.net']):
+        print(f'Downloading drehmal.net shard #{i+1}')
+        curr_shard_path = path.join(shard_path, f'{DREHMAL_VERSION_FILENAME}-{i}.tar.gz')
+        response = requests.get(source)
+        open(curr_shard_path, "wb").write(response.content)
+    print(f'Map shards successfully downloaded')
+    print(f'Extracting shards')
+    # Extract each individual map shard into users' save folder
+    extract_split(shard_path, download_path)
+    print(f'Map successfully downloaded and extracted')
+    print(f'Cleaning up files')
+    try: # Remove shard folder
+        shutil.rmtree(shard_path)
+    except OSError as e: # Print error
+        print(f'Error encountered: {e.filename} {e.strerror}')
 
 def get_resource_pack(resource_path):
     print(f'Downloading resourcepack')
