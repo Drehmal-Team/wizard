@@ -6,6 +6,8 @@ from pathlib import Path
 
 # Use a Mebibyte/Gibibyte converter
 SPLIT_FOLDER_LIMIT = 524288000 # In bytes
+DREHMAL_VERSION_NAME = 'drehmal-2.2-apotheosis-beta-1.0.1'
+# DREHMAL_VERSION_NAME = 'Drehmal 2.2 Apotheosis Beta - 1.0.1'
 
 def split_folder(src, dest = 'split'):
     folder_size = 0
@@ -14,8 +16,10 @@ def split_folder(src, dest = 'split'):
             
             file_path = os.path.join(dir_path, file)
             file_folder = Path(file_path).parents[0]
-            
-            split_path = os.path.join(dest, str(folder_size//SPLIT_FOLDER_LIMIT), file_folder)
+            file_folder = list(file_folder.parts)
+            file_folder.pop(0)
+            file_folder = os.path.join('', *file_folder)
+            split_path = os.path.join(dest, f'{DREHMAL_VERSION_NAME}-{folder_size//SPLIT_FOLDER_LIMIT}', file_folder)
             if not os.path.exists(split_path): os.makedirs(split_path)
             copy2(file_path, split_path)
             folder_size += os.path.getsize(file_path)
@@ -44,7 +48,6 @@ ARCHIVE_FILE = 'archived.tar.gz'
 ARCHIVE_DIR = 'archive'
 
 def main():
-    archive_file = 'archived.tar.gz'
     split_folder(src=SRC_DIR, dest=DEST_DIR)
 
     compress_split(ARCHIVE_DIR, 'split')
