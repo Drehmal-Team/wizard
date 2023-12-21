@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://5154w7e2g6sj"]
+
+[ext_resource type="Script" path="res://scenes/Map.gd" id="1_2q3v0"]
+
+[node name="Node" type="Node"]
+script = ExtResource("1_2q3v0")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]

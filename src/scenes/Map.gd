@@ -1,5 +1,5 @@
 # Using this because Fabric.gd does -- required for child node processes, might need to change
-extends Control
+extends Node
 
 # k-v pair of shard number:url
 var MAP_SHARDS = { 
@@ -16,14 +16,24 @@ var MAP_SHARDS = {
 	10: 'https://5b92a8a6-6d33-4119-8522-53f0f5e49ea3.usrfiles.com/archives/5b92a8_2e05191da7f84d4a829c0a887a216d2f.gz',
 	11: 'https://5b92a8a6-6d33-4119-8522-53f0f5e49ea3.usrfiles.com/archives/5b92a8_e10c25be92704b45bf34c49cf6f2685e.gz',
 }
+
 var DREHMAL_VERSION_FILENAME = 'drehmal-2.2-apotheosis-beta-1.0.1'
 
-func get_map_files():
+func _ready():
+	var button = Button.new()
+	button.text = "Click me"
+	button.pressed.connect(self._button_pressed)
+	add_child(button)
+
+func _button_pressed():
 	# Define and create map shards path, should be a subdir under the installer folder
-	var map_shards_path = "user://shards"
+	var map_shards_path = ProjectSettings.globalize_path("user://shards")
 	DirAccess.make_dir_absolute(map_shards_path)
 	# Likewise, define and create the Drehmal saves folder, should be a subdir under the user's MC/saves dir
-	var map_path = "%s/Drehmal 2.2 Apotheosis" % Global.SavesFolderPath
+	var saves_path = Global.SavesFolderPath
+	if (!saves_path): saves_path = ProjectSettings.globalize_path("%s/.minecraft/saves" % OS.get_data_dir())
+	
+	var map_path = "%s/Drehmal 2.2 Apotheosis" % saves_path
 	DirAccess.make_dir_absolute(map_path)
 	# Blank array for os-level 'tar' command -- used for extracting the map tarball
 	var tar_output = []
@@ -31,22 +41,21 @@ func get_map_files():
 	for shard in MAP_SHARDS:
 		# Define path to save the current map shard to
 		var shard_path = "%s/%s-%s.tar.gz" % [map_shards_path, DREHMAL_VERSION_FILENAME, shard]
-		print("Downloading drehmal.net shard #%s" % shard)
+		print("[%s] Downloading map shard #%s" % [Time.get_time_string_from_system(), shard, shard_path])
 		# Download the shard tarball, wait for complete execution
 		$HTTPRequest.download_file = shard_path
 		$HTTPRequest.request(MAP_SHARDS[shard])
 		await $HTTPRequest.request_completed
 		
-		print("Extracting map shard #%s" % shard)
+		print("[%s] Extracting map shard #%s" % [Time.get_time_string_from_system(), shard])
 		# Wipe the tar cmd output arr, will be appended to
 		tar_output = []
 		# Execute os-level 'tar' cmd to extract the tarball.
-		# NOTE: can consider downloading the map as uncompressed shards to eliminate os-level scripting at the cost of filesize
-		# Compressed: 3.88GB, Uncompressed: 5.44GB
 		OS.execute("tar", ["-xvf", shard_path, "-C", map_path], tar_output)
 		print("[%s] Tar command output:" % Time.get_time_string_from_system())
-		print(" --- ", tar_output, "")
+		print(tar_output)
+		print(" --- ")
 		
-		print("Removing map shard tarball #%s" % shard)
+		print("[%s] Removing map shard tarball #%s" % [Time.get_time_string_from_system(), shard])
 		# Remove the shard once extracted -- no longer needed by the client, clear up disk space
 		DirAccess.remove_absolute(shard_path)
