@@ -1,0 +1,60 @@
+[gd_scene load_steps=6 format=3 uid="uid://0bouryp2467i"]
+
+[ext_resource type="Texture2D" uid="uid://bwf06ycok84yl" path="res://textures/NextStepButton/PrevStepButton_OFF.png" id="1_2llis"]
+[ext_resource type="Texture2D" uid="uid://m7x446yb6qgb" path="res://textures/NextStepButton/NextStepButton_OFF.png" id="1_c8tx0"]
+[ext_resource type="Texture2D" uid="uid://8l6lvjdrs8of" path="res://textures/NextStepButton/PrevStepButton_ON.png" id="2_l5ofm"]
+[ext_resource type="Texture2D" uid="uid://kffn4bk6424u" path="res://textures/NextStepButton/NextStepButton_ON.png" id="2_roeik"]
+
+[sub_resource type="GDScript" id="GDScript_bo355"]
+resource_name = "NextPrev"
+script/source = "class_name NextStepButton extends MarginContainer
+
+@export var NextStepButton : bool
+@export var PrevStepButton : bool
+
+func _ready():
+	$HBoxContainer/PrevStepButton.visible = PrevStepButton
+	$HBoxContainer/NextStepButton.visible = NextStepButton
+	
+func _on_next_step_button_pressed():
+	Global.emit_signal(\"NextStep\")
+	Global.play_sound(\"FRWD\")
+
+func _on_prev_step_button_pressed():
+	Global.emit_signal(\"PrevStep\")
+	Global.play_sound(\"FRWD\")
+"
+
+[node name="NextPrevButtons" type="MarginContainer"]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = SubResource("GDScript_bo355")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="PrevStepButton" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("1_2llis")
+texture_pressed = ExtResource("2_l5ofm")
+texture_hover = ExtResource("2_l5ofm")
+stretch_mode = 5
+
+[node name="NextStepButton" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+texture_normal = ExtResource("1_c8tx0")
+texture_pressed = ExtResource("2_roeik")
+texture_hover = ExtResource("2_roeik")
+stretch_mode = 5
+
+[connection signal="pressed" from="HBoxContainer/PrevStepButton" to="." method="_on_prev_step_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/NextStepButton" to="." method="_on_next_step_button_pressed"]

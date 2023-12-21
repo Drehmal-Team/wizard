@@ -1,0 +1,255 @@
+[gd_scene load_steps=11 format=3 uid="uid://buumrt6abcnyv"]
+
+[ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="1_34ehl"]
+[ext_resource type="Texture2D" uid="uid://4rmds46ima60" path="res://textures/NextStepButton/BackToInstallButton_OFF.png" id="2_aly23"]
+[ext_resource type="Texture2D" uid="uid://cgj8crlipe718" path="res://textures/NextStepButton/BackToInstallButton_ON.png" id="3_vl433"]
+[ext_resource type="Texture2D" uid="uid://b1jxwpemgyr2d" path="res://textures/RefressButton/RefreshButton_OFF.png" id="4_ydeux"]
+[ext_resource type="Texture2D" uid="uid://bpgivxuab2724" path="res://textures/RefressButton/RefreshButton_ON.png" id="5_2q4ad"]
+
+[sub_resource type="GDScript" id="GDScript_licpc"]
+resource_name = "ModList"
+script/source = "extends Control
+
+@onready var VBoxNecess = $VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer/VBoxNecess
+@onready var VBoxPerf = $VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer/VBoxPerf
+@onready var VBoxOpti = $VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer/VBoxOpti
+
+signal RequestFullyCompleted
+
+var Item : PackedScene = load(\"res://Item.tscn\")
+var UrlList = []
+var lines = \"\"
+
+func _ready():
+	VBoxNecess.show()
+	VBoxPerf.hide()
+	VBoxOpti.hide()
+	
+	FileAccess.open(\"res://assets/url_list_necess.txt\", FileAccess.READ)
+	lines = FileAccess.get_file_as_string(\"res://assets/url_list_necess.txt\")
+	UrlList.append(_urls_to_list(lines))
+	
+	FileAccess.open(\"res://assets/url_list_perf.txt\", FileAccess.READ)
+	lines = FileAccess.get_file_as_string(\"res://assets/url_list_perf.txt\")
+	UrlList.append(_urls_to_list(lines))
+	
+	FileAccess.open(\"res://assets/url_list_opti.txt\", FileAccess.READ)
+	lines = FileAccess.get_file_as_string(\"res://assets/url_list_opti.txt\")
+	UrlList.append(_urls_to_list(lines))
+	
+	
+func _urls_to_list(txt : String):
+	var tempList = []
+	for line in txt.split(\"\\n\") :
+		if \"\\n\" in line :
+			line.replace(\"\\n\",\"\")
+		if line == \"\":
+			pass
+		elif line[0] != \"#\" :
+			tempList.append(line.split(\" : \")[0])
+	return tempList
+
+func _on_back_to_install_button_pressed():
+	Global.emit_signal(\"OutMods\")
+
+
+
+func _on_tab_bar_tab_changed(tab):
+	if tab == 0 :
+		VBoxNecess.show()
+		VBoxPerf.hide()
+		VBoxOpti.hide()
+	elif tab == 1 :
+		VBoxNecess.hide()
+		VBoxPerf.show()
+		VBoxOpti.hide()
+	elif tab == 2 :
+		VBoxNecess.hide()
+		VBoxPerf.hide()
+		VBoxOpti.show()
+
+
+func _on_http_request_request_completed(_result, _response_code, _headers, body):
+	var json = JSON.parse_string(body.get_string_from_utf8())
+	var new_item = Item.instantiate()
+	new_item.Title = json[\"title\"]
+	new_item.Link = \"Go to Modrinth page\"
+	new_item.Href = \"https://modrinth.com/mod/\" + str(json[\"slug\"])
+	new_item.Desc = json[\"description\"]
+	if not FileAccess.file_exists(\"res://assets/mod_icons/\" + str(json[\"id\"]) + \".png\") :
+		$HTTPRequestIMG.download_file = \"res://assets/mod_icons/\" + str(json[\"id\"]) + \".png\"
+		$HTTPRequestIMG.request(json[\"icon_url\"],[\"User-Agent: Drehmal_Installer_beta (drehmal.net)\"])
+		await $HTTPRequestIMG.request_completed
+		await get_tree().create_timer(1).timeout
+	new_item.Icon = load(\"res://assets/mod_icons/\" + str(json[\"id\"]) + \".png\")
+	if json[\"id\"] in UrlList[0] :
+		VBoxNecess.add_child(new_item)
+	if json[\"id\"] in UrlList[1] :
+		VBoxPerf.add_child(new_item)
+	if json[\"id\"] in UrlList[2] :
+		VBoxOpti.add_child(new_item)
+	emit_signal(\"RequestFullyCompleted\")
+
+
+func _on_testcall_button_pressed():
+	$VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer/InfoLabel.text = \"\"
+	for sublist in UrlList :
+		for slug in sublist :
+			$HTTPRequest.request(\"https://api.modrinth.com/v2/project/\" + slug,[\"User-Agent: Drehmal_Installer_beta (drehmal.net)\"])
+			await RequestFullyCompleted
+"
+
+[sub_resource type="LabelSettings" id="LabelSettings_h0qg1"]
+font = ExtResource("1_34ehl")
+font_size = 48
+shadow_size = 16
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_r3xr5"]
+font = ExtResource("1_34ehl")
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awi0o"]
+bg_color = Color(0, 0, 0, 0.247059)
+
+[sub_resource type="LabelSettings" id="LabelSettings_73i7d"]
+font = ExtResource("1_34ehl")
+font_size = 24
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Mods" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_licpc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 8.0
+text = "LIST OF MODS"
+label_settings = SubResource("LabelSettings_h0qg1")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Use the tabs to check each pack individually."
+label_settings = SubResource("LabelSettings_r3xr5")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TabBar" type="TabBar" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("1_34ehl")
+theme_override_font_sizes/font_size = 28
+tab_alignment = 1
+tab_count = 3
+tab_0/title = "Core"
+tab_1/title = "Performance"
+tab_2/title = "Optimization"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 9.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_awi0o")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="InfoLabel" type="Label" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "
+Click on the \"Refresh\" button to load the modlist !"
+label_settings = SubResource("LabelSettings_73i7d")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="VBoxNecess" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 15
+
+[node name="VBoxPerf" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 15
+
+[node name="VBoxOpti" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/MarginContainer/PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 15
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="BackToInstallButton" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 88)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource("2_aly23")
+texture_pressed = ExtResource("3_vl433")
+texture_hover = ExtResource("3_vl433")
+stretch_mode = 5
+
+[node name="Button" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.63
+texture_normal = ExtResource("4_ydeux")
+texture_pressed = ExtResource("5_2q4ad")
+texture_hover = ExtResource("5_2q4ad")
+stretch_mode = 5
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+use_threads = true
+
+[node name="HTTPRequestIMG" type="HTTPRequest" parent="."]
+
+[connection signal="tab_changed" from="VBoxContainer/VBoxContainer/TabBar" to="." method="_on_tab_bar_tab_changed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/BackToInstallButton" to="." method="_on_back_to_install_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="." method="_on_testcall_button_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]

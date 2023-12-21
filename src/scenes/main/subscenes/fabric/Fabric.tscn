@@ -1,0 +1,188 @@
+[gd_scene load_steps=16 format=3 uid="uid://cew7e6vstebj3"]
+
+[ext_resource type="Script" path="res://Fabric.gd" id="1_b4l0v"]
+[ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="1_v012q"]
+[ext_resource type="Texture2D" uid="uid://b0sisuwum3gk8" path="res://textures/Checks/unchecked.png" id="2_333iq"]
+[ext_resource type="PackedScene" uid="uid://0bouryp2467i" path="res://NextPrevButtons.tscn" id="2_aywwt"]
+[ext_resource type="Texture2D" uid="uid://df2o4xth5f6fp" path="res://textures/DownloadButton/DownloadButton_OFF.png" id="2_hmk02"]
+[ext_resource type="Texture2D" uid="uid://c45d338ivknj1" path="res://textures/DownloadButton/DownloadButton_ON.png" id="3_078ei"]
+[ext_resource type="Texture2D" uid="uid://b1xvsh80dlpb0" path="res://textures/FabricButton/FabricButton_OFF.png" id="5_ev44o"]
+[ext_resource type="Texture2D" uid="uid://n8wegsdb5u0u" path="res://textures/FabricButton/FabricButton_ON.png" id="6_et1j5"]
+[ext_resource type="Texture2D" uid="uid://ugcix41atog8" path="res://textures/FabricButton/FabricButton_DISABLED.png" id="8_nce0m"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_olk1x"]
+font = ExtResource("1_v012q")
+font_size = 48
+shadow_size = 16
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ffuag"]
+font = ExtResource("1_v012q")
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_718en"]
+font = ExtResource("1_v012q")
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0j81u"]
+font = ExtResource("1_v012q")
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_pbw82"]
+font = ExtResource("1_v012q")
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_36b0e"]
+font = ExtResource("1_v012q")
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Fabric" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b4l0v")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 8.0
+text = "FABRIC INSTALLATION"
+label_settings = SubResource("LabelSettings_olk1x")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Please follow the steps to install the Fabric mod loader."
+label_settings = SubResource("LabelSettings_ffuag")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
+theme_override_constants/separation = 10
+
+[node name="HBoxContainerDL" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 15
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/HBoxContainerDL"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_333iq")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/VBoxContainer/HBoxContainerDL"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("2_hmk02")
+texture_pressed = ExtResource("3_078ei")
+texture_hover = ExtResource("3_078ei")
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainerDL"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+size_flags_stretch_ratio = 4.0
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainerDL/VBoxContainer"]
+layout_mode = 2
+text = "Download the Fabric Loader"
+label_settings = SubResource("LabelSettings_718en")
+
+[node name="Label2" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainerDL/VBoxContainer"]
+layout_mode = 2
+text = "Click on the \"download\" button on the left to download the Fabric Loader. Don't worry about where the file is, the installer will take care of everything. Once that is done, move on to the next step."
+label_settings = SubResource("LabelSettings_0j81u")
+autowrap_mode = 3
+
+[node name="LogLabel" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainerDL/VBoxContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_pbw82")
+autowrap_mode = 3
+
+[node name="HBoxContainerInstall" type="HBoxContainer" parent="VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 15
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/VBoxContainer/HBoxContainerInstall"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("2_333iq")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/VBoxContainer/HBoxContainerInstall"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("5_ev44o")
+texture_pressed = ExtResource("6_et1j5")
+texture_hover = ExtResource("6_et1j5")
+texture_disabled = ExtResource("8_nce0m")
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/VBoxContainer/HBoxContainerInstall"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainerInstall/VBoxContainer"]
+layout_mode = 2
+text = "Install Fabric"
+label_settings = SubResource("LabelSettings_718en")
+
+[node name="Label2" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainerInstall/VBoxContainer"]
+layout_mode = 2
+text = "Click on the Fabric button on the left to launch the Installer when you are ready."
+label_settings = SubResource("LabelSettings_0j81u")
+autowrap_mode = 3
+
+[node name="LogLabel" type="Label" parent="VBoxContainer/VBoxContainer/HBoxContainerInstall/VBoxContainer"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_36b0e")
+autowrap_mode = 3
+
+[node name="NextPrevButtons" parent="VBoxContainer" instance=ExtResource("2_aywwt")]
+layout_mode = 2
+NextStepButton = true
+PrevStepButton = true
+
+[node name="HTTPRequestVer" type="HTTPRequest" parent="."]
+
+[node name="HTTPRequestJar" type="HTTPRequest" parent="."]
+
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/HBoxContainerDL/TextureButton" to="." method="_on_download_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/HBoxContainerInstall/TextureButton" to="." method="_on_install_button_pressed"]
+[connection signal="request_completed" from="HTTPRequestVer" to="." method="_on_http_request_request_completed"]

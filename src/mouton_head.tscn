@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://d1kvut0uknhh1"]
-
-[ext_resource type="PackedScene" uid="uid://cx8jgwowdmfdp" path="res://assets/mouton_head.gltf" id="1_vksdj"]
-
-[node name="mouton_head" instance=ExtResource("1_vksdj")]

@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Drehmal Installer"
 config/description="The Official Installer for Drehmal 2.2 : Apotheosis, made by MoutonDemocrate"
-run/main_scene="res://main.tscn"
+run/main_scene="res://scenes/main_menu/main.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="Primordial Team/Drehmal Installer"
 config/features=PackedStringArray("4.1", "Mobile")
@@ -25,8 +25,8 @@ config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
-Global="*res://Global.gd"
-SceneTransition="*res://scene_transition.tscn"
+Global="*res://scenes/Global.gd"
+SceneTransition="*res://scenes/scene_transition.tscn"
 
 [debug]
 

@@ -1,0 +1,154 @@
+[gd_scene load_steps=11 format=3 uid="uid://d2e45cw8bbhfj"]
+
+[ext_resource type="Script" path="res://Choices.gd" id="1_n7i5q"]
+[ext_resource type="FontFile" uid="uid://bsa1fmba5nnkk" path="res://assets/F77MinecraftRegular-0VYv.ttf" id="2_bxfu7"]
+[ext_resource type="Texture2D" uid="uid://bqyv6o3ap4751" path="res://textures/ToggleButton/ToggleButton_OFF.png" id="3_mfvey"]
+[ext_resource type="Texture2D" uid="uid://d4ltdgf40eb76" path="res://textures/ToggleButton/ToggleButton_ON.png" id="4_2hril"]
+[ext_resource type="Texture2D" uid="uid://cf5b5j603t5xt" path="res://textures/ToggleButton/ToggleButton_MIDDLE.png" id="5_ckdau"]
+[ext_resource type="PackedScene" uid="uid://0bouryp2467i" path="res://NextPrevButtons.tscn" id="6_dw7ay"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_h0qg1"]
+font = ExtResource("2_bxfu7")
+font_size = 48
+shadow_size = 16
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_r3xr5"]
+font = ExtResource("2_bxfu7")
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_u0qt2"]
+font = ExtResource("2_bxfu7")
+font_size = 24
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_vem87"]
+font = ExtResource("2_bxfu7")
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Choices" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n7i5q")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "RESOURCE PACK OPTIONS"
+label_settings = SubResource("LabelSettings_h0qg1")
+horizontal_alignment = 1
+vertical_alignment = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Select one option."
+label_settings = SubResource("LabelSettings_r3xr5")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="MarginContMinecraftFolder" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContMinecraftFolder"]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer"]
+layout_mode = 2
+text = "Drehmal's resource pack, the \"Primordial Pack\" is necessary for all audio-visual features of the Drehmal experience. From item textures to the soundtrack to essential story visuals, the resource pack is essential.
+
+Here you can choose to install the resource pack locally, globally, or both.
+A local installation will simply install the resource pack within the Drehmal world folder, loading and enabling the resource pack when you load Drehmal.
+A global installation will add it to your resource packs folder where it can be used on any world/server, which is necessary if you intend to join any multiplayer servers hosting Drehmal."
+label_settings = SubResource("LabelSettings_u0qt2")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="HBoxContainer_LOCAL" type="HBoxContainer" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 15
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer/HBoxContainer_LOCAL"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+texture_normal = ExtResource("3_mfvey")
+texture_pressed = ExtResource("4_2hril")
+texture_hover = ExtResource("5_ckdau")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer/HBoxContainer_LOCAL"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+text = "Install the resource pack locally"
+label_settings = SubResource("LabelSettings_vem87")
+
+[node name="HBoxContainer_GLOBAL" type="HBoxContainer" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 15
+
+[node name="TextureButton" type="TextureButton" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer/HBoxContainer_GLOBAL"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+texture_normal = ExtResource("3_mfvey")
+texture_pressed = ExtResource("4_2hril")
+texture_hover = ExtResource("5_ckdau")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer/HBoxContainer_GLOBAL"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+text = "Install the resource pack globally"
+label_settings = SubResource("LabelSettings_vem87")
+
+[node name="MarginContainer" parent="VBoxContainer" instance=ExtResource("6_dw7ay")]
+layout_mode = 2
+NextStepButton = true
+PrevStepButton = true
+
+[node name="ConfirmationDialog" type="AcceptDialog" parent="."]
+title = "Wait a second..."
+initial_position = 2
+size = Vector2i(1027, 109)
+ok_button_text = "Got it !"
+dialog_text = "The LOCAL resource pack is only useful if you're having a singleplayer installation, as it installs the resource pack in the save folder.
+Toggling it on will have no effect in your case."
+
+[connection signal="toggled" from="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer/HBoxContainer_LOCAL/TextureButton" to="." method="_on_texture_button_LOCAL_toggled"]
+[connection signal="toggled" from="VBoxContainer/MarginContMinecraftFolder/VBoxContainer/VBoxContainer/HBoxContainer_GLOBAL/TextureButton" to="." method="_on_texture_button_GLOBAL_toggled"]
